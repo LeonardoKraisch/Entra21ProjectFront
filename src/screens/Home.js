@@ -15,15 +15,13 @@ export default props => {
                 <View style={styles.mainContainer}>
                     <MainWallet />
                 </View>
-                <FlatList
+                <FlatList style={{marginBottom: 10}}
                     numColumns={2}
                     width='97%'
                     data={wallets}
                     renderItem={(item) => (<CustomWallet />)}
                 />
-                <View style={styles.buttonsContainer}>
-                    <AddButtons />
-                </View>
+                <AddButtons />
             </View>
         </View>
     )
@@ -48,7 +46,9 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '30%',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderBottomWidth: 3,
+        borderBottomColor: '#333'
     },
     buttonsContainer: {
         height: '25%',
@@ -56,6 +56,5 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#3C3C3C'
     }
 })
