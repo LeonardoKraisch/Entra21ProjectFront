@@ -8,7 +8,7 @@ export default props => {
 
     return (
         <View style={styles.containter}>
-            <Header/>
+            <Header navigation={props.navigation} />
             <View style={styles.body}>
                 <Text>
                     Home

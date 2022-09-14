@@ -1,5 +1,6 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { TouchableOpacity, Text } from "react-native-gesture-handler";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
 import Home from "./screens/Home";
@@ -12,23 +13,24 @@ export default props => {
     return (
         <NavigationContainer>
             <Drawer.Navigator screenOptions={{
-                headerShown:false,
+                headerShown: false,
                 drawerStyle: {
                     backgroundColor: '#32779E'
                 },
-                drawerItemStyle :{
+                drawerItemStyle: {
                     height: 60,
                     backgroundColor: '#34669E',
                 },
 
             }} initialRouteName="Home" >
-                <Drawer.Screen 
+                <Drawer.Screen
                     name="Home"
-                    component={Home}/>
-                <Drawer.Screen 
+                    component={Home} />
+                <Drawer.Screen
                     name="Login"
-                    component={Login}/>
+                    component={Login} />
             </Drawer.Navigator>
         </NavigationContainer>
     )
 }
+

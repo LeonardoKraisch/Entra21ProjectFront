@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import { Gravatar } from "react-native-gravatar";
 import { Ionicons } from "@expo/vector-icons";
+import MenuButton from "./MenuButton";
 
 export default props => {
     const [name, setName] = useState('Leonardo')
@@ -18,26 +19,27 @@ export default props => {
 
     return (
         <View style={styles.container}>
+            <MenuButton navigation={props.navigation} />
             <View style={styles.rowContainer}>
                 <View style={styles.userInfo}>
                     <Gravatar options={{ email, secure: true }}
                         style={styles.avatar} />
                     <View style={styles.texts}>
-                        <Text style={{color: '#FFF', fontSize: 18}}>{"Welcome,"}</Text>
-                        <Text style={{color: '#FFF', fontSize: 27}}>{name}</Text>
+                        <Text style={{ color: '#FFF', fontSize: 18 }}>{"Welcome,"}</Text>
+                        <Text style={{ color: '#FFF', fontSize: 27 }}>{name}</Text>
                     </View>
                 </View>
                 <View style={styles.balance}>
                     <View style={styles.textIcon}>
-                        <Text style={{color: '#FFF', fontSize: 18}}>Balance:</Text>
+                        <Text style={{ color: '#FFF', fontSize: 18 }}>Balance:</Text>
                         <TouchableOpacity style={styles.eye} onPress={() => setShowBalance(!showBalance)}>
                             <Ionicons name={showBalance ? 'eye' : 'eye-off-outline'}
                                 size={25} color='#FFF' />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.value}>
-                        <Text style={{color: '#FFF', fontSize: 27}}>{coin}</Text>
-                        <View>{showBalance ? <Text style={{color: '#FFF', fontSize: 27}}>{balance}</Text> : <Text style={{color: '#FFF', fontSize: 27}}>{"--------"}</Text>}</View>
+                        <Text style={{ color: '#FFF', fontSize: 27 }}>{coin}</Text>
+                        <View>{showBalance ? <Text style={{ color: '#FFF', fontSize: 27 }}>{balance}</Text> : <Text style={{ color: '#FFF', fontSize: 27 }}>{"--------"}</Text>}</View>
                     </View>
                 </View>
             </View>
@@ -71,7 +73,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         margin: 2,
         padding: 0
-        
+
     },
     balance: {
         borderBottomColor: '#CCC',
