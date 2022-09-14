@@ -1,6 +1,5 @@
 import React from "react";
-import { TouchableOpacity, Text } from "react-native-gesture-handler";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
 import Home from "./screens/Home";

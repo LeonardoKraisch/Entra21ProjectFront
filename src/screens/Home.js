@@ -1,18 +1,24 @@
-import React, { useState } from "react";
-import { View, Image, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions } from 'react-native'
+import React from "react";
+import { View, StyleSheet, FlatList } from 'react-native'
 import Header from "../components/Header";
+import CustomWallet from "../components/CustomWallet";
+import MainWallet from "../components/MainWallet";
 
 export default props => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-
+    const wallets = [1, 2, 3, 4, 5, 6, 7, 8]
     return (
         <View style={styles.containter}>
             <Header navigation={props.navigation} />
             <View style={styles.body}>
-                <Text>
-                    Home
-                </Text>
+                <View style={styles.mainContainer}>
+                    <MainWallet />
+                </View>
+                <FlatList 
+                    numColumns={2}
+                    width='97%'
+                    data={wallets} 
+                    renderItem={(item) => (<CustomWallet/>)}
+                    />
             </View>
         </View>
     )
@@ -28,6 +34,16 @@ const styles = StyleSheet.create({
     body: {
         flex: 1,
         backgroundColor: '#3C3C3C',
-        width: '100%'
-    }
+        width: '100%',
+        height: '100%',
+        alignItems: 'center'
+    },
+    mainContainer: {
+        margin: 10,
+        width: '100%',
+        height: '30%',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+
 })
