@@ -1,10 +1,26 @@
 import React, { useState } from "react";
 import { View, Image, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
 import icon from '../../assets/icon.png'
+import JWT from 'expo-jwt'
 
 export default props => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+
+    const login = async () => {
+        
+        const token = await JWT.encode({email, password}, 'segredo')
+        fetch("https://e21project-be.herokuapp.com/user/login",
+            {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json', 'content-Type': 'application/json'
+                },
+                body: JSON.stringify({token})
+            }).then(state => state.json())
+            .then(result => console.log(result))
+    }
 
     return (
         <View style={styles.containter}>
@@ -27,14 +43,18 @@ export default props => {
                     value={password}
                     secureTextEntry={true}
                 />
+
+
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={() => login({ email, password })}>
+                    onPress={login}>
                     <Text style={styles.buttonText}>Sign In</Text>
                 </TouchableOpacity>
+
+
                 <View style={styles.buttonRow}>
                     <TouchableOpacity
-                    style={styles.forgottenPass}
+                        style={styles.forgottenPass}
                         onPress={() => recover({ email })}>
                         <Text style={styles.textRec}>Forgot Password</Text>
                     </TouchableOpacity>

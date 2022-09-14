@@ -12,7 +12,7 @@ export default props => {
     const [confPassword, setConfPassword] = useState('')
 
     const signUp = async () => {
-        var token = await JWT.sign({
+        var token = await JWT.encode({
             userName: name,
             userPhone: phone,
             userEmail: email,
