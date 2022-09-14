@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Image, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
+import Toast from 'react-native-toast-message'
 
 export default props => {
     const [name, setName] = useState('')
@@ -7,6 +8,64 @@ export default props => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confPassword, setConfPassword] = useState('')
+
+    const signUp = () => {
+        fetch("https://e21project-be.herokuapp.com/user/signUp",
+            {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json', 'content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userName: name,
+                    userPhone: phone,
+                    userEmail: email,
+                    userPasswd: password,
+                })
+            })
+    }
+
+    const validation = () => {
+        if (name.replace(" ", "") == "") {
+            Toast.show({
+                type: 'info',
+                text1: 'Nome Invalido',
+                text2: 'Informe um nome valido'
+            })
+        } else if (phone.replace(" ", "") == "") {
+            Toast.show({
+                type: 'info',
+                text1: 'Telefone Invalido',
+                text2: 'Informe um telefone valido'
+            })
+        } else if (email.replace(" ", "") == "") {
+            Toast.show({
+                type: 'info',
+                text1: 'Email Invalido',
+                text2: 'Informe um email valido'
+            })
+        } else if (password.replace(" ", "") == "") {
+            Toast.show({
+                type: 'info',
+                text1: 'Senha Invalido',
+                text2: 'Informe uma senha valida'
+            })
+        } else if (confPassword.replace(" ", "") == "") {
+            Toast.show({
+                type: 'info',
+                text1: 'Senha de confirmação Invalido',
+                text2: 'Informe uma senha de fonrimação valida'
+            })
+        } else if (confPassword != password) {
+            Toast.show({
+                type: 'info',
+                text1: 'Senha de confirmação diferente',
+                text2: 'A senha de confirmação não é igual'
+            })
+        } else {
+            signUp()
+        }
+    }
 
     return (
         <View style={styles.containter}>
@@ -47,7 +106,7 @@ export default props => {
             />
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => login({ email, password })}>
+                onPress={validation}>
                 <Text style={styles.buttonText}>Sign In</Text>
             </TouchableOpacity>
         </View>
