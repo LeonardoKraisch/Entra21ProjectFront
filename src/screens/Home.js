@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Image, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Image, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions } from 'react-native'
 import Header from "../components/Header";
 
 export default props => {
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
-        flex: 1
+        flex: 1,
     },
     body: {
         flex: 1,
