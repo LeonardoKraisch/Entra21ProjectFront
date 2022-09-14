@@ -21,7 +21,7 @@ export default props => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        width: '46%',
+        width: 180,
         backgroundColor: '#333',
         justifyContent: "flex-end",
         position: 'absolute',
