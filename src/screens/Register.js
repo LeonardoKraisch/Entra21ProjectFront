@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, Image, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
 import Toast from 'react-native-toast-message'
+import { TextInputMask } from 'react-native-masked-text'
+import * as jwt from 'jsonwebtoken'
 
 export default props => {
     const [name, setName] = useState('')
@@ -9,19 +11,22 @@ export default props => {
     const [password, setPassword] = useState('')
     const [confPassword, setConfPassword] = useState('')
 
-    const signUp = () => {
+    const signUp = async () => {
+        var token = await jwt.sign({
+            userName: name,
+            userPhone: phone,
+            userEmail: email,
+            userPasswd: password,
+        }, 'segredo');
+        console.log(token);
+        
         fetch("https://e21project-be.herokuapp.com/user/signUp",
             {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json', 'content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    userName: name,
-                    userPhone: phone,
-                    userEmail: email,
-                    userPasswd: password,
-                })
+                body: JSON.stringify({token})
             })
     }
 
@@ -76,8 +81,9 @@ export default props => {
                 onChangeText={setName}
                 value={name}
             />
-            <TextInput
+            <TextInputMask
                 style={styles.input}
+                type={'cel-phone'}
                 placeholder="Phone Number"
                 onChangeText={setPhone}
                 value={phone}
