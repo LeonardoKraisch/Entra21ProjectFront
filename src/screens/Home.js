@@ -15,7 +15,7 @@ export default props => {
                 <View style={styles.mainContainer}>
                     <MainWallet />
                 </View>
-                <FlatList style={{marginBottom: 10}}
+                <FlatList
                     numColumns={2}
                     width='97%'
                     data={wallets}
