@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Image, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
 import Toast from 'react-native-toast-message'
 import { TextInputMask } from 'react-native-masked-text'
-import * as jwt from 'jsonwebtoken'
+import JWT from 'expo-jwt'
 
 export default props => {
     const [name, setName] = useState('')
@@ -12,7 +12,7 @@ export default props => {
     const [confPassword, setConfPassword] = useState('')
 
     const signUp = async () => {
-        var token = await jwt.sign({
+        var token = await JWT.sign({
             userName: name,
             userPhone: phone,
             userEmail: email,
