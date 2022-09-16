@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Image, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
 import Toast from 'react-native-toast-message'
 import { TextInputMask } from 'react-native-masked-text'
 

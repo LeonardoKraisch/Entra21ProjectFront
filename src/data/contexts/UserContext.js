@@ -40,6 +40,39 @@ export const UserProvider = ({ children }) => {
                     type: 'info',
                     text1: 'Erro ao registrar',
                 }))
+        },
+        signIn: async (email, password) => {
+
+            const token = await JWT.encode({ email, password }, 'segredo')
+            fetch("https://e21project-be.herokuapp.com/user/login",
+                {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json', 'content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ token })
+                }).then(state => state.json())
+                .then(result => {
+                    if (result.logged) {
+                        Toast.show({
+                            type: 'info',
+                            text1: 'Credenciais Validadas',
+                            text2: 'As credeciais foram Validadas'
+                        })
+                        setEmail(email)
+                    }
+                    else {
+                        Toast.show({
+                            type: 'info',
+                            text1: 'Credenciais Invalidas',
+                            text2: 'As credeciais informadas não correspondem'
+                        })
+                    }
+                })
+        },
+        
+        logOut: function () {
+            setEmail('')
         }
     }
 

@@ -1,46 +1,19 @@
 import React, { useState } from "react";
-import { View, Image, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
 import Toast from 'react-native-toast-message'
-import icon from '../../assets/icon.png'
 import JWT from 'expo-jwt'
+import useUser from "../data/hooks/useUser";
 
 export default ({ navigation }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-
-    const login = async () => {
-
-        const token = await JWT.encode({ email, password }, 'segredo')
-        fetch("https://e21project-be.herokuapp.com/user/login",
-            {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json', 'content-Type': 'application/json'
-                },
-                body: JSON.stringify({ token })
-            }).then(state => state.json())
-            .then(result => {
-                if (result.logged)
-                    Toast.show({
-                        type: 'info',
-                        text1: 'Credenciais Validadas',
-                        text2: 'As credeciais foram Validadas'
-                    })
-                else {
-                    Toast.show({
-                        type: 'info',
-                        text1: 'Credenciais Invalidas',
-                        text2: 'As credeciais informadas não correspondem'
-                    })
-                }
-            })
-    }
+    const { signIn } = useUser()
 
     return (
         <View style={styles.containter}>
             <View style={styles.animation}>
-                {/* <Image style={styles.image} source={icon} /> */}
+            
             </View>
             <View style={styles.login}>
                 <Text style={styles.title}>Sign In</Text>
@@ -62,7 +35,7 @@ export default ({ navigation }) => {
 
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={login}>
+                    onPress={() => signIn(email, password)}>
                     <Text style={styles.buttonText}>Sign In</Text>
                 </TouchableOpacity>
 
