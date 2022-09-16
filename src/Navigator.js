@@ -7,12 +7,14 @@ import Home from "./screens/Home";
 import Login from "./screens/Login";
 import Register from "./screens/Register"
 
+import useUser from "./data/hooks/useUser";
+
 const Drawer = createDrawerNavigator()
 const Stack = createNativeStackNavigator()
 
 export default props => {
 
-    const [email, setEmail] = useState('')
+    const { email } = useUser()
 
     const Auth = () => (
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
