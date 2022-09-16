@@ -4,15 +4,19 @@ import Navigator from './src/Navigator';
 import Login from './src/screens/Login';
 import Register from './src/screens/Register';
 import Toast from 'react-native-toast-message'
+import { UserProvider } from './src/data/contexts/UserContext';
+
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
-      {/* <Login /> */}
-      {/* <Register /> */}
-      <Navigator />
-      <Toast/>
-    </SafeAreaView>
+    <UserProvider>
+      <SafeAreaView style={styles.container}>
+        {/* <Login /> */}
+        {/* <Register /> */}
+        <Navigator />
+        <Toast />
+      </SafeAreaView>
+    </UserProvider>
   );
 }
 

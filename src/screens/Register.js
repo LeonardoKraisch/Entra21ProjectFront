@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { View, Image, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
 import Toast from 'react-native-toast-message'
 import { TextInputMask } from 'react-native-masked-text'
-import JWT from 'expo-jwt'
+
+import useUser from '../data/hooks/useUser'  
 
 export default props => {
     const [name, setName] = useState('')
@@ -11,24 +12,7 @@ export default props => {
     const [password, setPassword] = useState('')
     const [confPassword, setConfPassword] = useState('')
 
-    const signUp = async () => {
-        var token = await JWT.encode({
-            userName: name,
-            userPhone: phone,
-            userEmail: email,
-            userPasswd: password,
-        }, 'segredo');
-        console.log(token);
-        
-        fetch("https://e21project-be.herokuapp.com/user/signUp",
-            {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json', 'content-Type': 'application/json'
-                },
-                body: JSON.stringify({token})
-            })
-    }
+    const { signUp } = useUser()
 
     const validation = () => {
         if (name.replace(" ", "") == "") {
@@ -68,7 +52,7 @@ export default props => {
                 text2: 'A senha de confirmação não é igual'
             })
         } else {
-            signUp()
+            signUp({name, phone, email, password})
         }
     }
 

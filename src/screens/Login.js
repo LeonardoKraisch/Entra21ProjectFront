@@ -4,7 +4,7 @@ import Toast from 'react-native-toast-message'
 import icon from '../../assets/icon.png'
 import JWT from 'expo-jwt'
 
-export default props => {
+export default ({ navigation }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -28,9 +28,10 @@ export default props => {
                         text2: 'As credeciais foram Validadas'
                     })
                 else {
-                    Toast.show({ type: 'info',
-                    text1: 'Credenciais Invalidas',
-                    text2: 'As credeciais informadas não correspondem'
+                    Toast.show({
+                        type: 'info',
+                        text1: 'Credenciais Invalidas',
+                        text2: 'As credeciais informadas não correspondem'
                     })
                 }
             })
@@ -74,7 +75,7 @@ export default props => {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.signUp}
-                        onPress={() => register({ email })}>
+                        onPress={() => navigation.navigate("Register")}>
                         <Text style={styles.textUp}>New here?</Text>
                     </TouchableOpacity>
                 </View>
