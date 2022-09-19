@@ -1,14 +1,14 @@
 import { useState, createContext } from "react";
 import JWT from 'expo-jwt'
 import Toast from 'react-native-toast-message'
+import axios from "axios";
 
 const UserContext = createContext({})
-
 
 export const UserProvider = ({ children }) => {
     const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
-    const [email, setEmail] = useState('')
+    const [email, setEmail] = useState('leonardokraisch@gmail.com')
     const [userCode, setUserCode] = useState('')
 
     const userInternalContext = {
@@ -17,70 +17,83 @@ export const UserProvider = ({ children }) => {
         email,
         userCode,
         signUp: async user => {
-            var token = await JWT.encode({
+            var token = JWT.encode({
                 userName: user.name,
                 userPhone: user.phone,
                 userEmail: user.email,
                 userPasswd: user.password,
             }, 'segredo');
-
-            fetch("https://e21project-be.herokuapp.com/user/signUp",
-                {
-                    method: 'POST',
-                    headers: {
-                        Accept: 'application/json', 'content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ token })
-                })
-                .then(() => Toast.show({
-                    type: 'info',
-                    text1: 'Registro confirmado',
-                }))
-                .catch(() => Toast.show({
+            try {
+                const newUser = await axios.post("/user/signUp", { token })
+                if (newUser.data.registered) {
+                    setEmail(user.email)
+                    setName(user.name)
+                    setPhone(user.phone)
+                    setUserCode(newUser.data.userCode)
+                    Toast.show({
+                        type: 'info',
+                        text1: 'Registro confirmado',
+                    })
+                }
+            } catch (err) {
+                Toast.show({
                     type: 'info',
                     text1: 'Erro ao registrar',
-                }))
+                    text2: err.message
+                })
+            }
         },
+
         signIn: async (email, password) => {
 
-            const token = await JWT.encode({ email, password }, 'segredo')
-            fetch("https://e21project-be.herokuapp.com/user/login",
-                {
-                    method: 'POST',
-                    headers: {
-                        Accept: 'application/json', 'content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ token })
-                }).then(state => state.json())
-                .then(result => {
-                    if (result.logged) {
-                        Toast.show({
-                            type: 'info',
-                            text1: 'Credenciais Validadas',
-                            text2: 'As credeciais foram Validadas'
-                        })
-                        setEmail(email)
-                    }
-                    else {
-                        Toast.show({
-                            type: 'info',
-                            text1: 'Credenciais Invalidas',
-                            text2: 'As credeciais informadas não correspondem'
-                        })
-                    }
-                })
-        },
-        
-        logOut: function () {
-            setEmail('')
-        }
-    }
+            const token = JWT.encode({ email, password }, 'segredo')
 
-    return (
-        <UserContext.Provider value={userInternalContext}>
-            {children}
-        </UserContext.Provider>
-    )
+            try {
+                const userConnect = await axios.post("/user/login", { token })
+                // const resToken = JWT.decode(userConnect.data.token, 'segredo')
+                console.log(userConnect.data.token)
+                // if (resToken.logged) {
+
+                //     Toast.show({
+                //         type: 'info',
+                //         text1: 'Credenciais Validadas',
+                //         text2: 'As credeciais foram Validadas'
+                //     })
+
+                //     setName(resToken.user.userName)
+                //     setPhone(resToken.user.userPhone)
+                //     setUserCode(resToken.user.userCode)
+                //     setEmail(email)
+
+                // } else {
+                //     Toast.show({
+                //         type: 'info',
+                //         text1: 'Credenciais Invalidas',
+                //         text2: 'As credeciais informadas não correspondem'
+                //     })
+                // }
+
+            } catch (err) {
+                Toast.show({
+                    type: 'info',
+                    text1: 'Erro de conexão',
+                    text2: err.message
+                })
+            }
+        },
+            logOut: function () {
+                setEmail('')
+                setName('')
+                setPhone('')
+                setUserCode('')
+            }
+        }
+
+return(
+    <UserContext.Provider value={ userInternalContext } >
+        { children }
+    </UserContext.Provider >
+)
 }
 
 export default UserContext

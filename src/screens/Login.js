@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
-import Toast from 'react-native-toast-message'
-import JWT from 'expo-jwt'
 import useUser from "../data/hooks/useUser";
 
-export default ({ navigation }) => {
+export default props => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -48,7 +46,7 @@ export default ({ navigation }) => {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.signUp}
-                        onPress={() => navigation.navigate("Register")}>
+                        onPress={() => props.navigation.navigate("Register")}>
                         <Text style={styles.textUp}>New here?</Text>
                     </TouchableOpacity>
                 </View>

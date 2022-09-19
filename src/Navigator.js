@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
+import { StyleSheet, View, Text } from "react-native";
+import { Gravatar } from "react-native-gravatar";
 import { NavigationContainer } from "@react-navigation/native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Home from "./screens/Home";
@@ -14,7 +16,7 @@ const Stack = createNativeStackNavigator()
 
 export default props => {
 
-    const { email } = useUser()
+    const { email, name, logOut } = useUser()
 
     const Auth = () => (
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
@@ -25,32 +27,76 @@ export default props => {
 
     const AuthOrHome = () => (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-           {email ? 
-                <Stack.Screen name="Home" component={Home} /> 
-                    :
+            {email ?
+                <Stack.Screen name="Main" component={Home} />
+                :
                 <Stack.Screen name="Auth" component={Auth} />
-           } 
+            }
         </Stack.Navigator>
     )
 
+
+    const menuConfig = {
+        headerShown: false,
+        drawerStyle: {
+            backgroundColor: '#32779E'
+        },
+        drawerItemStyle: {
+            height: 60,
+            backgroundColor: '#34669E',
+        },
+    }
+
     return (
         <NavigationContainer>
-            <Drawer.Navigator screenOptions={{
-                headerShown: false,
-                drawerStyle: {
-                    backgroundColor: '#32779E'
-                },
-                drawerItemStyle: {
-                    height: 60,
-                    backgroundColor: '#34669E',
-                },
-
-            }} initialRouteName="AuthOrHome" >
+            <Drawer.Navigator
+                drawerContent={props => {
+                    return (
+                        <DrawerContentScrollView {...props}>
+                            <View style={styles.userInfo}>
+                                <Gravatar options={{ email, secure: true }}
+                                    style={styles.avatar} />
+                                <View style={styles.texts}>
+                                    <Text style={{ color: '#FFF', fontSize: 18 }}>{"Welcome,"}</Text>
+                                    <Text style={{ color: '#FFF', fontSize: 27 }}>{name}</Text>
+                                </View>
+                            </View>
+                            <DrawerItemList {...props} />
+                            <DrawerItem
+                                label="Logout"
+                                onPress={() => {
+                                    logOut()
+                                    props.navigation.closeDrawer()
+                                }}
+                            />
+                        </DrawerContentScrollView>
+                    )
+                }
+                }
+                screenOptions={menuConfig} initialRouteName="AuthOrHome" >
                 <Drawer.Screen
-                    name="AuthOrHome"
+                    name="Home"
                     component={AuthOrHome} />
             </Drawer.Navigator>
         </NavigationContainer>
     )
 }
 
+
+const styles = StyleSheet.create({
+    userInfo: {
+        flexDirection: 'row',
+        marginVertical: 20
+    },
+    avatar: {
+        margin: 5,
+        height: 60,
+        width: 60,
+        borderRadius: 30
+    },
+    texts: {
+        justifyContent: 'flex-end',
+        margin: 2,
+        padding: 0
+    },
+})

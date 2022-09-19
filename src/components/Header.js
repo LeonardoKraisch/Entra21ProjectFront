@@ -5,29 +5,18 @@ import {
     View,
     TouchableOpacity
 } from 'react-native'
-import { Gravatar } from "react-native-gravatar";
 import { Ionicons } from "@expo/vector-icons";
 import MenuButton from "./MenuButton";
 
 export default props => {
-    const [name, setName] = useState('Leonardo')
-    const [email, setEmail] = useState('leonardokraisch@outlook.com')
     const [balance, setBalance] = useState('2.000,00')
     const [coin, setCoin] = useState('R$')
     const [showBalance, setShowBalance] = useState(false)
 
     return (
         <View style={styles.container}>
-            <MenuButton navigation={props.navigation} />
             <View style={styles.rowContainer}>
-                <View style={styles.userInfo}>
-                    <Gravatar options={{ email, secure: true }}
-                        style={styles.avatar} />
-                    <View style={styles.texts}>
-                        <Text style={{ color: '#FFF', fontSize: 18 }}>{"Welcome,"}</Text>
-                        <Text style={{ color: '#FFF', fontSize: 27 }}>{name}</Text>
-                    </View>
-                </View>
+                <MenuButton {...props} />
                 <View style={styles.balance}>
                     <View style={styles.textIcon}>
                         <Text style={{ color: '#FFF', fontSize: 18 }}>Balance:</Text>
@@ -59,25 +48,10 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingBottom: 10
     },
-    userInfo: {
-        flexDirection: 'row',
-    },
-    avatar: {
-        margin: 5,
-        height: 60,
-        width: 60,
-        borderRadius: 30
-    },
-    texts: {
-        justifyContent: 'flex-end',
-        margin: 2,
-        padding: 0
-
-    },
     balance: {
         borderBottomColor: '#CCC',
         borderBottomWidth: 2,
-        width: '45%',
+        width: '75%',
         justifyContent: 'flex-end',
         paddingHorizontal: 7
     },

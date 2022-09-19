@@ -13,6 +13,7 @@ export default props => {
                 <Entypo name="circle-with-minus" size={30} color='#c63222'/>
                 <Text style={{color: '#c63222', fontSize: 25}}>$</Text>
             </TouchableOpacity>
+            
         </View>
     )
 }

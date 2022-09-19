@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import Toast from 'react-native-toast-message'
 import { TextInputMask } from 'react-native-masked-text'
 
-import useUser from '../data/hooks/useUser'  
+import useUser from '../data/hooks/useUser'
 
 export default props => {
     const [name, setName] = useState('')
@@ -18,32 +18,32 @@ export default props => {
         if (name.replace(" ", "") == "") {
             Toast.show({
                 type: 'info',
-                text1: 'Nome Invalido',
-                text2: 'Informe um nome valido'
+                text1: 'Nome Inválido',
+                text2: 'Informe um nome válido'
             })
         } else if (phone.replace(" ", "") == "") {
             Toast.show({
                 type: 'info',
                 text1: 'Telefone Invalido',
-                text2: 'Informe um telefone valido'
+                text2: 'Informe um telefone válido'
             })
-        } else if (email.replace(" ", "") == "") {
+        } else if (email.replace(" ", "") == "" || !email.includes('@')) {
             Toast.show({
                 type: 'info',
-                text1: 'Email Invalido',
+                text1: 'Email Inválido',
                 text2: 'Informe um email valido'
             })
         } else if (password.replace(" ", "") == "") {
             Toast.show({
                 type: 'info',
-                text1: 'Senha Invalido',
-                text2: 'Informe uma senha valida'
+                text1: 'Senha Inválida',
+                text2: 'Informe uma senha válida'
             })
         } else if (confPassword.replace(" ", "") == "") {
             Toast.show({
                 type: 'info',
-                text1: 'Senha de confirmação Invalido',
-                text2: 'Informe uma senha de fonrimação valida'
+                text1: 'Senha de confirmação Inválida',
+                text2: 'Informe uma senha de confirmação válida'
             })
         } else if (confPassword != password) {
             Toast.show({
@@ -52,7 +52,7 @@ export default props => {
                 text2: 'A senha de confirmação não é igual'
             })
         } else {
-            signUp({name, phone, email, password})
+            signUp({ name, phone, email, password })
         }
     }
 
@@ -99,6 +99,13 @@ export default props => {
                 onPress={validation}>
                 <Text style={styles.buttonText}>Sign In</Text>
             </TouchableOpacity>
+            <View style={styles.buttonRow}>
+                <TouchableOpacity
+                    style={styles.button2}
+                    onPress={() => props.navigation.goBack()}>
+                    <Text style={styles.textUp}>Already have an account</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }

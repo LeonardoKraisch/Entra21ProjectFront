@@ -6,11 +6,11 @@ import MainWallet from "../components/MainWallet";
 import AddButtons from "../components/AddButtons";
 
 export default props => {
-    const wallets = [1, 2, 3, 4, 5, 6, 7, 8]
+    const wallets = [1, 2]
 
     return (
         <View style={styles.containter}>
-            <Header navigation={props.navigation} />
+            <Header {...props} />
             <View style={styles.body}>
                 <View style={styles.mainContainer}>
                     <MainWallet />
