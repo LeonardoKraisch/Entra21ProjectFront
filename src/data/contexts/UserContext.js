@@ -8,7 +8,7 @@ const UserContext = createContext({})
 export const UserProvider = ({ children }) => {
     const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
-    const [email, setEmail] = useState('leonardokraisch@gmail.com')
+    const [email, setEmail] = useState('')
     const [userCode, setUserCode] = useState('')
 
     const userInternalContext = {
@@ -50,28 +50,26 @@ export const UserProvider = ({ children }) => {
 
             try {
                 const userConnect = await axios.post("/user/login", { token })
-                // const resToken = JWT.decode(userConnect.data.token, 'segredo')
-                console.log(userConnect.data.token)
-                // if (resToken.logged) {
+                if (userConnect.data.logged) {
 
-                //     Toast.show({
-                //         type: 'info',
-                //         text1: 'Credenciais Validadas',
-                //         text2: 'As credeciais foram Validadas'
-                //     })
+                    Toast.show({
+                        type: 'info',
+                        text1: 'Credenciais Validadas',
+                        text2: 'As credeciais foram Validadas'
+                    })
 
-                //     setName(resToken.user.userName)
-                //     setPhone(resToken.user.userPhone)
-                //     setUserCode(resToken.user.userCode)
-                //     setEmail(email)
+                    setName(userConnect.data.user.userName)
+                    setPhone(userConnect.data.user.userPhone)
+                    setUserCode(userConnect.data.user.userCode)
+                    setEmail(email)
 
-                // } else {
-                //     Toast.show({
-                //         type: 'info',
-                //         text1: 'Credenciais Invalidas',
-                //         text2: 'As credeciais informadas não correspondem'
-                //     })
-                // }
+                } else {
+                    Toast.show({
+                        type: 'info',
+                        text1: 'Credenciais Invalidas',
+                        text2: 'As credeciais informadas não correspondem'
+                    })
+                }
 
             } catch (err) {
                 Toast.show({
