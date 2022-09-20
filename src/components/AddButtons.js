@@ -2,6 +2,8 @@ import { View, TouchableOpacity, Text, StyleSheet, Animated, TextInput } from "r
 import { Entypo } from "@expo/vector-icons";
 import { useState, useRef, useEffect } from "react";
 
+import Inputs from "./Inputs";
+
 export default props => {
 
     const [show, setShow] = useState(false)
@@ -9,53 +11,55 @@ export default props => {
     const RollInView = (props) => {
 
         const rollSideAnim = show ? useRef(new Animated.Value(190)).current : useRef(new Animated.Value(390)).current
-        show ?
-            useEffect(() => {
+        useEffect(() => {
+            show ?
+
                 Animated.timing(
                     rollSideAnim,
                     {
                         toValue: 390,
-                        duration: 700,
+                        duration: 150,
                         useNativeDriver: false
                     }
-                ).start();
-            }, [rollSideAnim])
-            :
-            useEffect(() => {
+                ).start()
+
+                :
+
                 Animated.timing(
                     rollSideAnim,
                     {
                         toValue: 190,
-                        duration: 700,
+                        duration: 150,
                         useNativeDriver: false
                     }
-                ).start();
-            }, [rollSideAnim])
+                ).start()
+
+        }, [show])
+
 
         const rollUpAnim = show ? useRef(new Animated.Value(46)).current : useRef(new Animated.Value(630)).current
-        show ?
-            useEffect(() => {
+        useEffect(() => {
+            show ?
                 Animated.timing(
                     rollUpAnim,
                     {
                         toValue: 630,
-                        duration: 700,
+                        duration: 150,
                         useNativeDriver: false
                     }
-                ).start();
-            }, [rollUpAnim])
-            :
-            useEffect(() => {
+                ).start()
+
+                :
+
                 Animated.timing(
                     rollUpAnim,
                     {
                         toValue: 46,
-                        duration: 700,
+                        duration: 150,
                         useNativeDriver: false
                     }
-                ).start();
-            }, [rollUpAnim])
-
+                ).start()
+        }, [show])
 
         return (
             <Animated.View style={{ ...props.style, width: rollSideAnim, height: rollUpAnim }}>
@@ -69,7 +73,7 @@ export default props => {
             <View style={styles.containerButton}>
                 <TouchableOpacity onPress={() => setShow(true)}
                     style={styles.buttonPlus}>
-                    <Entypo name="circle-with-plus" size={30} color='#32c622' />
+                    <Entypo name="circle-with-plus"  size={30} color='#32c622' />
                     <Text style={{ color: '#32c622', fontSize: 25 }}>$</Text>
                 </TouchableOpacity>
                 <View style={{ backgroundColor: '#333', width: 4 }}></View>
@@ -79,18 +83,14 @@ export default props => {
                 </TouchableOpacity>
             </View>
             {show ?
-                <View style={styles.addInfo}>
-                    <View style={styles.infos}>
-                        <TextInput placeholder="Add to Balance" />
-                    </View>
-                    <TouchableOpacity onPress={() => {
-                        setShow(false)
-                    }} style={styles.buttonClose}>
-                        <Entypo name="circle-with-cross" size={30} color='#c63222' />
+                <View style={{ flexDirection: 'column-reverse', justifyContent: "space-between" }}>
+                    <TouchableOpacity onPress={() => setShow(false)} style={styles.buttonClose}>
+                        <Entypo name="circle-with-cross" size={25} color='#c63222' />
                     </TouchableOpacity>
+                    <Inputs />
                 </View>
                 :
-                null
+                false
             }
         </RollInView >
     )
@@ -98,6 +98,7 @@ export default props => {
 
 const styles = StyleSheet.create({
     container: {
+        maxHeight: '100%',
         backgroundColor: '#333',
         justifyContent: "space-between",
         position: 'absolute',
@@ -108,6 +109,7 @@ const styles = StyleSheet.create({
         borderTopStartRadius: 36,
         borderTopWidth: 3,
         borderLeftWidth: 3,
+        paddingBottom: 1,
         borderColor: '#32779E',
 
     },
@@ -137,12 +139,13 @@ const styles = StyleSheet.create({
         borderColor: '#c63222',
         flexDirection: 'row'
     },
-    addInfo: {
-        backgroundColor: '#333',
-        alignSelf: 'center',
-        justifyContent: "space-between",
-        height: '90%',
-        width: '95%'
-    },
+    buttonClose: {
+        backgroundColor: '#f64232',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 3,
+        borderColor: '#c63222',
+        flexDirection: 'row'
+    }
 
 })
