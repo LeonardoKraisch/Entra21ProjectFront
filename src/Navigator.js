@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
-import { Gravatar } from "react-native-gravatar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -54,8 +53,7 @@ export default props => {
                     return (
                         <DrawerContentScrollView {...props}>
                             <View style={styles.userInfo}>
-                                <Gravatar options={{ email, secure: true }}
-                                    style={styles.avatar} />
+                                
                                 <View style={styles.texts}>
                                     <Text style={{ color: '#FFF', fontSize: 18 }}>{"Welcome,"}</Text>
                                     <Text style={{ color: '#FFF', fontSize: 27 }}>{name}</Text>

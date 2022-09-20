@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, FlatList } from 'react-native'
+import { SafeAreaView, View, StyleSheet, FlatList } from 'react-native'
 import Header from "../components/Header";
 import CustomWallet from "../components/CustomWallet";
 import MainWallet from "../components/MainWallet";
@@ -9,7 +9,7 @@ export default props => {
     const wallets = [1, 2]
 
     return (
-        <View style={styles.containter}>
+        <SafeAreaView style={styles.containter}>
             <Header {...props} />
             <View style={styles.body}>
                 <View style={styles.mainContainer}>
@@ -23,7 +23,7 @@ export default props => {
                 />
                 <AddButtons />
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 
@@ -49,12 +49,5 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderBottomWidth: 3,
         borderBottomColor: '#333'
-    },
-    buttonsContainer: {
-        height: '25%',
-        backgroundColor: '#FFF',
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
     }
 })

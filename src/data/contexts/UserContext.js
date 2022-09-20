@@ -8,7 +8,7 @@ const UserContext = createContext({})
 export const UserProvider = ({ children }) => {
     const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
-    const [email, setEmail] = useState('')
+    const [email, setEmail] = useState('a')
     const [userCode, setUserCode] = useState('')
 
     const userInternalContext = {

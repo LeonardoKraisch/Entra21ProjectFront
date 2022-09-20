@@ -97,7 +97,7 @@ export default props => {
             <TouchableOpacity
                 style={styles.button}
                 onPress={validation}>
-                <Text style={styles.buttonText}>Sign In</Text>
+                <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>
             <View style={styles.buttonRow}>
                 <TouchableOpacity
