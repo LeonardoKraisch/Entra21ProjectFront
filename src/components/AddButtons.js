@@ -8,6 +8,39 @@ export default props => {
 
     const [show, setShow] = useState(false)
 
+    const Buttons = props => {
+        const [pressedPlus, setPressedPlus] = useState(false)
+        const [pressedMinus, setPressedMinus] = useState(false)
+
+        return (
+            <View style={styles.containerButton}>
+                <TouchableOpacity onPress={() => {
+                    if (show == false) {
+                        setShow(true)
+                    }
+                    setPressedPlus(true)
+                    setPressedMinus(false)
+                }}
+                    style={pressedPlus ? styles.pressedPlus : styles.buttonPlus}>
+                    <Entypo name="circle-with-plus" size={30} color='#32c622' />
+                    <Text style={{ color: '#32c622', fontSize: 25 }}>$</Text>
+                </TouchableOpacity>
+                <View style={{ backgroundColor: '#333', width: 4 }}></View>
+                <TouchableOpacity onPress={() => {
+                    if (show == false) {
+                        setShow(true)
+                    }
+                    setPressedPlus(false)
+                    setPressedMinus(true)
+                }}
+                    style={pressedMinus ? styles.pressedMinus : styles.buttonMinus}>
+                    <Entypo name="circle-with-minus" size={30} color='#c63222' />
+                    <Text style={{ color: '#c63222', fontSize: 25 }}>$</Text>
+                </TouchableOpacity>
+            </View>
+        )
+    }
+
     const RollInView = (props) => {
 
         const rollSideAnim = show ? useRef(new Animated.Value(190)).current : useRef(new Animated.Value(390)).current
@@ -70,22 +103,11 @@ export default props => {
 
     return (
         <RollInView style={styles.container}>
-            <View style={styles.containerButton}>
-                <TouchableOpacity onPress={() => setShow(true)}
-                    style={styles.buttonPlus}>
-                    <Entypo name="circle-with-plus"  size={30} color='#32c622' />
-                    <Text style={{ color: '#32c622', fontSize: 25 }}>$</Text>
-                </TouchableOpacity>
-                <View style={{ backgroundColor: '#333', width: 4 }}></View>
-                <TouchableOpacity style={styles.buttonMinus}>
-                    <Entypo name="circle-with-minus" size={30} color='#c63222' />
-                    <Text style={{ color: '#c63222', fontSize: 25 }}>$</Text>
-                </TouchableOpacity>
-            </View>
+            <Buttons />
             {show ?
                 <View style={{ flexDirection: 'column-reverse', justifyContent: "space-between" }}>
                     <TouchableOpacity onPress={() => setShow(false)} style={styles.buttonClose}>
-                        <Entypo name="circle-with-cross" size={25} color='#c63222' />
+                        <Entypo name="circle-with-cross" size={30} color='#c63222' />
                     </TouchableOpacity>
                     <Inputs />
                 </View>
@@ -130,6 +152,16 @@ const styles = StyleSheet.create({
         borderColor: '#32c622',
         flexDirection: 'row'
     },
+    pressedPlus: {
+        backgroundColor: '#34F9b2',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderTopStartRadius: 28,
+        flex: 1,
+        borderWidth: 3,
+        borderColor: '#34F9b2',
+        flexDirection: 'row'
+    },
     buttonMinus: {
         backgroundColor: '#f64232',
         justifyContent: 'center',
@@ -137,6 +169,15 @@ const styles = StyleSheet.create({
         flex: 1,
         borderWidth: 3,
         borderColor: '#c63222',
+        flexDirection: 'row'
+    },
+    pressedMinus: {
+        backgroundColor: '#f64232',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
+        borderWidth: 3,
+        borderColor: '#f64232',
         flexDirection: 'row'
     },
     buttonClose: {
