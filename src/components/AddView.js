@@ -1,28 +1,30 @@
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 
-import useAnimation from '../data/hooks/useAnimation'
+import RollInView from "./RollInView";
+import AddButtons from "./AddButtons"
+import Inputs from "./Inputs";
+import useAnimation from "../data/hooks/useAnimation";
 
 export default props => {
+    const { show, close } = useAnimation()
 
-    const { pressedPlus, pressedMinus, pressPlus, pressMinus } = useAnimation()
     return (
-        <View style={styles.containerButton}>
-            <TouchableOpacity onPress={() => pressPlus()}
-                style={!pressedPlus ? styles.buttonPlus : styles.pressedPlus}>
-                <Entypo name="circle-with-plus" size={30} color='#32c622' />
-                <Text style={{ color: '#32c622', fontSize: 25 }}>$</Text>
-            </TouchableOpacity>
-            <View style={{ backgroundColor: '#333', width: 4 }}></View>
-            <TouchableOpacity onPress={() => pressMinus()}
-                style={!pressedMinus ? styles.buttonMinus : styles.pressedMinus}>
-                <Entypo name="circle-with-minus" size={30} color='#c63222' />
-                <Text style={{ color: '#c63222', fontSize: 25 }}>$</Text>
-            </TouchableOpacity>
-        </View>
+        <RollInView style={styles.container}>
+            <AddButtons />
+            {show ?
+                <View style={{ flexDirection: 'column-reverse', justifyContent: "space-between" }}>
+                    <TouchableOpacity onPress={() => close()} style={styles.buttonClose}>
+                        <Entypo name="circle-with-cross" size={30} color='#c63222' />
+                    </TouchableOpacity>
+                    <Inputs />
+                </View>
+                :
+                false
+            }
+        </RollInView >
     )
 }
-
 
 const styles = StyleSheet.create({
     container: {

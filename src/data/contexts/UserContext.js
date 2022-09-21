@@ -79,19 +79,19 @@ export const UserProvider = ({ children }) => {
                 })
             }
         },
-            logOut: function () {
-                setEmail('')
-                setName('')
-                setPhone('')
-                setUserCode('')
-            }
+        logOut: function () {
+            setEmail('')
+            setName('')
+            setPhone('')
+            setUserCode('')
         }
+    }
 
-return(
-    <UserContext.Provider value={ userInternalContext } >
-        { children }
-    </UserContext.Provider >
-)
+    return (
+        <UserContext.Provider value={userInternalContext}>
+            {children}
+        </UserContext.Provider >
+    )
 }
 
 export default UserContext

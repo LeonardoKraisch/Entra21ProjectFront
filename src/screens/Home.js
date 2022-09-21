@@ -3,7 +3,7 @@ import { SafeAreaView, View, StyleSheet, FlatList } from 'react-native'
 import Header from "../components/Header";
 import CustomWallet from "../components/CustomWallet";
 import MainWallet from "../components/MainWallet";
-import AddButtons from "../components/AddButtons";
+import AddView from "../components/AddView";
 
 export default props => {
     const wallets = [1, 2]
@@ -21,7 +21,7 @@ export default props => {
                     data={wallets}
                     renderItem={(item) => (<CustomWallet />)}
                 />
-                <AddButtons />
+                <AddView />
             </View>
         </SafeAreaView>
     )
