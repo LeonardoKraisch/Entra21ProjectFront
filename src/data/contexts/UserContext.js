@@ -1,30 +1,47 @@
-import { useState, createContext } from "react";
-import JWT from 'expo-jwt'
+import { useState, createContext, useCallback } from "react";
 import Toast from 'react-native-toast-message'
 import axios from "axios";
+import JWT from "expo-jwt";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const UserContext = createContext({})
 
 export const UserProvider = ({ children }) => {
     const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
-    const [email, setEmail] = useState('a')
+    const [email, setEmail] = useState('')
     const [userCode, setUserCode] = useState('')
-
     const userInternalContext = {
         name,
         phone,
         email,
         userCode,
-        signUp: async user => {
-            var token = JWT.encode({
-                userName: user.name,
-                userPhone: user.phone,
-                userEmail: user.email,
-                userPasswd: user.password,
-            }, 'segredo');
+        start: async () => {
+            const userDataJson = await AsyncStorage.getItem('token')
             try {
-                const newUser = await axios.post("/user/signUp", { token })
+                var userData = JSON.parse(userDataJson)
+                const decoded = JWT.decode(userData, "segredo")
+                if (decoded.logged) {
+                setName(decoded.user.userName)
+                setPhone(decoded.user.userPhone)
+                setUserCode(decoded.user.userCode) 
+                setEmail(decoded.user.userPhone)
+                }
+            } catch(e) {
+                await AsyncStorage.removeItem('token')
+                return
+            }
+        },
+        signUp: async user => {
+            try {
+                const newUser = await axios.post("/user/signUp", {
+                    newUser: {
+                        userName: user.name,
+                        userPhone: user.phone,
+                        userEmail: user.email,
+                        userPasswd: user.password
+                    }
+                })
                 if (newUser.data.registered) {
                     setEmail(user.email)
                     setName(user.name)
@@ -45,29 +62,34 @@ export const UserProvider = ({ children }) => {
         },
 
         signIn: async (email, password) => {
-
-            const token = JWT.encode({ email, password }, 'segredo')
-
             try {
-                const userConnect = await axios.post("/user/login", { token })
-                if (userConnect.data.logged) {
+                const userConnect = await axios.post("/user/login", {
+                    user: {
+                        email,
+                        password
+                    }
+                })
+
+                const decoded = JWT.decode(await userConnect.data.token, "segredo")
+                if (decoded.logged) {
+
+                    setName(decoded.user.userName)
+                    setPhone(decoded.user.userPhone)
+                    setUserCode(decoded.user.userCode)
 
                     Toast.show({
                         type: 'info',
-                        text1: 'Credenciais Validadas',
-                        text2: 'As credeciais foram Validadas'
+                        text1: 'Login success',
+                        text2: `Welcome ${name}!`
                     })
-
-                    setName(userConnect.data.user.userName)
-                    setPhone(userConnect.data.user.userPhone)
-                    setUserCode(userConnect.data.user.userCode)
+                    await AsyncStorage.setItem('token', JSON.stringify(userConnect.data.token))
                     setEmail(email)
 
                 } else {
                     Toast.show({
                         type: 'info',
-                        text1: 'Credenciais Invalidas',
-                        text2: 'As credeciais informadas não correspondem'
+                        text1: 'Ivalid Token',
+                        text2: 'Login required'
                     })
                 }
 
@@ -79,11 +101,12 @@ export const UserProvider = ({ children }) => {
                 })
             }
         },
-        logOut: function () {
+        logout: async function () {
             setEmail('')
             setName('')
             setPhone('')
             setUserCode('')
+            await AsyncStorage.removeItem('token')
         }
     }
 

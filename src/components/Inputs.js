@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, StyleSheet, TextInput, Text } from "react-native";
+import { View, StyleSheet, TextInput, Text, TouchableOpacity } from "react-native";
 import { TextInputMask } from "react-native-masked-text";
 import { AntDesign } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
@@ -37,28 +37,28 @@ export default props => {
     const BalancePicker = () => {
         if (pressedPlus) {
             return (
-                <Picker selectedValue={category} onValueChange={setCategory} style={styles.picker}>
-                    <Picker.Item label="Fixed" value="fixed" />
-                    <Picker.Item label="Benefits" value="benefits" />
-                    <Picker.Item label="Comission" value="comission" />
-                    <Picker.Item label="Services" value="services" />
-                    <Picker.Item label="Sales" value="sales" />
-                    <Picker.Item label="Other" value="other" />
+                <Picker dropdownIconColor='#FFF' selectedValue={category} onValueChange={setCategory} style={styles.picker}>
+                    <Picker.Item style={styles.pickerItem} label="Fixed" value="fixed" />
+                    <Picker.Item style={styles.pickerItem} label="Benefits" value="benefits" />
+                    <Picker.Item style={styles.pickerItem} label="Comission" value="comission" />
+                    <Picker.Item style={styles.pickerItem} label="Services" value="services" />
+                    <Picker.Item style={styles.pickerItem} label="Sales" value="sales" />
+                    <Picker.Item style={styles.pickerItem} label="Other" value="other" />
                 </Picker>
             )
         } else {
             return (
-                <Picker selectedValue={category} onValueChange={setCategory} style={styles.picker}>
-                    <Picker.Item label="Food" value="food" />
-                    <Picker.Item label="Car" value="car" />
-                    <Picker.Item label="House" value="house" />
-                    <Picker.Item label="Fun" value="fun" />
-                    <Picker.Item label="Education" value="education" />
-                    <Picker.Item label="Health" value="health" />
-                    <Picker.Item label="Clothes" value="clothes" />
-                    <Picker.Item label="Services" value="services" />
-                    <Picker.Item label="Transportation" value="transportation" />
-                    <Picker.Item label="Other" value="other" />
+                <Picker dropdownIconColor='#FFF' selectedValue={category} onValueChange={setCategory} style={styles.picker}>
+                    <Picker.Item style={styles.pickerItem} label="🍽 Food" value="food" />
+                    <Picker.Item style={styles.pickerItem} label="🚗 Car" value="car" />
+                    <Picker.Item style={styles.pickerItem} label="🏠 House" value="house" />
+                    <Picker.Item style={styles.pickerItem} label="🎡 Fun" value="fun" />
+                    <Picker.Item style={styles.pickerItem} label="📚 Education" value="education" />
+                    <Picker.Item style={styles.pickerItem} label="🩺 Health" value="health" />
+                    <Picker.Item style={styles.pickerItem} label="👕 Clothes" value="clothes" />
+                    <Picker.Item style={styles.pickerItem} label="🛠 Services" value="services" />
+                    <Picker.Item style={styles.pickerItem} label="🚌 Transportation" value="transportation" />
+                    <Picker.Item style={styles.pickerItem} label="💲 Other" value="other" />
                 </Picker>
             )
         }
@@ -73,7 +73,13 @@ export default props => {
                     value={money}
                     keyboardType="numeric" />
                 <TextInput style={styles.input} placeholder="Do you want to input a description?" />
-                <BalancePicker />
+                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'}}>
+                    <Text style={styles.textTitle2}>Select a category:</Text>
+                    <BalancePicker />
+                </View>
+                <TouchableOpacity>
+                    <Text>Add</Text>
+                </TouchableOpacity>
             </View>
         </View>
     )
@@ -102,11 +108,23 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold'
     },
+    textTitle2: {
+        color: '#FFF',
+        fontSize: 15
+    },
     input: {
         backgroundColor: '#FFF',
         borderRadius: 5,
         margin: 10,
         height: 35
     },
-
+    picker: {
+        color: '#FFF',
+        width: '50%'
+    },
+    pickerItem: {
+        backgroundColor: '#333',
+        color: '#FFF',
+        fontSize: 20,
+    }
 })

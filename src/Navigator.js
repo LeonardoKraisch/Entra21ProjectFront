@@ -3,6 +3,7 @@ import { StyleSheet, View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Home from "./screens/Home";
 import Login from "./screens/Login";
@@ -15,7 +16,8 @@ const Stack = createNativeStackNavigator()
 
 export default props => {
 
-    const { email, name, logOut } = useUser()
+    const { email, name, logout, start } = useUser()
+    const userDataJson = AsyncStorage.getItem('token')
 
     const Auth = () => (
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
@@ -24,15 +26,21 @@ export default props => {
         </Stack.Navigator>
     )
 
-    const AuthOrHome = () => (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-            {email ?
-                <Stack.Screen name="Main" component={Home} />
-                :
-                <Stack.Screen name="Auth" component={Auth} />
-            }
-        </Stack.Navigator>
-    )
+    const AuthOrHome = () => {
+        if (userDataJson !== null) {
+            start()
+        }
+        return (
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+                {email ?
+                    <Stack.Screen name="Main" component={Home} />
+                    :
+                    <Stack.Screen name="Auth" component={Auth} />
+                }
+            </Stack.Navigator>
+        )
+    }
+
 
 
     const menuConfig = {
@@ -53,7 +61,7 @@ export default props => {
                     return (
                         <DrawerContentScrollView {...props}>
                             <View style={styles.userInfo}>
-                                
+
                                 <View style={styles.texts}>
                                     <Text style={{ color: '#FFF', fontSize: 18 }}>{"Welcome,"}</Text>
                                     <Text style={{ color: '#FFF', fontSize: 27 }}>{name}</Text>
@@ -63,7 +71,7 @@ export default props => {
                             <DrawerItem
                                 label="Logout"
                                 onPress={() => {
-                                    logOut()
+                                    logout()
                                     props.navigation.closeDrawer()
                                 }}
                             />
