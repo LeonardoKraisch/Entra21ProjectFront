@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         borderTopStartRadius: 40
     },
     buttonPlus: {
-        backgroundColor: '#34F9b2',
+        backgroundColor: '#71E9a1',
         justifyContent: 'center',
         alignItems: 'center',
         borderTopStartRadius: 28,
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     buttonMinus: {
-        backgroundColor: '#f64232',
+        backgroundColor: '#f25545',
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1,
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         color: '#c63222'
     },
     iconPressed: {
-        color: '#FFF5'
+        color: '#FFF'
     },
     buttonClose: {
         backgroundColor: '#f64232',
