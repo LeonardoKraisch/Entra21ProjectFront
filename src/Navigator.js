@@ -17,19 +17,16 @@ const Stack = createNativeStackNavigator()
 export default props => {
 
     const { email, name, logout, start } = useUser()
-    const userDataJson = AsyncStorage.getItem('token')
-
+    
     const Auth = () => (
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />
         </Stack.Navigator>
     )
-
+    
     const AuthOrHome = () => {
-        if (userDataJson !== null) {
-            start()
-        }
+        start()
         return (
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 {email ?

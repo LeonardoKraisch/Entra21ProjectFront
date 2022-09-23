@@ -18,17 +18,26 @@ export const UserProvider = ({ children }) => {
         userCode,
         start: async () => {
             const userDataJson = await AsyncStorage.getItem('token')
-            try {
-                var userData = JSON.parse(userDataJson)
-                const decoded = JWT.decode(userData, "segredo")
-                if (decoded.logged) {
-                setName(decoded.user.userName)
-                setPhone(decoded.user.userPhone)
-                setUserCode(decoded.user.userCode) 
-                setEmail(decoded.user.userPhone)
+
+            if (userDataJson !== null) {
+                try {
+                    var userData = JSON.parse(userDataJson)
+                    const decoded = JWT.decode(userData, "segredo", { timeSkew: 300 })
+                    if (decoded.logged) {
+                        setName(decoded.user.userName)
+                        setPhone(decoded.user.userPhone)
+                        setUserCode(decoded.user.userCode)
+                        setEmail(decoded.user.userPhone)
+                    } else {
+                        await AsyncStorage.removeItem('token')
+                        return
+                    }
+                } catch (e) {
+                    console.log(e)
+                    await AsyncStorage.removeItem('token')
+                    return
                 }
-            } catch(e) {
-                await AsyncStorage.removeItem('token')
+            } else {
                 return
             }
         },
@@ -70,20 +79,20 @@ export const UserProvider = ({ children }) => {
                     }
                 })
 
-                const decoded = JWT.decode(await userConnect.data.token, "segredo")
+                const decoded = JWT.decode(await userConnect.data.token, "segredo", { timeSkew: 300 })
                 if (decoded.logged) {
 
                     setName(decoded.user.userName)
                     setPhone(decoded.user.userPhone)
                     setUserCode(decoded.user.userCode)
+                    await AsyncStorage.setItem('token', JSON.stringify(userConnect.data.token))
+                    setEmail(email)
 
                     Toast.show({
                         type: 'info',
                         text1: 'Login success',
-                        text2: `Welcome ${name}!`
+                        text2: 'Welcome!'
                     })
-                    await AsyncStorage.setItem('token', JSON.stringify(userConnect.data.token))
-                    setEmail(email)
 
                 } else {
                     Toast.show({
