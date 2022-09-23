@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { View, StyleSheet, TextInput, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TextInput, Text, TouchableOpacity, Platform } from "react-native";
 import { TextInputMask } from "react-native-masked-text";
 import { AntDesign } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
+
+import moment from 'moment'
+import DateTimePicker from '@react-native-community/datetimepicker'
 
 import useAnimation from '../data/hooks/useAnimation'
 
@@ -15,8 +18,8 @@ export default props => {
     const [payments, setPayments] = useState('1')
     const [totalValue, setTotalValue] = useState(true)
     const [times, setTimes] = useState(1)
-    const [pending, setPending] = useState(true)
-    const [date, setDate] = useState()
+    const [pending, setPending] = useState(false)
+    const [date, setDate] = useState(new Date())
     const [showDatePicker, setShowDatePicker] = useState(false)
 
     const Message = () => {
@@ -38,6 +41,30 @@ export default props => {
                     <AntDesign name="caretdown" size={30} color="#FFF" />
                 </View>
             )
+        }
+    }
+    const DatePicker = () => {
+        let datePicker = <DateTimePicker value={date} onChange={(_, date) => {
+            setDate(date)
+            setShowDatePicker(false)
+        }} mode='date' />
+
+        const dateSring = moment(date).format('ddd, D [/] MMMM [/] YYYY')
+
+        if(Platform.OS === 'android') {
+            datePicker = (
+                <View style={styles.datePicker}>
+                    <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+                        <Text style={styles.date}>
+                            {dateSring}
+                        </Text>
+                    </TouchableOpacity>
+                    {showDatePicker && datePicker}
+                </View>
+            )
+        }
+        if(pending) {
+            return datePicker
         }
     }
 
@@ -124,13 +151,14 @@ export default props => {
                     <BalancePicker />
                 </View>
                 <View style={styles.buttons}>
-                    <TouchableOpacity style={styles.buttonInput} onPress={() => setPending(true)}>
-                        <Text style={[pending ? styles.selected : styles.unselect]}>Paid</Text>
-                    </TouchableOpacity>
                     <TouchableOpacity style={styles.buttonInput} onPress={() => setPending(false)}>
-                        <Text style={[!pending ? styles.selected : styles.unselect]}>Pending</Text>
+                        <Text style={[!pending ? styles.selected : styles.unselect]}>Paid</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.buttonInput} onPress={() => setPending(true)}>
+                        <Text style={[pending ? styles.selected : styles.unselect]}>Pending</Text>
                     </TouchableOpacity>
                 </View>
+                    <DatePicker />
                 <TextInput style={styles.input} placeholder="Do you want to add a description?" />
                 <TouchableOpacity style={styles.send}>
                     <Text style={styles.sendText}>OK</Text>
@@ -232,6 +260,20 @@ const styles = StyleSheet.create({
         backgroundColor: '#333',
         color: '#FFF',
         fontSize: 15,
+    },
+    datePicker: {
+        borderWidth: 3,
+        borderColor: '#32779E',
+        borderRadius: 5,
+        backgroundColor: '#333',
+        paddingVertical: 5,
+        paddingHorizontal: 20,
+        marginTop: 10
+    },
+    date: {
+        fontSize: 17,
+        color: '#FFF',
+        fontWeight: 'bold'
     },
     send: {
         backgroundColor: '#32779E',
