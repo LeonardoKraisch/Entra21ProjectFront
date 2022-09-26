@@ -8,11 +8,13 @@ import moment from 'moment'
 import DateTimePicker from '@react-native-community/datetimepicker'
 
 import useAnimation from '../data/hooks/useAnimation'
-
+import useMoney from '../data/hooks/useMoney'
 
 export default props => {
 
     const { pressedPlus } = useAnimation()
+    const { send } = useMoney()
+    
     const [money, setMoney] = useState(0)
     const [category, setCategory] = useState("other")
     const [payments, setPayments] = useState('1')
@@ -20,8 +22,11 @@ export default props => {
     const [times, setTimes] = useState(1)
     const [pending, setPending] = useState(false)
     const [date, setDate] = useState(new Date())
+    const [description, setDescription] = useState('')
     const [showDatePicker, setShowDatePicker] = useState(false)
-
+    
+    const dateString = moment(date).format('ddd, D [/] MMMM [/] YYYY')
+    
     const Message = () => {
         if (pressedPlus) {
             return (
@@ -49,21 +54,20 @@ export default props => {
             setShowDatePicker(false)
         }} mode='date' />
 
-        const dateSring = moment(date).format('ddd, D [/] MMMM [/] YYYY')
 
-        if(Platform.OS === 'android') {
+        if (Platform.OS === 'android') {
             datePicker = (
                 <View style={styles.datePicker}>
                     <TouchableOpacity onPress={() => setShowDatePicker(true)}>
                         <Text style={styles.date}>
-                            {dateSring}
+                            {dateString}
                         </Text>
                     </TouchableOpacity>
                     {showDatePicker && datePicker}
                 </View>
             )
         }
-        if(pending) {
+        if (pending) {
             return datePicker
         }
     }
@@ -98,27 +102,27 @@ export default props => {
         if (pressedPlus) {
             return (
                 <Picker dropdownIconColor='#FFF' selectedValue={category} onValueChange={setCategory} style={styles.picker}>
-                    <Picker.Item style={styles.pickerItem} label="Fixed💼" value="fixed" />
-                    <Picker.Item style={styles.pickerItem} label="Benefits💳" value="benefits" />
-                    <Picker.Item style={styles.pickerItem} label="Comission👔" value="comission" />
-                    <Picker.Item style={styles.pickerItem} label="Services🛠" value="services" />
-                    <Picker.Item style={styles.pickerItem} label="Sales🤝" value="sales" />
-                    <Picker.Item style={styles.pickerItem} label="Other💲" value="other" />
+                    <Picker.Item style={styles.pickerItem} label="Fixed 💼" value="fixed" />
+                    <Picker.Item style={styles.pickerItem} label="Benefits 💳" value="benefits" />
+                    <Picker.Item style={styles.pickerItem} label="Comission 👔" value="comission" />
+                    <Picker.Item style={styles.pickerItem} label="Services 🛠" value="services" />
+                    <Picker.Item style={styles.pickerItem} label="Sales 🤝" value="sales" />
+                    <Picker.Item style={styles.pickerItem} label="Other 💲" value="other" />
                 </Picker>
             )
         } else {
             return (
                 <Picker dropdownIconColor='#FFF' selectedValue={category} onValueChange={setCategory} style={styles.picker}>
-                    <Picker.Item style={styles.pickerItem} label="Food🍽" value="food" />
-                    <Picker.Item style={styles.pickerItem} label="Car🚗" value="car" />
-                    <Picker.Item style={styles.pickerItem} label="House🏠" value="house" />
-                    <Picker.Item style={styles.pickerItem} label="Fun🎡" value="fun" />
-                    <Picker.Item style={styles.pickerItem} label="Education📚" value="education" />
-                    <Picker.Item style={styles.pickerItem} label="Health🩺" value="health" />
-                    <Picker.Item style={styles.pickerItem} label="Clothes👕" value="clothes" />
-                    <Picker.Item style={styles.pickerItem} label="Services🛠" value="services" />
-                    <Picker.Item style={styles.pickerItem} label="Transportation🚌" value="transportation" />
-                    <Picker.Item style={styles.pickerItem} label="Other💲" value="other" />
+                    <Picker.Item style={styles.pickerItem} label="Food 🍽" value="food" />
+                    <Picker.Item style={styles.pickerItem} label="Car 🚗" value="car" />
+                    <Picker.Item style={styles.pickerItem} label="House 🏠" value="house" />
+                    <Picker.Item style={styles.pickerItem} label="Fun 🎡" value="fun" />
+                    <Picker.Item style={styles.pickerItem} label="Education 📚" value="education" />
+                    <Picker.Item style={styles.pickerItem} label="Health 🩺" value="health" />
+                    <Picker.Item style={styles.pickerItem} label="Clothes 👕" value="clothes" />
+                    <Picker.Item style={styles.pickerItem} label="Services 🛠" value="services" />
+                    <Picker.Item style={styles.pickerItem} label="Transportation 🚌" value="transportation" />
+                    <Picker.Item style={styles.pickerItem} label="Other 💲" value="other" />
                 </Picker>
             )
         }
@@ -150,6 +154,7 @@ export default props => {
                     <Text style={styles.textTitle2}>Category:</Text>
                     <BalancePicker />
                 </View>
+                <TextInput style={styles.input} placeholder="Do you want to add a description?" value={description} onChangeText={setDescription} />
                 <View style={styles.buttons}>
                     <TouchableOpacity style={styles.buttonInput} onPress={() => setPending(false)}>
                         <Text style={[!pending ? styles.selected : styles.unselect]}>Paid</Text>
@@ -158,9 +163,9 @@ export default props => {
                         <Text style={[pending ? styles.selected : styles.unselect]}>Pending</Text>
                     </TouchableOpacity>
                 </View>
-                    <DatePicker />
-                <TextInput style={styles.input} placeholder="Do you want to add a description?" />
-                <TouchableOpacity style={styles.send}>
+                <DatePicker />
+                <TouchableOpacity onPress={() => send({ money, category, payments, totalValue, times, pending, dateString, description })}
+                    style={styles.send}>
                     <Text style={styles.sendText}>OK</Text>
                 </TouchableOpacity>
             </View>
@@ -196,7 +201,9 @@ const styles = StyleSheet.create({
     input2: {
         width: '50%',
         backgroundColor: '#444',
-        textAlign: "right"
+        textAlign: "right",
+        color: '#FFF',
+        fontSize: 15
     },
     buttons: {
         flexDirection: 'row',
@@ -244,7 +251,7 @@ const styles = StyleSheet.create({
         width: '90%',
         borderRadius: 5,
         margin: 10,
-        height: 35
+        height: 35,
     },
     pickerContainer: {
         alignSelf: 'flex-end',

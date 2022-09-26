@@ -18,38 +18,38 @@ export default props => {
         if (name.replace(" ", "") == "") {
             Toast.show({
                 type: 'info',
-                text1: 'Nome Inválido',
-                text2: 'Informe um nome válido'
+                text1: 'Invalid name',
+                text2: 'The field is incomplete or has an invalid name.'
             })
         } else if (phone.replace(" ", "") == "") {
             Toast.show({
                 type: 'info',
-                text1: 'Telefone Invalido',
-                text2: 'Informe um telefone válido'
+                text1: 'Invalid phone',
+                text2: 'The field is incomplete or has an invalid phone.'
             })
         } else if (email.replace(" ", "") == "" || !email.includes('@')) {
             Toast.show({
                 type: 'info',
-                text1: 'Email Inválido',
-                text2: 'Informe um email valido'
+                text1: 'Invalid email',
+                text2: 'The field is incomplete or has an invalid email.'
             })
         } else if (password.replace(" ", "") == "") {
             Toast.show({
                 type: 'info',
-                text1: 'Senha Inválida',
-                text2: 'Informe uma senha válida'
+                text1: 'Invalid password',
+                text2: 'The field is incomplete or has an invalid password.'
             })
         } else if (confPassword.replace(" ", "") == "") {
             Toast.show({
                 type: 'info',
-                text1: 'Senha de confirmação Inválida',
-                text2: 'Informe uma senha de confirmação válida'
+                text1: 'Invalid confimation password',
+                text2: 'The field is incomplete.'
             })
         } else if (confPassword != password) {
             Toast.show({
                 type: 'info',
-                text1: 'Senha de confirmação diferente',
-                text2: 'A senha de confirmação não é igual'
+                text1: 'Invalid password',
+                text2: "Password and confirmation password don't match."
             })
         } else {
             signUp({ name, phone, email, password })

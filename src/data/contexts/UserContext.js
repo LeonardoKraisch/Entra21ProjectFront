@@ -1,4 +1,4 @@
-import { useState, createContext, useCallback } from "react";
+import { useState, createContext } from "react";
 import Toast from 'react-native-toast-message'
 import axios from "axios";
 import JWT from "expo-jwt";
@@ -58,13 +58,13 @@ export const UserProvider = ({ children }) => {
                     setUserCode(newUser.data.userCode)
                     Toast.show({
                         type: 'info',
-                        text1: 'Registro confirmado',
+                        text1: 'Your account was successfully created!',
                     })
                 }
             } catch (err) {
                 Toast.show({
                     type: 'info',
-                    text1: 'Erro ao registrar',
+                    text1: 'An error has occurred. Please, try again.',
                     text2: err.message
                 })
             }
@@ -105,7 +105,7 @@ export const UserProvider = ({ children }) => {
             } catch (err) {
                 Toast.show({
                     type: 'info',
-                    text1: 'Erro de conexão',
+                    text1: 'Connection error. Please, try again.',
                     text2: err.message
                 })
             }

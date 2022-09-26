@@ -8,9 +8,10 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import MenuButton from "./MenuButton";
 
+import useMoney from '../data/hooks/useMoney'
+
 export default props => {
-    const [balance, setBalance] = useState('2.000,00')
-    const [coin, setCoin] = useState('R$')
+    const { balance, coin } = useMoney()
     const [showBalance, setShowBalance] = useState(false)
 
     return (
@@ -27,7 +28,10 @@ export default props => {
                     </View>
                     <View style={styles.value}>
                         <Text style={{ color: '#FFF', fontSize: 27 }}>{coin}</Text>
-                        <View>{showBalance ? <Text style={{ color: '#FFF', fontSize: 27 }}>{balance}</Text> : <Text style={{ color: '#FFF', fontSize: 27 }}>{"--------"}</Text>}</View>
+                        <View>{showBalance ?
+                            <Text style={{ color: '#FFF', fontSize: 27 }}>{balance}</Text> :
+                            <Text style={{ color: '#FFF', fontSize: 27 }}>{"--------------"}</Text>}
+                        </View>
                     </View>
                 </View>
             </View>
