@@ -73,7 +73,7 @@ export default props => {
             return (
                 <View style={styles.inputContainer}>
                     <Text style={styles.textTitle2}>Quantity:</Text>
-                    <TextInput style={styles.input2} value={times} onChangeText={setTimes} />
+                    <TextInput style={styles.input2} keyboardType='number-pad' value={times} onChangeText={setTimes} />
                 </View>
             )
         }
@@ -194,8 +194,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     input2: {
-        width: '40%',
-        backgroundColor: '#444'
+        width: '50%',
+        backgroundColor: '#444',
+        textAlign: "right"
     },
     buttons: {
         flexDirection: 'row',
