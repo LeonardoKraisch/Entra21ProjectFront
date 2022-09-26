@@ -13,8 +13,8 @@ export const MoneyProvider = ({ children }) => {
 
     const [balance, setBalance] = useState('2.000,00')
     const [coin, setCoin] = useState('R$')
-    const [total, setTotal] = useState(0)
-    const [expenses, setExpenses] = useState(0)
+    const [total, setTotal] = useState(2000)
+    const [expenses, setExpenses] = useState(300)
     const moneyInternalContext = {
         balance,
         coin,
@@ -60,10 +60,12 @@ export const MoneyProvider = ({ children }) => {
             }
         },
         
-            getPlaceHolder: async data => {
-                const newQuery = await axios.post(`/${pressedPlus ? "income" : "expenses"}/new`, {userCode})
-                console.log(newQuery.data.incomes)
+            getRegisters: async data => {
+                const newQuery = await axios.post(`/${data.type ? "income" : "expenses"}/query`, {userCode})
+                return newQuery.data.registers
             }
+
+            
         
 
     }
