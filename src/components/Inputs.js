@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#444',
         textAlign: "right",
         color: '#FFF',
-        fontSize: 15
+        fontSize: 20
     },
     buttons: {
         flexDirection: 'row',

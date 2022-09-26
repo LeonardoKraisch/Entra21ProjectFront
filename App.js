@@ -8,7 +8,8 @@ import { MoneyProvider } from './src/data/contexts/MoneyContext';
 
 import Navigator from './src/Navigator';
 
-axios.defaults.baseURL = "https://e21project-be.herokuapp.com"
+// axios.defaults.baseURL = "https://e21project-be.herokuapp.com"
+axios.defaults.baseURL = "http://10.10.204.187:8080"
 
 export default function App() {
   return (
