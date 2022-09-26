@@ -14,9 +14,12 @@ export const MoneyProvider = ({ children }) => {
     const [balance, setBalance] = useState('2.000,00')
     const [coin, setCoin] = useState('R$')
     const [total, setTotal] = useState(0)
+    const [expenses, setExpenses] = useState(0)
     const moneyInternalContext = {
         balance,
         coin,
+        total,
+        expenses,
         send: async data => {
             var launch = {
                 incMoney: data.money,
@@ -30,32 +33,23 @@ export const MoneyProvider = ({ children }) => {
                 userCode: await userCode
             }
             try {
-                if (pressedPlus) {
-                    const newLaunch = await axios.post("/income/new", {launch})
+                    const newLaunch = await axios.post(`/${pressedPlus ? "income" : "expenses"}/new`, {launch})
                     if (newLaunch.data.registered) {
-                        console.log('+', launch)
                         Toast.show({
                             type: 'info',
                             text1: 'Successful launch!',
-                            text2: 'You increased your balance.'
+                            text2: 'You updated your balance.'
                         })
                     } else {
                         Toast.show({
                             type: 'info',
                             text1: 'Noooooooot Successful launch!',
-                            text2: "You don't increased your balance."
+                            text2: "You don't updated your balance."
                         }) 
                     }
 
-                } else {
-                    // const newLaunch = await axios.post("", {launch})
-                    console.log('-', launch)
-                    Toast.show({
-                        type: 'info',
-                        text1: 'Successful launch!',
-                        text2: 'You decreased your balance.'
-                    })
-                }
+                
+                
             } catch (e) {
                 console.warn(e)
                 Toast.show({
@@ -65,6 +59,12 @@ export const MoneyProvider = ({ children }) => {
                 })
             }
         },
+        
+            getPlaceHolder: async data => {
+                const newQuery = await axios.post(`/${pressedPlus ? "income" : "expenses"}/new`, {userCode})
+                console.log(newQuery.data.incomes)
+            }
+        
 
     }
     return (
