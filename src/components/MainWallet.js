@@ -48,11 +48,16 @@ export default props => {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.label}>
+            <View style={styles.label}>
                 <Text style={styles.labelText}>
                     Main Wallet
                 </Text>
-            </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.labelButton}>
+                        +Details
+                    </Text>
+                </TouchableOpacity>
+            </View>
             <MyPieChart />
         </View>
     )
@@ -66,14 +71,19 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     label: {
-        alignItems: 'flex-end',
-        backgroundColor: '#333',
-        padding: 5
+        borderBottomColor: '#CCC',
+        borderBottomWidth: 2,
+        padding: 5,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     labelText: {
         color: '#FFF',
         fontWeight: 'bold',
         fontSize: 16
+        
+    },
+    labelButton: {
         
     },
     graph: {

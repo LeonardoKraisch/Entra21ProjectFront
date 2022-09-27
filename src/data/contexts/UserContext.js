@@ -11,6 +11,7 @@ export const UserProvider = ({ children }) => {
     const [phone, setPhone] = useState('')
     const [email, setEmail] = useState('')
     const [userCode, setUserCode] = useState('')
+    
     const userInternalContext = {
         name,
         phone,
@@ -48,7 +49,8 @@ export const UserProvider = ({ children }) => {
                         userName: user.name,
                         userPhone: user.phone,
                         userEmail: user.email,
-                        userPasswd: user.password
+                        userPasswd: user.password,
+                        userMoney: 0
                     }
                 })
                 if (newUser.data.registered) {
