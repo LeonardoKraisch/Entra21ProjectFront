@@ -59,9 +59,9 @@ export const MoneyProvider = ({ children }) => {
                 })
             }
         },
-        
+            
             getRegisters: async data => {
-                const newQuery = await axios.post(` /${data.type ? "income" : "expenses"}
+                const newQuery = await axios.post(` /${data.type=="+" ? "income" : "expenses"}
                                                     /query`,
                                                     {filterType:data.filterType, filter:data.filter})
                 return newQuery.data.registers
