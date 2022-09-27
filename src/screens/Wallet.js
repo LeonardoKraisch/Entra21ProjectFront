@@ -3,15 +3,17 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
 import moment from 'moment'
 import DateTimePicker from '@react-native-community/datetimepicker'
+import { Picker } from "@react-native-picker/picker";
 
 import useMoney from "../data/hooks/useMoney";
 
 export default props => {
     const [show, setShow] = useState("expenses")
-    const [date1, setDate1] = useState(new Date())
-    const [showDatePicker1, setShowDatePicker1] = useState(false)
     const [date2, setDate2] = useState(new Date())
     const [showDatePicker2, setShowDatePicker2] = useState(false)
+    const [date1, setDate1] = useState(new Date().setMonth(date2.getMonth() - 1))
+    const [showDatePicker1, setShowDatePicker1] = useState(false)
+    const [category, setCategory] = useState("other")
 
     const dateString1 = moment(date1).format('YYYY[-]M[-]D')
     const dateString2 = moment(date2).format('YYYY[-]M[-]D')
@@ -89,6 +91,53 @@ export default props => {
         return datePicker
     }
 
+    const BalancePicker = () => {
+        if (show == "expenses") {
+            return (
+                <Picker dropdownIconColor='#FFF' selectedValue={category} onValueChange={setCategory} style={styles.picker}>
+                    <Picker.Item style={styles.pickerItem} label="Food 🍽" value="food" />
+                    <Picker.Item style={styles.pickerItem} label="Car 🚗" value="car" />
+                    <Picker.Item style={styles.pickerItem} label="House 🏠" value="house" />
+                    <Picker.Item style={styles.pickerItem} label="Fun 🎡" value="fun" />
+                    <Picker.Item style={styles.pickerItem} label="Education 📚" value="education" />
+                    <Picker.Item style={styles.pickerItem} label="Health 🩺" value="health" />
+                    <Picker.Item style={styles.pickerItem} label="Clothes 👕" value="clothes" />
+                    <Picker.Item style={styles.pickerItem} label="Services 🛠" value="services" />
+                    <Picker.Item style={styles.pickerItem} label="Transportation 🚌" value="transportation" />
+                    <Picker.Item style={styles.pickerItem} label="Other 💲" value="other" />
+                </Picker>
+            )
+        } else if (show == "incomes") {
+            return (
+                <Picker dropdownIconColor='#FFF' selectedValue={category} onValueChange={setCategory} style={styles.picker}>
+                    <Picker.Item style={styles.pickerItem} label="Fixed 💼" value="fixed" />
+                    <Picker.Item style={styles.pickerItem} label="Benefits 💳" value="benefits" />
+                    <Picker.Item style={styles.pickerItem} label="Comission 👔" value="comission" />
+                    <Picker.Item style={styles.pickerItem} label="Services 🛠" value="services" />
+                    <Picker.Item style={styles.pickerItem} label="Sales 🤝" value="sales" />
+                    <Picker.Item style={styles.pickerItem} label="Other 💲" value="other" />
+                </Picker>
+            )
+        } else {
+            <Picker dropdownIconColor='#FFF' selectedValue={category} onValueChange={setCategory} style={styles.picker}>
+                <Picker.Item style={styles.pickerItem} label="Food 🍽" value="food" />
+                <Picker.Item style={styles.pickerItem} label="Car 🚗" value="car" />
+                <Picker.Item style={styles.pickerItem} label="House 🏠" value="house" />
+                <Picker.Item style={styles.pickerItem} label="Fun 🎡" value="fun" />
+                <Picker.Item style={styles.pickerItem} label="Education 📚" value="education" />
+                <Picker.Item style={styles.pickerItem} label="Health 🩺" value="health" />
+                <Picker.Item style={styles.pickerItem} label="Clothes 👕" value="clothes" />
+                <Picker.Item style={styles.pickerItem} label="Transportation 🚌" value="transportation" />
+                <Picker.Item style={styles.pickerItem} label="Fixed 💼" value="fixed" />
+                <Picker.Item style={styles.pickerItem} label="Benefits 💳" value="benefits" />
+                <Picker.Item style={styles.pickerItem} label="Comission 👔" value="comission" />
+                <Picker.Item style={styles.pickerItem} label="Services 🛠" value="services" />
+                <Picker.Item style={styles.pickerItem} label="Sales 🤝" value="sales" />
+                <Picker.Item style={styles.pickerItem} label="Other 💲" value="other" />
+            </Picker>
+        }
+    }
+
     return (
         <View style={styles.containter}>
             <Text style={styles.title}>Wallet</Text>
@@ -120,6 +169,10 @@ export default props => {
                             <Text style={styles.dateTitle}>to:</Text>
                             <DatePicker2 />
                         </View>
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <Text style={styles.dateTitle}>Categories: </Text>
+                        <BalancePicker />
                     </View>
                 </View>
             </View>
@@ -202,5 +255,14 @@ const styles = StyleSheet.create({
     dateTitle: {
         fontSize: 16,
         color: '#FFF',
-    }
+    },
+    picker: {
+        color: '#FFF',
+        width: '40%'
+    },
+    pickerItem: {
+        backgroundColor: '#333',
+        color: '#FFF',
+        fontSize: 15,
+    },
 })
