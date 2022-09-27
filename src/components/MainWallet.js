@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 
 import useMoney from "../data/hooks/useMoney";
@@ -48,11 +48,11 @@ export default props => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.label}>
-                <Text>
+            <TouchableOpacity style={styles.label}>
+                <Text style={styles.labelText}>
                     Main Wallet
                 </Text>
-            </View>
+            </TouchableOpacity>
             <MyPieChart />
         </View>
     )
@@ -65,7 +65,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#32779E',
         borderRadius: 10,
     },
+    label: {
+        alignItems: 'flex-end',
+        backgroundColor: '#333',
+        padding: 5
+    },
+    labelText: {
+        color: '#FFF',
+        fontWeight: 'bold',
+        fontSize: 16
+        
+    },
     graph: {
-        flex: 1 
+        flex: 1
     }
 })

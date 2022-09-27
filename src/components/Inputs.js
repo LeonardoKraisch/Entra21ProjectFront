@@ -25,7 +25,7 @@ export default props => {
     const [description, setDescription] = useState('')
     const [showDatePicker, setShowDatePicker] = useState(false)
     
-    const dateString = moment(date).format('ddd, D [/] MMMM [/] YYYY')
+    const dateString = moment(date).format('YYYY[-]M[-]D')
     
     const Message = () => {
         if (pressedPlus) {
