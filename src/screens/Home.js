@@ -13,7 +13,7 @@ export default props => {
             <Header {...props} />
             <View style={styles.body}>
                 <View style={styles.mainContainer}>
-                    <MainWallet />
+                    <MainWallet {...props} />
                 </View>
                 <FlatList
                     numColumns={2}

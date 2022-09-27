@@ -5,34 +5,46 @@ import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemL
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Home from "./screens/Home";
+import Wallet from './screens/Wallet'
 import Login from "./screens/Login";
 import Register from "./screens/Register"
 
 import useUser from "./data/hooks/useUser";
+import useMoney from "./data/hooks/useMoney";
 
 const Drawer = createDrawerNavigator()
 const Stack = createNativeStackNavigator()
 
 export default props => {
 
-    const { email, name, logout, start } = useUser()
-    
+    const { email, name, logout } = useUser()
+    const { getBalance } = useMoney()
+
     const Auth = () => (
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />
         </Stack.Navigator>
     )
-    
+
     const AuthOrHome = () => {
-        start()
+        getBalance()
         return (
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 {email ?
-                    <Stack.Screen name="Main" component={Home} />
+                    <Stack.Screen name="Main" component={HomeStack} />
                     :
                     <Stack.Screen name="Auth" component={Auth} />
                 }
+            </Stack.Navigator>
+        )
+    }
+
+    const HomeStack = () => {
+        return (
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="First" component={Home} />
+                <Stack.Screen name="Wallet" component={Wallet} />
             </Stack.Navigator>
         )
     }

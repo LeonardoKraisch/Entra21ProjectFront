@@ -9,9 +9,9 @@ const MoneyContext = createContext({})
 
 export const MoneyProvider = ({ children }) => {
     const { pressedPlus } = useAnimation()
-    const { userCode } = useUser()
+    const { userCode, start } = useUser()
 
-    const [balance, setBalance] = useState('2.000,00')
+    const [balance, setBalance] = useState(0)
     const [coin, setCoin] = useState('R$')
     const [total, setTotal] = useState(2000)
     const [expenses, setExpenses] = useState(300)
@@ -20,6 +20,10 @@ export const MoneyProvider = ({ children }) => {
         coin,
         total,
         expenses,
+        getBalance: async () => {
+            await start()
+            setBalance(total - expenses)
+        },
         send: async data => {
             var launch = {
                 incMoney: data.money,

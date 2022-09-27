@@ -54,13 +54,14 @@ export default props => {
             setShowDatePicker(false)
         }} mode='date' />
 
+        const dateStringUser = moment(date).format('ddd, MMMM[/]D[/]YYYY')
 
         if (Platform.OS === 'android') {
             datePicker = (
                 <View style={styles.datePicker}>
                     <TouchableOpacity onPress={() => setShowDatePicker(true)}>
                         <Text style={styles.date}>
-                            {dateString}
+                            {dateStringUser}
                         </Text>
                     </TouchableOpacity>
                     {showDatePicker && datePicker}
