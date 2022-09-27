@@ -25,8 +25,9 @@ export const MoneyProvider = ({ children }) => {
             setBalance(total - expenses)
         },
         send: async data => {
+            var money = data.money.replace("R$","").replace(".","").replace(",",".")
             var launch = {
-                incMoney: data.money,
+                incMoney: parseFloat(money),
                 incCategory: data.category,
                 incPayments: data.payments,
                 incTotalValue: data.totalValue,
