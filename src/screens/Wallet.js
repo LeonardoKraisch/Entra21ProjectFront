@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native'
 
 import moment from 'moment'
 import DateTimePicker from '@react-native-community/datetimepicker'
@@ -13,7 +13,11 @@ export default props => {
     const [showDatePicker2, setShowDatePicker2] = useState(false)
     const [date1, setDate1] = useState(new Date().setMonth(date2.getMonth() - 1))
     const [showDatePicker1, setShowDatePicker1] = useState(false)
+    const [value, setValue] = useState(0)
     const [category, setCategory] = useState("other")
+    const [payments, setPayments] = useState('1')
+    const [pending, setPending] = useState(false)
+    const [description, setDescription] = useState('')
 
     const dateString1 = moment(date1).format('YYYY[-]M[-]D')
     const dateString2 = moment(date2).format('YYYY[-]M[-]D')
@@ -173,6 +177,9 @@ export default props => {
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                         <Text style={styles.dateTitle}>Categories: </Text>
                         <BalancePicker />
+                    </View>
+                    <View>
+                        <TextInput style={styles.input} placeholder="Search for description" value={description} onChangeText={setDescription} />
                     </View>
                 </View>
             </View>
