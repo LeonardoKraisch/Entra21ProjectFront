@@ -1,23 +1,23 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
 import moment from 'moment'
 import DateTimePicker from '@react-native-community/datetimepicker'
-import { Picker } from "@react-native-picker/picker";
+
 
 import useMoney from "../data/hooks/useMoney";
+import WalletFilters from "../components/WalletFilters";
 
 export default props => {
     const [show, setShow] = useState("expenses")
+
     const [date2, setDate2] = useState(new Date())
     const [showDatePicker2, setShowDatePicker2] = useState(false)
-    const [date1, setDate1] = useState(new Date().setMonth(date2.getMonth() - 1))
+
+    const lastMonth = new Date()
+    lastMonth.setMonth(date2.getMonth() - 1)
+    const [date1, setDate1] = useState(lastMonth)
     const [showDatePicker1, setShowDatePicker1] = useState(false)
-    const [value, setValue] = useState(0)
-    const [category, setCategory] = useState("other")
-    const [payments, setPayments] = useState('1')
-    const [pending, setPending] = useState(false)
-    const [description, setDescription] = useState('')
 
     const dateString1 = moment(date1).format('YYYY[-]M[-]D')
     const dateString2 = moment(date2).format('YYYY[-]M[-]D')
@@ -95,52 +95,7 @@ export default props => {
         return datePicker
     }
 
-    const BalancePicker = () => {
-        if (show == "expenses") {
-            return (
-                <Picker dropdownIconColor='#FFF' selectedValue={category} onValueChange={setCategory} style={styles.picker}>
-                    <Picker.Item style={styles.pickerItem} label="Food 🍽" value="food" />
-                    <Picker.Item style={styles.pickerItem} label="Car 🚗" value="car" />
-                    <Picker.Item style={styles.pickerItem} label="House 🏠" value="house" />
-                    <Picker.Item style={styles.pickerItem} label="Fun 🎡" value="fun" />
-                    <Picker.Item style={styles.pickerItem} label="Education 📚" value="education" />
-                    <Picker.Item style={styles.pickerItem} label="Health 🩺" value="health" />
-                    <Picker.Item style={styles.pickerItem} label="Clothes 👕" value="clothes" />
-                    <Picker.Item style={styles.pickerItem} label="Services 🛠" value="services" />
-                    <Picker.Item style={styles.pickerItem} label="Transportation 🚌" value="transportation" />
-                    <Picker.Item style={styles.pickerItem} label="Other 💲" value="other" />
-                </Picker>
-            )
-        } else if (show == "incomes") {
-            return (
-                <Picker dropdownIconColor='#FFF' selectedValue={category} onValueChange={setCategory} style={styles.picker}>
-                    <Picker.Item style={styles.pickerItem} label="Fixed 💼" value="fixed" />
-                    <Picker.Item style={styles.pickerItem} label="Benefits 💳" value="benefits" />
-                    <Picker.Item style={styles.pickerItem} label="Comission 👔" value="comission" />
-                    <Picker.Item style={styles.pickerItem} label="Services 🛠" value="services" />
-                    <Picker.Item style={styles.pickerItem} label="Sales 🤝" value="sales" />
-                    <Picker.Item style={styles.pickerItem} label="Other 💲" value="other" />
-                </Picker>
-            )
-        } else {
-            <Picker dropdownIconColor='#FFF' selectedValue={category} onValueChange={setCategory} style={styles.picker}>
-                <Picker.Item style={styles.pickerItem} label="Food 🍽" value="food" />
-                <Picker.Item style={styles.pickerItem} label="Car 🚗" value="car" />
-                <Picker.Item style={styles.pickerItem} label="House 🏠" value="house" />
-                <Picker.Item style={styles.pickerItem} label="Fun 🎡" value="fun" />
-                <Picker.Item style={styles.pickerItem} label="Education 📚" value="education" />
-                <Picker.Item style={styles.pickerItem} label="Health 🩺" value="health" />
-                <Picker.Item style={styles.pickerItem} label="Clothes 👕" value="clothes" />
-                <Picker.Item style={styles.pickerItem} label="Transportation 🚌" value="transportation" />
-                <Picker.Item style={styles.pickerItem} label="Fixed 💼" value="fixed" />
-                <Picker.Item style={styles.pickerItem} label="Benefits 💳" value="benefits" />
-                <Picker.Item style={styles.pickerItem} label="Comission 👔" value="comission" />
-                <Picker.Item style={styles.pickerItem} label="Services 🛠" value="services" />
-                <Picker.Item style={styles.pickerItem} label="Sales 🤝" value="sales" />
-                <Picker.Item style={styles.pickerItem} label="Other 💲" value="other" />
-            </Picker>
-        }
-    }
+
 
     return (
         <View style={styles.containter}>
@@ -163,25 +118,17 @@ export default props => {
                         </Text>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.secondaryFilters}>
-                    <View style={styles.setDate}>
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={styles.dateTitle}>From:</Text>
-                            <DatePicker1 />
-                        </View>
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={styles.dateTitle}>to:</Text>
-                            <DatePicker2 />
-                        </View>
+                <View style={styles.setDate}>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Text style={styles.dateTitle}>From:</Text>
+                        <DatePicker1 />
                     </View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <Text style={styles.dateTitle}>Categories: </Text>
-                        <BalancePicker />
-                    </View>
-                    <View>
-                        <TextInput style={styles.input} placeholder="Search for description" value={description} onChangeText={setDescription} />
+                    <View style={{ flexDirection: 'row' }}>
+                        <Text style={styles.dateTitle}>to:</Text>
+                        <DatePicker2 />
                     </View>
                 </View>
+                <WalletFilters show={show} />
             </View>
             <View style={styles.row}>
                 <TouchableOpacity
@@ -198,6 +145,7 @@ const styles = StyleSheet.create({
     containter: {
         justifyContent: 'center',
         width: '100%',
+        height: '100%',
         flex: 1,
         backgroundColor: '#3C3C3C',
         padding: 20,
@@ -226,12 +174,19 @@ const styles = StyleSheet.create({
     filters: {
         backgroundColor: '#32779E',
         borderRadius: 3,
-        marginTop: 5
+        marginTop: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     mainFilters: {
-        padding: 5,
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        width: '95%',
+        padding: 10,
+        marginBottom: 5,
+        borderBottomColor: '#CCC',
+        borderBottomWidth: 1,
     },
     selected: {
         color: '#FFF',
@@ -243,14 +198,13 @@ const styles = StyleSheet.create({
         color: '#CCC'
     },
     setDate: {
-        justifyContent: "space-around",
+        width: '85%',
+        justifyContent: "space-between",
+        alignItems: 'center',
         flexDirection: 'row',
-        alignItems: 'center'
+        margin: 5
     },
     datePicker: {
-        borderRadius: 5,
-        backgroundColor: '#333',
-        paddingVertical: 2,
         paddingHorizontal: 5,
         marginHorizontal: 5
     },
@@ -263,13 +217,5 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#FFF',
     },
-    picker: {
-        color: '#FFF',
-        width: '40%'
-    },
-    pickerItem: {
-        backgroundColor: '#333',
-        color: '#FFF',
-        fontSize: 15,
-    },
 })
+
