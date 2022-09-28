@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         height: '85%',
         width: '90%',
         backgroundColor: '#32779E',
-        borderRadius: 10,
+        borderRadius: 3,
     },
     label: {
         borderBottomColor: '#CCC',

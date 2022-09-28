@@ -10,6 +10,7 @@ import WalletFilters from "../components/WalletFilters";
 
 export default props => {
     const [show, setShow] = useState("expenses")
+    const [showFilters, setShowFilters] = useState(false)
 
     const [date2, setDate2] = useState(new Date())
     const [showDatePicker2, setShowDatePicker2] = useState(false)
@@ -95,7 +96,28 @@ export default props => {
         return datePicker
     }
 
-
+    const Filters = () => {
+        if (showFilters) {
+            return (
+                <View style={styles.secondaryContainer}>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={() => setShowFilters(false)}>
+                            <Text style={styles.buttonText}>- Filters</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <WalletFilters show={show} />
+                </View>
+            )
+        } else {
+            return (
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity onPress={() => setShowFilters(true)}>
+                        <Text style={styles.buttonText}>+ Filters</Text>
+                    </TouchableOpacity>
+                </View>
+            )
+        }
+    }
 
     return (
         <View style={styles.containter}>
@@ -128,8 +150,8 @@ export default props => {
                         <DatePicker2 />
                     </View>
                 </View>
-                <WalletFilters show={show} />
             </View>
+            <Filters />
             <View style={styles.row}>
                 <TouchableOpacity
                     style={{ justifyContent: 'center' }}
@@ -175,8 +197,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#32779E',
         borderRadius: 3,
         marginTop: 5,
+        paddingBottom: 3,
         alignItems: 'center',
         justifyContent: 'center',
+        borderBottomColor: '#CCC',
+        borderBottomWidth: 2,
     },
     mainFilters: {
         flexDirection: 'row',
@@ -217,5 +242,25 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#FFF',
     },
+    secondaryContainer: {
+        backgroundColor: '#32779E'
+    },
+    buttonContainer: {
+        width: '20%',
+        paddingHorizontal: 2,
+        marginHorizontal: 2,
+        backgroundColor: '#32779E',
+        borderColor: '#CCC',
+        borderBottomWidth: 1,
+        borderRightWidth: 1,
+        borderLeftWidth: 1,
+        borderBottomStartRadius: 5,
+        borderBottomEndRadius: 50
+    },
+    buttonText: {
+        color: '#FFF',
+        fontSize: 13,
+        fontWeight: 'bold'
+    }
 })
 

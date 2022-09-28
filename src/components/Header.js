@@ -20,7 +20,7 @@ export default props => {
                 <MenuButton {...props} />
                 <View style={styles.balance}>
                     <View style={styles.textIcon}>
-                        <Text style={{ color: '#FFF', fontSize: 18 }}>Balance:</Text>
+                        <Text style={{ color: '#FFF', fontSize: 18, fontWeight: 'bold' }}>Balance:</Text>
                         <TouchableOpacity style={styles.eye} onPress={() => setShowBalance(!showBalance)}>
                             <Ionicons name={showBalance ? 'eye' : 'eye-off-outline'}
                                 size={25} color='#FFF' />

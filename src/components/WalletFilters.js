@@ -3,15 +3,12 @@ import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-nativ
 import { Picker } from "@react-native-picker/picker";
 
 export default props => {
-    const [category, setCategory] = useState("other")
-    const [payments, setPayments] = useState('1')
-    const [pending, setPending] = useState(false)
+    const [category, setCategory] = useState("all")
     const [description, setDescription] = useState('')
 
     const [pickerValue, setPickerValue] = useState("higher")
     const [value1, setValue1] = useState(0)
     const [value2, setValue2] = useState(0)
-
 
     const BalancePicker = () => {
         if (props.show == "expenses") {
@@ -27,6 +24,7 @@ export default props => {
                     <Picker.Item style={styles.pickerItem} label="Services 🛠" value="services" />
                     <Picker.Item style={styles.pickerItem} label="Transportation 🚌" value="transportation" />
                     <Picker.Item style={styles.pickerItem} label="Other 💲" value="other" />
+                    <Picker.Item style={styles.pickerItem} label="All 💲" value="all" />
                 </Picker>
             )
         } else if (props.show == "incomes") {
@@ -38,6 +36,7 @@ export default props => {
                     <Picker.Item style={styles.pickerItem} label="Services 🛠" value="services" />
                     <Picker.Item style={styles.pickerItem} label="Sales 🤝" value="sales" />
                     <Picker.Item style={styles.pickerItem} label="Other 💲" value="other" />
+                    <Picker.Item style={styles.pickerItem} label="All 💲" value="all" />
                 </Picker>
             )
         } else {
@@ -57,6 +56,7 @@ export default props => {
                     <Picker.Item style={styles.pickerItem} label="Services 🛠" value="services" />
                     <Picker.Item style={styles.pickerItem} label="Sales 🤝" value="sales" />
                     <Picker.Item style={styles.pickerItem} label="Other 💲" value="other" />
+                    <Picker.Item style={styles.pickerItem} label="All 💲" value="all" />
                 </Picker>
             )
         }
@@ -76,15 +76,15 @@ export default props => {
         if (pickerValue == 'higher' || pickerValue == 'lower') {
             return (
                 <View style={styles.inputContainer}>
-                    <TextInput style={styles.inputMoney} keyboardType='number-pad' value={value1} onChangeText={setValue1} placeholder="value" />
+                    <TextInput style={styles.inputMoney} keyboardType='number-pad' value={value1} onChangeText={setValue1} placeholder="Value" />
                 </View>
             )
         } else {
             return (
                 <View style={styles.inputContainer}>
-                    <TextInput style={styles.inputMoney} keyboardType='number-pad' value={value2} onChangeText={setValue2} placeholder="lower value" />
+                    <TextInput style={styles.inputMoney} keyboardType='number-pad' value={value2} onChangeText={setValue2} placeholder="Lower value" />
                     <Text style={styles.titles}>and</Text>
-                    <TextInput style={styles.inputMoney} keyboardType='number-pad' value={value1} onChangeText={setValue1} placeholder="higher value" />
+                    <TextInput style={styles.inputMoney} keyboardType='number-pad' value={value1} onChangeText={setValue1} placeholder="Higher value" />
                 </View>
             )
         }
@@ -109,7 +109,7 @@ export default props => {
 
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.send}>
-                    <Text>Search</Text>
+                    <Text style={styles.sendText}>Filter</Text>
                 </TouchableOpacity>
             </View>
 
@@ -118,9 +118,11 @@ export default props => {
 }
 const styles = StyleSheet.create({
     secondaryFilters: {
+        backgroundColor: '#42779E',
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderRadius: 3
     },
     picker: {
         flex: 1
@@ -145,29 +147,35 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         width: '90%',
-        marginVertical: 15
+        marginVertical: 15,
     },
     inputMoney: {
         borderBottomColor: '#CCC',
         borderBottomWidth: 1,
         paddingHorizontal: 5,
         marginHorizontal: 10,
-        flex: 1
+        flex: 1,
+        fontSize: 16
     },
     buttonContainer: {
-        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         width: '90%',
-        marginVertical: 15
+        marginVertical: 15,
     },
     send: {
-        backgroundColor: '#3a3a3a',
+        backgroundColor: '#FFF',
         width: '100%',
         alignSelf: 'center',
         borderRadius: 5,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingVertical: 5
+    },
+    sendText: {
+        fontWeight: 'bold',
+        color: '#666',
+        fontSize: 16
     }
 
 })
