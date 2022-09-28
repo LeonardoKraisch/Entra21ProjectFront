@@ -1,14 +1,75 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native'
+
+import moment from 'moment'
+import DateTimePicker from '@react-native-community/datetimepicker'
+
 import { Picker } from "@react-native-picker/picker";
 
 export default props => {
+    const [date2, setDate2] = useState(new Date())
+    const [showDatePicker2, setShowDatePicker2] = useState(false)
+
+    const lastMonth = new Date()
+    lastMonth.setMonth(date2.getMonth() - 1)
+    const [date1, setDate1] = useState(lastMonth)
+    const [showDatePicker1, setShowDatePicker1] = useState(false)
+
+    const dateString1 = moment(date1).format('YYYY[-]M[-]D')
+    const dateString2 = moment(date2).format('YYYY[-]M[-]D')
+
     const [category, setCategory] = useState("all")
     const [description, setDescription] = useState('')
 
     const [pickerValue, setPickerValue] = useState("higher")
     const [value1, setValue1] = useState(0)
     const [value2, setValue2] = useState(0)
+
+    const DatePicker1 = () => {
+        let datePicker = <DateTimePicker value={date1} onChange={(_, date) => {
+            setDate1(date)
+            setShowDatePicker1(false)
+        }} mode='date' />
+
+        const dateStringUser1 = moment(date1).format('M[/]D[/]YYYY')
+
+        if (Platform.OS === 'android') {
+            datePicker = (
+                <View style={styles.datePicker}>
+                    <TouchableOpacity onPress={() => setShowDatePicker1(true)}>
+                        <Text style={styles.date}>
+                            {dateStringUser1}
+                        </Text>
+                    </TouchableOpacity>
+                    {showDatePicker1 && datePicker}
+                </View>
+            )
+        }
+        return datePicker
+    }
+
+    const DatePicker2 = () => {
+        let datePicker = <DateTimePicker value={date2} onChange={(_, date) => {
+            setDate2(date)
+            setShowDatePicker2(false)
+        }} mode='date' />
+
+        const dateStringUser2 = moment(date2).format('M[/]D[/]YYYY')
+
+        if (Platform.OS === 'android') {
+            datePicker = (
+                <View style={styles.datePicker}>
+                    <TouchableOpacity onPress={() => setShowDatePicker2(true)}>
+                        <Text style={styles.date}>
+                            {dateStringUser2}
+                        </Text>
+                    </TouchableOpacity>
+                    {showDatePicker2 && datePicker}
+                </View>
+            )
+        }
+        return datePicker
+    }
 
     const BalancePicker = () => {
         if (props.show == "expenses") {
@@ -92,12 +153,19 @@ export default props => {
 
     return (
         <View style={styles.secondaryFilters}>
-            <View style={styles.inputContainer}>
-                <TextInput style={styles.inputMoney} placeholder="Search for description" value={description} onChangeText={setDescription} />
+            <View style={styles.setDate}>
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={styles.dateTitle}>Date between:</Text>
+                    <DatePicker1 />
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={styles.dateTitle}>to:</Text>
+                    <DatePicker2 />
+                </View>
             </View>
 
             <View style={styles.container}>
-                <Text style={styles.titles}>Select value</Text>
+                <Text style={styles.titles}>Values</Text>
                 <ValuePicker />
             </View>
             <ValueInput />
@@ -107,12 +175,15 @@ export default props => {
                 <BalancePicker />
             </View>
 
+            <View style={styles.inputContainer}>
+                <TextInput style={styles.inputMoney} placeholder="Search for description" value={description} onChangeText={setDescription} />
+            </View>
+
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.send}>
                     <Text style={styles.sendText}>Filter</Text>
                 </TouchableOpacity>
             </View>
-
         </View>
     )
 }
@@ -124,8 +195,28 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderRadius: 3
     },
+    setDate: {
+        width: '85%',
+        justifyContent: "space-between",
+        alignItems: 'center',
+        flexDirection: 'row',
+        margin: 5
+    },
+    datePicker: {
+        paddingHorizontal: 5,
+        marginHorizontal: 5
+    },
+    date: {
+        fontSize: 15,
+        color: '#FFF',
+        fontWeight: 'bold'
+    },
+    dateTitle: {
+        fontSize: 16,
+        color: '#FFF',
+    },
     picker: {
-        flex: 1
+        flex: 1,
     },
     pickerItem: {
         backgroundColor: '#32779E',
@@ -147,7 +238,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         width: '90%',
-        marginVertical: 15,
+        marginBottom: 2
     },
     inputMoney: {
         borderBottomColor: '#CCC',
@@ -159,7 +250,6 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         alignItems: 'center',
-        justifyContent: 'space-between',
         width: '90%',
         marginVertical: 15,
     },

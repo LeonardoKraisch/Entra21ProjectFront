@@ -1,24 +1,53 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from 'react-native'
+import { ScrollView, View, Text, StyleSheet } from 'react-native'
 
 export default props => {
     return (
-        <View style={styles.info}>
-            <View>
-                <Text>Total:</Text>
+        <ScrollView style={styles.container}>
+            <View style={styles.header}>
+                <Text style={styles.headerTitle}>Launches</Text>
+                <View style={styles.headerValues}>
+                    <Text style={styles.headerText}>Total:</Text>
+                    <Text style={styles.headerText}>{props.total}</Text>
+                </View>
             </View>
-            <View>
-                <Text>{props.total}</Text>
+            <View style={styles.info}>
             </View>
-        </View>
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
-    info: {
-        height: '80%',
+    container: {
         width: '100%',
-        flexDirection: "row"
+        margin: 10,
+        backgroundColor: '#DDD',
+        borderRadius: 5,
+        alignSelf: 'center'
+    },
+    header: {
+        borderBottomColor: '#000',
+        borderBottomWidth: 2,
+        flexDirection: 'row',
+        padding: 10,
+        justifyContent: 'space-between'
+    },
+    headerTitle: {
+        fontSize: 18,
+        fontWeight: "bold",
+        color: '#333'
+    },
+    headerValues: {
+        flexDirection: 'row'
+    },
+    headerText: {
+        fontSize: 18,
+        fontWeight: "bold",
+        paddingLeft: 10
+    },
+    info: {
+        flexDirection: "row",
+        padding: 10,
     },
 })
 

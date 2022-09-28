@@ -1,31 +1,18 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
-import moment from 'moment'
-import DateTimePicker from '@react-native-community/datetimepicker'
-
 import useMoney from "../data/hooks/useMoney";
 import WalletFilters from "../components/Wallet/WalletFilters";
 import Report from "../components/Wallet/Report";
+
 
 export default props => {
     const [show, setShow] = useState("expenses")
     const [showFilters, setShowFilters] = useState(false)
 
-    const [date2, setDate2] = useState(new Date())
-    const [showDatePicker2, setShowDatePicker2] = useState(false)
-
-    const lastMonth = new Date()
-    lastMonth.setMonth(date2.getMonth() - 1)
-    const [date1, setDate1] = useState(lastMonth)
-    const [showDatePicker1, setShowDatePicker1] = useState(false)
-
-    const dateString1 = moment(date1).format('YYYY[-]M[-]D')
-    const dateString2 = moment(date2).format('YYYY[-]M[-]D')
-
     const { balance, total, expenses } = useMoney()
 
-    const showReport = () => {
+    const ShowReport = () => {
         if (show == "expenses") {
             return (
                 <Report total={expenses} />
@@ -41,50 +28,8 @@ export default props => {
         }
     }
 
-    const DatePicker1 = () => {
-        let datePicker = <DateTimePicker value={date1} onChange={(_, date) => {
-            setDate1(date)
-            setShowDatePicker1(false)
-        }} mode='date' />
+    const MonthPicker = () => {
 
-        const dateStringUser1 = moment(date1).format('M[/]D[/]YYYY')
-
-        if (Platform.OS === 'android') {
-            datePicker = (
-                <View style={styles.datePicker}>
-                    <TouchableOpacity onPress={() => setShowDatePicker1(true)}>
-                        <Text style={styles.date}>
-                            {dateStringUser1}
-                        </Text>
-                    </TouchableOpacity>
-                    {showDatePicker1 && datePicker}
-                </View>
-            )
-        }
-        return datePicker
-    }
-
-    const DatePicker2 = () => {
-        let datePicker = <DateTimePicker value={date2} onChange={(_, date) => {
-            setDate2(date)
-            setShowDatePicker2(false)
-        }} mode='date' />
-
-        const dateStringUser2 = moment(date2).format('M[/]D[/]YYYY')
-
-        if (Platform.OS === 'android') {
-            datePicker = (
-                <View style={styles.datePicker}>
-                    <TouchableOpacity onPress={() => setShowDatePicker2(true)}>
-                        <Text style={styles.date}>
-                            {dateStringUser2}
-                        </Text>
-                    </TouchableOpacity>
-                    {showDatePicker2 && datePicker}
-                </View>
-            )
-        }
-        return datePicker
     }
 
     const Filters = () => {
@@ -131,18 +76,10 @@ export default props => {
                         </Text>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.setDate}>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={styles.dateTitle}>From:</Text>
-                        <DatePicker1 />
-                    </View>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={styles.dateTitle}>to:</Text>
-                        <DatePicker2 />
-                    </View>
-                </View>
+                
             </View>
             <Filters />
+            <ShowReport />
             <View style={styles.row}>
                 <TouchableOpacity
                     style={{ justifyContent: 'center' }}
@@ -167,7 +104,8 @@ const styles = StyleSheet.create({
         fontSize: 30,
         color: '#FFF',
         fontWeight: 'bold',
-        margin: 2
+        margin: 2,
+        marginTop: 80
     },
     filters: {
         backgroundColor: '#32779E',
@@ -198,31 +136,13 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: '#CCC'
     },
-    setDate: {
-        width: '85%',
-        justifyContent: "space-between",
-        alignItems: 'center',
-        flexDirection: 'row',
-        margin: 5
-    },
-    datePicker: {
-        paddingHorizontal: 5,
-        marginHorizontal: 5
-    },
-    date: {
-        fontSize: 15,
-        color: '#FFF',
-        fontWeight: 'bold'
-    },
-    dateTitle: {
-        fontSize: 16,
-        color: '#FFF',
-    },
     secondaryContainer: {
-        backgroundColor: '#32779E'
+        backgroundColor: '#32779E',
+        borderBottomStartRadius: 3,
+        borderBottomEndRadius: 3,
     },
     buttonContainer: {
-        width: '20%',
+        width: '23%',
         paddingHorizontal: 2,
         marginHorizontal: 2,
         backgroundColor: '#32779E',
@@ -235,7 +155,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: '#FFF',
-        fontSize: 13,
+        fontSize: 15,
         fontWeight: 'bold'
     },
     row: {
