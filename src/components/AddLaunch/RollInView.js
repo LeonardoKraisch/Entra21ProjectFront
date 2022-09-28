@@ -1,7 +1,7 @@
 import { Animated } from "react-native";
 import { useEffect, useRef } from "react";
 
-import useAnimation from "../data/hooks/useAnimation";
+import useAnimation from "../../data/hooks/useAnimation";
 
 export default props => {
 

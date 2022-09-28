@@ -7,8 +7,8 @@ import { Picker } from "@react-native-picker/picker";
 import moment from 'moment'
 import DateTimePicker from '@react-native-community/datetimepicker'
 
-import useAnimation from '../data/hooks/useAnimation'
-import useMoney from '../data/hooks/useMoney'
+import useAnimation from '../../data/hooks/useAnimation'
+import useMoney from '../../data/hooks/useMoney'
 
 export default props => {
 

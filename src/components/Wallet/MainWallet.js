@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 
-import useMoney from "../data/hooks/useMoney";
+import useMoney from "../../data/hooks/useMoney";
 
 export default props => {
     const { total, expenses } = useMoney()

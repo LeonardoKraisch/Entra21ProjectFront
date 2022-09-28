@@ -4,7 +4,7 @@ import { Entypo } from "@expo/vector-icons";
 import RollInView from "./RollInView";
 import AddButtons from "./AddButtons"
 import Inputs from "./Inputs";
-import useAnimation from "../data/hooks/useAnimation";
+import useAnimation from "../../data/hooks/useAnimation";
 
 export default props => {
     const { show, close } = useAnimation()

@@ -25,7 +25,7 @@ export const MoneyProvider = ({ children }) => {
             setBalance(total - expenses)
         },
         send: async data => {
-            var money = data.money.replace("R$","").replace(".","").replace(",",".")
+            var money = data.money.replace("R$", "").replace(".", "").replace(",", ".")
             var launch = {
                 incMoney: parseFloat(money),
                 incCategory: data.category,
@@ -38,23 +38,23 @@ export const MoneyProvider = ({ children }) => {
                 userCode: await userCode
             }
             try {
-                    const newLaunch = await axios.post(`/${pressedPlus ? "income" : "expenses"}/new`, {launch})
-                    if (newLaunch.data.registered) {
-                        Toast.show({
-                            type: 'info',
-                            text1: 'Successful launch!',
-                            text2: 'You updated your balance.'
-                        })
-                    } else {
-                        Toast.show({
-                            type: 'info',
-                            text1: 'Noooooooot Successful launch!',
-                            text2: "You don't updated your balance."
-                        }) 
-                    }
+                const newLaunch = await axios.post(`/${pressedPlus ? "income" : "expenses"}/new`, { launch })
+                if (newLaunch.data.registered) {
+                    Toast.show({
+                        type: 'info',
+                        text1: 'Successful launch!',
+                        text2: 'You updated your balance.'
+                    })
+                } else {
+                    Toast.show({
+                        type: 'info',
+                        text1: 'Noooooooot Successful launch!',
+                        text2: "You don't updated your balance."
+                    })
+                }
 
-                
-                
+
+
             } catch (e) {
                 console.warn(e)
                 Toast.show({
@@ -64,18 +64,18 @@ export const MoneyProvider = ({ children }) => {
                 })
             }
         },
-            
-            getRegisters: async data => {
-                const newQuery = await axios.post(` /${data.type=="+" ? "income" : "expenses"}
+
+        getRegisters: async data => {
+            const newQuery = await axios.post(` /${data.type == "+" ? "income" : "expenses"}
                                                     /query`,
-                                                    {filterType:data.filterType, filter:data.filter})
-                return newQuery.data.registers
-            }
+                { filterType: data.filterType, filter: data.filter })
+            return newQuery.data.registers
+        }
 
 
 
-            
-        
+
+
 
     }
     return (

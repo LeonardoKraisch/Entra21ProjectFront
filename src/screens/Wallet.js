@@ -4,9 +4,9 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import moment from 'moment'
 import DateTimePicker from '@react-native-community/datetimepicker'
 
-
 import useMoney from "../data/hooks/useMoney";
-import WalletFilters from "../components/WalletFilters";
+import WalletFilters from "../components/Wallet/WalletFilters";
+import Report from "../components/Wallet/Report";
 
 export default props => {
     const [show, setShow] = useState("expenses")
@@ -23,31 +23,22 @@ export default props => {
     const dateString1 = moment(date1).format('YYYY[-]M[-]D')
     const dateString2 = moment(date2).format('YYYY[-]M[-]D')
 
-    const { balance } = useMoney()
+    const { balance, total, expenses } = useMoney()
 
-    const showExpenses = () => {
-        return (
-            <View style={styles.info}>
-                <View>
-                    <Text>Total expenses:</Text>
-                </View>
-                <View>
-                    <Text>{balance}</Text>
-                </View>
-            </View>
-        )
-    }
-    const showTotal = () => {
-        return (
-            <View style={styles.info}>
-                <View>
-                    <Text>Total balance:</Text>
-                </View>
-                <View>
-                    <Text>{balance}</Text>
-                </View>
-            </View>
-        )
+    const showReport = () => {
+        if (show == "expenses") {
+            return (
+                <Report total={expenses} />
+            )
+        } else if (show == "incomes") {
+            return (
+                <Report total={total} />
+            )
+        } else {
+            return (
+                <Report total={balance} />
+            )
+        }
     }
 
     const DatePicker1 = () => {
@@ -178,21 +169,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         margin: 2
     },
-    row: {
-        justifyContent: 'flex-end',
-        flexDirection: 'row',
-        marginTop: 15,
-        width: '90%',
-        alignSelf: 'center'
-    },
-    textReturn: {
-        color: '#22EEFB'
-    },
-    info: {
-        height: '80%',
-        width: '100%',
-        flexDirection: "row"
-    },
     filters: {
         backgroundColor: '#32779E',
         borderRadius: 3,
@@ -261,6 +237,16 @@ const styles = StyleSheet.create({
         color: '#FFF',
         fontSize: 13,
         fontWeight: 'bold'
+    },
+    row: {
+        justifyContent: 'flex-end',
+        flexDirection: 'row',
+        marginTop: 15,
+        width: '90%',
+        alignSelf: 'center'
+    },
+    textReturn: {
+        color: '#22EEFB'
     }
 })
 

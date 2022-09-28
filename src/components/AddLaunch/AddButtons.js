@@ -1,7 +1,7 @@
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 
-import useAnimation from '../data/hooks/useAnimation'
+import useAnimation from '../../data/hooks/useAnimation'
 
 export default props => {
 
