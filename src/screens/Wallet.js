@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
+import moment from 'moment'
+import DateTimePicker from '@react-native-community/datetimepicker'
+
 import useMoney from "../data/hooks/useMoney";
 import WalletFilters from "../components/Wallet/WalletFilters";
 import Report from "../components/Wallet/Report";
@@ -9,8 +12,34 @@ import Report from "../components/Wallet/Report";
 export default props => {
     const [show, setShow] = useState("expenses")
     const [showFilters, setShowFilters] = useState(false)
+    const [date, setDate] = useState(new Date())
+    const [showDatePicker, setShowDatePicker] = useState(false)
 
     const { balance, total, expenses } = useMoney()
+
+    const dateStringUser = moment(date).format('MMMM[/]YYYY')
+
+    const DatePicker = () => {
+        let datePicker = <DateTimePicker display="spinner" value={date} onChange={(_, date) => {
+            setDate(date)
+            setShowDatePicker(false)
+        }} mode='date' />
+
+
+        if (Platform.OS === 'android') {
+            datePicker = (
+                <View style={styles.datePicker}>
+                    <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+                        <Text style={styles.date}>
+                            {dateStringUser}
+                        </Text>
+                    </TouchableOpacity>
+                    {showDatePicker && datePicker}
+                </View>
+            )
+        }
+        return datePicker
+    }
 
     const ShowReport = () => {
         if (show == "expenses") {
@@ -26,10 +55,6 @@ export default props => {
                 <Report total={balance} />
             )
         }
-    }
-
-    const MonthPicker = () => {
-
     }
 
     const Filters = () => {
@@ -76,7 +101,7 @@ export default props => {
                         </Text>
                     </TouchableOpacity>
                 </View>
-                
+                <DatePicker />
             </View>
             <Filters />
             <ShowReport />
@@ -135,6 +160,15 @@ const styles = StyleSheet.create({
     unselect: {
         fontSize: 15,
         color: '#CCC'
+    },
+    datePicker: {
+        paddingHorizontal: 5,
+        marginHorizontal: 5
+    },
+    date: {
+        fontSize: 15,
+        color: '#FFF',
+        fontWeight: 'bold'
     },
     secondaryContainer: {
         backgroundColor: '#32779E',
