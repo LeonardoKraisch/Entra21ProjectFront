@@ -1,4 +1,4 @@
-import { useState, createContext } from "react";
+import React, { useState, createContext } from "react";
 import Toast from 'react-native-toast-message'
 import axios from "axios";
 
@@ -12,9 +12,9 @@ export const MoneyProvider = ({ children }) => {
     const { userCode, start } = useUser()
 
     const [balance, setBalance] = useState(0)
-    const [coin, setCoin] = useState('R$')
     const [total, setTotal] = useState(2000)
     const [expenses, setExpenses] = useState(300)
+    const [coin, setCoin] = useState('R$')
     const moneyInternalContext = {
         balance,
         coin,
@@ -29,9 +29,9 @@ export const MoneyProvider = ({ children }) => {
             var launch = {
                 incMoney: parseFloat(money),
                 incCategory: data.category,
-                incPayments: data.payments,
-                incTotalValue: data.totalValue,
-                incTimes: data.times,
+                incPaymentMethod: parseInt(data.payments),
+                incTotalPayment: data.totalValue,
+                incTimes: parseInt(data.times),
                 incPending: data.pending,
                 incDate: data.dateString,
                 incDescription: data.description,
@@ -52,8 +52,6 @@ export const MoneyProvider = ({ children }) => {
                         text2: "You don't updated your balance."
                     })
                 }
-
-
 
             } catch (e) {
                 console.warn(e)

@@ -15,7 +15,7 @@ export default props => {
     const { pressedPlus } = useAnimation()
     const { send } = useMoney()
 
-    const [money, setMoney] = useState(0)
+    const [money, setMoney] = useState("0")
     const [category, setCategory] = useState("other")
     const [payments, setPayments] = useState('1')
     const [totalValue, setTotalValue] = useState(true)
@@ -25,7 +25,7 @@ export default props => {
     const [description, setDescription] = useState('')
     const [showDatePicker, setShowDatePicker] = useState(false)
 
-    const dateString = moment(date).format('YYYY[-]M[-]D')
+    const dateString = moment(date).format('YYYY[-]MM[-]D')
 
     const Message = () => {
         if (pressedPlus) {
