@@ -1,4 +1,5 @@
-import React from 'react'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
+import React, { useState } from 'react'
 import {
     View,
     Text,
@@ -7,8 +8,10 @@ import {
 } from 'react-native'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { MaterialIcons } from '@expo/vector-icons'
 
 export default props => {
+    const [show, setShow] = useState(false)
 
     const getRightContent = () => {
         return (
@@ -18,15 +21,35 @@ export default props => {
         )
     }
 
+    const ShowDescription = () => {
+        if (show) {
+            return (
+                <View style={styles.descriptionContainer}>
+                    <MaterialIcons name="subdirectory-arrow-right" size={15} color='#000' />
+                    <Text style={{ fontWeight: 'bold', fontSize: 15, marginLeft: 3 }}>Description: </Text>
+                    <Text style={styles.description}>{props.incDescription}</Text>
+                </View>
+            )
+        }
+    }
+
     return (
         <Swipeable renderRightActions={getRightContent} >
-            <View style={styles.container}>
-                <Text>{props.incMoney}</Text>
-                <Text>{props.incDate}</Text>
-                <Text>{props.incCategory}</Text>
-                <Text>{props.incDescription}</Text>
-                <Text>{props.parcelCode}</Text>
-            </View>
+            <TouchableOpacity onPress={() => setShow(!show)} style={styles.container}>
+                <View style={styles.textContainer}>
+                    <Text style={styles.text}>{props.incCategory}</Text>
+                </View>
+                <View style={styles.textContainer}>
+                    <Text style={styles.text}>{props.incDate}</Text>
+                </View>
+                <View style={styles.textContainer}>
+                    <Text style={styles.text}>{props.parcelCode}</Text>
+                </View>
+                <View style={styles.textContainer}>
+                    <Text style={styles.text}>{props.incMoney}</Text>
+                </View>
+            </TouchableOpacity>
+            <ShowDescription />
         </Swipeable>
     )
 }
@@ -34,6 +57,9 @@ export default props => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
+        backgroundColor: '#FFF',
+        width: '100%',
+        height: 30
     },
     right: {
         backgroundColor: 'red',
@@ -41,5 +67,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-end',
         paddingHorizontal: 20
+    },
+    textContainer: {
+        flex: 1,
+        alignItems: 'center',
+        margin: 5,
+        justifyContent: 'space-between'
+    },
+    descriptionContainer: {
+        backgroundColor: '#EEE',
+        flexDirection: 'row',
+        marginHorizontal: 15,
+        alignItems: 'baseline'
+    },
+    description: {
+        flex: 1,
+        marginLeft: 10
     }
 })

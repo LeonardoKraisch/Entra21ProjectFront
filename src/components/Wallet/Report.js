@@ -6,7 +6,7 @@ import Register from "./Register";
 export default props => {
     const data = [
         {
-            incMoney: 20.50,
+            incMoney: 2000.50,
             incCategory: "food",
             incDate: "2022-09-28",
             incDescription: "salada",
@@ -40,7 +40,20 @@ export default props => {
                         <Text style={styles.headerText}>{props.total}</Text>
                     </View>
                 </View>
-
+                <View style={styles.headerBottom}>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.text}>Category</Text>
+                    </View>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.text}>Date</Text>
+                    </View>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.text}>Parcel</Text>
+                    </View>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.text}>Value</Text>
+                    </View>
+                </View>
             </View>
             <View style={styles.info}>
                 <RegistersList />
@@ -53,20 +66,36 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         margin: 10,
-        backgroundColor: '#DDD',
+        backgroundColor: '#FFF',
         borderRadius: 5,
         alignSelf: 'center'
     },
     header: {
         width: '100%',
-        flexDirection: 'row',
     },
     headerTop: {
         width: '100%',
         flexDirection: 'row',
-        borderBottomColor: '#000',
-        borderBottomWidth: 2,
-        justifyContent: "space-between"
+        borderBottomColor: '#3C3C3C',
+        borderBottomWidth: 1,
+        justifyContent: "space-between",
+        paddingHorizontal: 5,
+        paddingVertical: 3
+    },
+    headerBottom: {
+        width: '98%',
+        alignSelf: 'center',
+        justifyContent: "space-between",
+        flexDirection: 'row',
+        margin: 3
+    },
+    textContainer: {
+        width: '23%',
+        alignItems: 'center',
+    },
+    text: {
+        fontWeight: 'bold',
+        fontSize: 16
     },
     headerValues: {
         flexDirection: 'row',
@@ -83,7 +112,6 @@ const styles = StyleSheet.create({
     },
     info: {
         flexDirection: "row",
-        padding: 10,
     },
 })
 
