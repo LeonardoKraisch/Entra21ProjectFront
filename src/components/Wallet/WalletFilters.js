@@ -6,7 +6,11 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 
 import { Picker } from "@react-native-picker/picker";
 
+import useMoney from '../../data/hooks/useMoney'
+
 export default props => {
+    const { getRegisters } = useMoney()
+
     const [date2, setDate2] = useState(new Date())
     const [showDatePicker2, setShowDatePicker2] = useState(false)
 
@@ -180,7 +184,12 @@ export default props => {
             </View>
 
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.send}>
+                <TouchableOpacity onPress={() => getRegisters({
+                    type: "+",
+                    filterType: ">=",
+                    filter: "2022-09-1",
+                    column: "incDate"
+                })} style={styles.send}>
                     <Text style={styles.sendText}>Filter</Text>
                 </TouchableOpacity>
             </View>
