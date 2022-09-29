@@ -66,9 +66,18 @@ export const MoneyProvider = ({ children }) => {
         getRegisters: async data => {
             const newQuery = await axios.post(` /${data.type == "+" ? "income" : "expenses"}
                                                     /query`,
-                { filterType: data.filterType, filter: data.filter })
+                { filterType: data.filterType, filter: data.filter,  column :data. column })
             return newQuery.data.registers
+        },
+        exemple: () => {
+            console.log(getRegisters({
+                type:"+",
+                filterType: ">=",
+                filter:"2022-09-1",
+                column:"incDate"
+            }))
         }
+
 
 
 
