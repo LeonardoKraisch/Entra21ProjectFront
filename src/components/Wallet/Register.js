@@ -58,8 +58,11 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         backgroundColor: '#FFF',
-        width: '100%',
-        height: 30
+        height: 30,
+        borderRightColor: '#999',
+        borderBottomColor: '#999',
+        borderBottomWidth: 1,
+        borderRightWidth: 1
     },
     right: {
         backgroundColor: 'red',

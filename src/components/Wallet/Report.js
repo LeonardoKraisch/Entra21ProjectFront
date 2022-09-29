@@ -66,9 +66,10 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         margin: 10,
-        backgroundColor: '#FFF',
+        backgroundColor: '#EEE',
         borderRadius: 5,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        padding: 5
     },
     header: {
         width: '100%',

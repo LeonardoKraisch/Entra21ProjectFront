@@ -165,7 +165,9 @@ export default props => {
                     </TouchableOpacity>
                 </View>
                 <DatePicker />
-                <TouchableOpacity onPress={() => send({ money, category, payments, totalValue, times, pending, dateString, description })}
+                <TouchableOpacity
+                    disabled={money == 0 || '' ? true : false}
+                    onPress={() => send({ money, category, payments, totalValue, times, pending, dateString, description })}
                     style={styles.send}>
                     <Text style={styles.sendText}>OK</Text>
                 </TouchableOpacity>
