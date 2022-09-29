@@ -10,12 +10,13 @@ import Report from "../components/Wallet/Report";
 
 
 export default props => {
+    const { date, setDate, balance } = useMoney()
+
     const [show, setShow] = useState("expenses")
     const [showFilters, setShowFilters] = useState(false)
-    const [date, setDate] = useState(new Date())
     const [showDatePicker, setShowDatePicker] = useState(false)
-
-    const { balance, total, expenses } = useMoney()
+    const [incomes, setIncomes] = useState([])
+    const [expenses, setExpenses] = useState([])
 
     const dateStringUser = moment(date).format('MMMM[/]YYYY')
 
@@ -44,15 +45,15 @@ export default props => {
     const ShowReport = () => {
         if (show == "expenses") {
             return (
-                <Report total={expenses} />
+                <Report launches={expenses} />
             )
         } else if (show == "incomes") {
             return (
-                <Report total={total} />
+                <Report launches={incomes} />
             )
         } else {
             return (
-                <Report total={balance} />
+                <Report launches={balance} />
             )
         }
     }

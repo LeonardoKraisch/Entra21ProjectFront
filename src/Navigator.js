@@ -17,8 +17,7 @@ const Stack = createNativeStackNavigator()
 
 export default props => {
 
-    const { email, name, logout } = useUser()
-    const { getBalance } = useMoney()
+    const { email, name, logout, start } = useUser()
 
     const Auth = () => (
         <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
@@ -28,7 +27,7 @@ export default props => {
     )
 
     const AuthOrHome = () => {
-        getBalance()
+        start()
         return (
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 {email ?

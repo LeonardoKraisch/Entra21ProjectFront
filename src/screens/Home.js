@@ -6,6 +6,7 @@ import MainWallet from "../components/Wallet/MainWallet";
 import AddView from "../components/AddLaunch/AddView";
 
 export default props => {
+
     const wallets = [1, 2]
 
     return (

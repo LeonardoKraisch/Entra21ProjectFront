@@ -184,12 +184,7 @@ export default props => {
             </View>
 
             <View style={styles.buttonContainer}>
-                <TouchableOpacity onPress={() => getRegisters({
-                    type: "+",
-                    filterType: ">=",
-                    filter: "2022-09-1",
-                    column: "incDate"
-                })} style={styles.send}>
+                <TouchableOpacity style={styles.send}>
                     <Text style={styles.sendText}>Filter</Text>
                 </TouchableOpacity>
             </View>

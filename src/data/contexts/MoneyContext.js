@@ -2,6 +2,8 @@ import React, { useState, createContext } from "react";
 import Toast from 'react-native-toast-message'
 import axios from "axios";
 
+import moment from 'moment'
+
 import useAnimation from "../hooks/useAnimation";
 import useUser from "../hooks/useUser"
 
@@ -9,21 +11,58 @@ const MoneyContext = createContext({})
 
 export const MoneyProvider = ({ children }) => {
     const { pressedPlus } = useAnimation()
-    const { userCode, start } = useUser()
+    const { userCode } = useUser()
 
     const [balance, setBalance] = useState(0)
-    const [total, setTotal] = useState(2000)
-    const [expenses, setExpenses] = useState(300)
+    const [totalInc, setTotalInc] = useState(2000)
+    const [totalExp, setTotalExp] = useState(300)
+    const [date, setDate] = useState(new Date())
+
     const [coin, setCoin] = useState('R$')
+
+    const dateString = moment(date).format('YYYY[-]MM')
+    const lastDay = (date) => {
+        var month = new Date(date).getMonth() + 1
+        var year = new Date(date).getFullYear()
+        var numDays = 0
+        switch (month) {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                numDays = 31
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                numDays = 30;
+                break;
+            case 2:
+                if (((year % 4 == 0) &&
+                    !(year % 100 == 0))
+                    || (year % 400 == 0))
+                    numDays = 29;
+                else
+                    numDays = 28;
+                break;
+            default:
+                console.warn("Invalid month.")
+                break;
+        }
+        return numDays
+    }
+
     const moneyInternalContext = {
         balance,
         coin,
-        total,
-        expenses,
-        getBalance: async () => {
-            await start()
-            setBalance(total - expenses)
-        },
+        date,
+        totalInc,
+        totalExp,
+        setDate,
         send: async data => {
             var money = data.money.replace("R$", "").replace(".", "").replace(",", ".")
             var launch = {
@@ -64,20 +103,27 @@ export const MoneyProvider = ({ children }) => {
         },
 
         getRegisters: async data => {
-            console.log(` /${data.type == "+" ? "income" : "expenses"}/query`);
             const newQuery = await axios.post(`/${data.type == "+" ? "income" : "expenses"}/query`,
                 { filterType: data.filterType, filter: data.filter, column: data.column })
-                console.log(newQuery.data.registers)
             return newQuery.data.registers
+        },
+
+        fetchMonthLaunches: async function () {
+            const incomeArray = await moneyInternalContext.getRegisters({
+                type: "+",
+                filterType: "[]",
+                filter: [`${dateString}-1`, `${dateString}-${lastDay(date)}`],
+                column: "incDate"
+            })
+            setIncomes(incomeArray)
+
+            // moneyInternalContext.getRegisters({
+            //     type: "-",
+            //     filterType: "[]",
+            //     filter: [`${dateString}-1`, `${dateString}-${lastDay(date)}`],
+            //     column: "incDate"
+            // })
         }
-
-
-
-
-
-
-
-
     }
     return (
         <MoneyContext.Provider value={moneyInternalContext}>

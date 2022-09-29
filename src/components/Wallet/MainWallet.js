@@ -5,19 +5,19 @@ import { PieChart } from "react-native-chart-kit";
 import useMoney from "../../data/hooks/useMoney";
 
 export default props => {
-    const { total, expenses } = useMoney()
+    const { totalInc, totalExp } = useMoney()
 
     const pieData = [
         {
             name: 'Total Left',
-            values: total - expenses,
+            values: totalInc - totalExp,
             color: '#ffffff',
             legendFontColor: '#FFF',
             legendFontSize: 15,
         },
         {
             name: 'Expenses',
-            values: expenses,
+            values: totalExp,
             color: '#c63222',
             legendFontColor: '#FFF',
             legendFontSize: 15,
