@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
 import moment from 'moment'
@@ -10,13 +10,32 @@ import Report from "../components/Wallet/Report";
 
 
 export default props => {
-    const { date, setDate, balance } = useMoney()
+    const { balance, getRegisters, calcTotal, lastDay } = useMoney()
 
     const [show, setShow] = useState("expenses")
     const [showFilters, setShowFilters] = useState(false)
     const [showDatePicker, setShowDatePicker] = useState(false)
+    const [date, setDate] = useState(new Date())
     const [incomes, setIncomes] = useState([])
+    const [totalInc, setTotalInc] = useState()
     const [expenses, setExpenses] = useState([])
+
+    const dateString = moment(date).format('YYYY[-]MM')
+
+    useEffect(() => {
+        async function fetchData() {
+            const response = await getRegisters({
+                type: "+",
+                filterType: "[]",
+                filter: [`${dateString}-1`, `${dateString}-${lastDay(date)}`],
+                column: "incDate"
+            })
+            const totalIncome = await calcTotal(response, 'incMoney')
+            setIncomes(response)
+            setTotalInc(totalIncome)
+        }
+        fetchData()
+    }, [date])
 
     const dateStringUser = moment(date).format('MMMM[/]YYYY')
 
@@ -25,7 +44,6 @@ export default props => {
             setDate(date)
             setShowDatePicker(false)
         }} mode='date' />
-
 
         if (Platform.OS === 'android') {
             datePicker = (
@@ -49,7 +67,7 @@ export default props => {
             )
         } else if (show == "incomes") {
             return (
-                <Report launches={incomes} />
+                <Report launches={incomes} total={totalInc} date={date} />
             )
         } else {
             return (
@@ -104,8 +122,10 @@ export default props => {
                 </View>
                 <DatePicker />
             </View>
-            <Filters />
-            <ShowReport />
+            <View style={{ maxHeight: "50%" }}>
+                <Filters />
+                <ShowReport />
+            </View>
             <View style={styles.row}>
                 <TouchableOpacity
                     style={{ justifyContent: 'center' }}

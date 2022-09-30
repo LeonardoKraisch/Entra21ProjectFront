@@ -14,8 +14,10 @@ export const MoneyProvider = ({ children }) => {
     const { userCode } = useUser()
 
     const [balance, setBalance] = useState(0)
-    const [totalInc, setTotalInc] = useState(2000)
-    const [totalExp, setTotalExp] = useState(300)
+    const [incomes, setIncomes] = useState([])
+    const [expenses, setExpenses] = useState([])
+    const [totalInc, setTotalInc] = useState(0)
+    const [totalExp, setTotalExp] = useState(0)
     const [date, setDate] = useState(new Date())
 
     const [coin, setCoin] = useState('R$')
@@ -62,7 +64,7 @@ export const MoneyProvider = ({ children }) => {
         date,
         totalInc,
         totalExp,
-        setDate,
+        lastDay,
         send: async data => {
             var money = data.money.replace("R$", "").replace(".", "").replace(",", ".")
             var launch = {
@@ -108,22 +110,42 @@ export const MoneyProvider = ({ children }) => {
             return newQuery.data.registers
         },
 
-        fetchMonthLaunches: async function () {
-            const incomeArray = await moneyInternalContext.getRegisters({
-                type: "+",
-                filterType: "[]",
-                filter: [`${dateString}-1`, `${dateString}-${lastDay(date)}`],
-                column: "incDate"
-            })
-            setIncomes(incomeArray)
+        fetchAllLaunches: async function () {
+            try {
+                const incomeArray = await moneyInternalContext.getRegisters({
+                    type: "+",
+                    filterType: "[]",
+                    filter: [`${dateString}-1`, `${dateString}-${lastDay(date)}`],
+                    column: "incDate"
+                })
+                const expensesArray = await moneyInternalContext.getRegisters({
+                    type: "-",
+                    filterType: "[]",
+                    filter: [`${dateString}-1`, `${dateString}-${lastDay(date)}`],
+                    column: "expDate"
+                })
 
-            // moneyInternalContext.getRegisters({
-            //     type: "-",
-            //     filterType: "[]",
-            //     filter: [`${dateString}-1`, `${dateString}-${lastDay(date)}`],
-            //     column: "incDate"
-            // })
+                var totalInc = await moneyInternalContext.calcTotal(incomeArray, 'incMoney')
+                var totalExp = await moneyInternalContext.calcTotal(expensesArray, 'expMoney')
+
+                setTotalExp(totalExp)
+                setTotalInc(totalInc)
+                setExpenses(expensesArray)
+                setIncomes(incomeArray)
+
+            } catch (e) {
+                console.log(e.message)
+            }
+        },
+
+        calcTotal: async (array, camp) => {
+            var total = 0
+            array.forEach((element) => {
+                total = total + element[camp]
+            })
+            return total
         }
+
     }
     return (
         <MoneyContext.Provider value={moneyInternalContext}>

@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SafeAreaView, View, StyleSheet, FlatList } from 'react-native'
 import Header from "../components/Header";
 import CustomWallet from "../components/CustomWallet";
 import MainWallet from "../components/Wallet/MainWallet";
 import AddView from "../components/AddLaunch/AddView";
 
-export default props => {
+import useMoney from "../data/hooks/useMoney";
 
+export default props => {
+    const { fetchAllLaunches } = useMoney()
     const wallets = [1, 2]
+
+    useEffect(() => {
+        async function fetch() {
+            fetchAllLaunches()
+        }
+        fetch()
+    }, [])
 
     return (
         <SafeAreaView style={styles.containter}>

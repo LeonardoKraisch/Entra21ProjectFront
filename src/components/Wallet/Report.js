@@ -1,30 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, StyleSheet, FlatList } from 'react-native'
 
 import Register from "./Register";
 
 export default props => {
-    const data = [
-        {
-            incMoney: 2000.50,
-            incCategory: "food",
-            incDate: "2022-09-28",
-            incDescription: "salada",
-            parcelCode: 1
-        },
-        {
-            incMoney: 20.50,
-            incCategory: "food",
-            incDate: "2022-09-28",
-            incDescription: "salada",
-            parcelCode: 1
-        }
-    ]
-    const [registers, setRegisters] = useState(data)
 
     const RegistersList = () => {
         return (
-            <FlatList data={data}
+            <FlatList data={props.launches}
                 keyExtractor={item => Math.random()}
                 renderItem={({ item }) => <Register {...item} />} />
         )
@@ -113,6 +96,6 @@ const styles = StyleSheet.create({
     },
     info: {
         flexDirection: "row",
+        maxHeight: "80%"
     },
 })
-
