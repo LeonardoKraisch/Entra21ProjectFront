@@ -26,7 +26,7 @@ export default props => {
                 <View style={styles.descriptionContainer}>
                     <MaterialIcons name="subdirectory-arrow-right" size={15} color='#000' />
                     <Text style={{ fontWeight: 'bold', fontSize: 15, marginLeft: 3 }}>Description: </Text>
-                    <Text style={styles.description}>{props.incDescription}</Text>
+                    <Text style={styles.description}>{props.incDescription ? props.incDescription : props.expDescription}</Text>
                 </View>
             )
         }
@@ -36,16 +36,16 @@ export default props => {
         <Swipeable renderRightActions={getRightContent} >
             <TouchableOpacity onPress={() => setShow(!show)} style={styles.container}>
                 <View style={styles.textContainer}>
-                    <Text style={styles.text}>{props.incCategory}</Text>
+                    <Text style={styles.text}>{props.incCategory ? props.incCategory : props.expCategory}</Text>
                 </View>
                 <View style={styles.textContainer}>
-                    <Text style={styles.text}>{props.incDate}</Text>
+                    <Text style={styles.text}>{props.incDate ? props.incDate : props.expDate}</Text>
                 </View>
                 <View style={styles.textContainer}>
                     <Text style={styles.text}>{props.parcelCode}</Text>
                 </View>
                 <View style={styles.textContainer}>
-                    <Text style={styles.text}>{props.incMoney}</Text>
+                    <Text style={styles.text}>{props.incMoney ? props.incMoney : props.expMoney}</Text>
                 </View>
             </TouchableOpacity>
             <ShowDescription />

@@ -80,17 +80,17 @@ export const MoneyProvider = ({ children }) => {
         lastDay,
         send: async data => {
             var money = data.money.replace("R$", "").replace(".", "").replace(",", ".")
-            var launch = {
-                incMoney: parseFloat(money),
-                incCategory: data.category,
-                incPaymentMethod: parseInt(data.payments),
-                incTotalPayment: data.totalValue,
-                incTimes: parseInt(data.times),
-                incPending: data.pending,
-                incDate: data.dateString,
-                incDescription: data.description,
-                userCode: await userCode
-            }
+            var table = pressedPlus ? "inc" : "exp"
+            var launch = {}
+                launch[`${table}Money`] = parseFloat(money),
+                launch[`${table}Category`] = data.category,
+                launch[`${table}PaymentMethod`] = parseInt(data.payments),
+                launch[`${table}TotalPayment`] = data.totalValue,
+                launch[`${table}Times`] = parseInt(data.times),
+                launch[`${table}Pending`] = data.pending,
+                launch[`${table}Date`] = data.dateString,
+                launch[`${table}Description`] = data.description,
+                launch['userCode'] = await userCode
             try {
                 const newLaunch = await axios.post(`/${pressedPlus ? "income" : "expense"}/new`, { launch })
                 if (await newLaunch.data.registered) {
@@ -100,6 +100,7 @@ export const MoneyProvider = ({ children }) => {
                         text2: 'You updated your balance.'
                     })
                 } else {
+                    console.log(newLaunch.data.registered)
                     Toast.show({
                         type: 'info',
                         text1: 'Noooooooot Successful launch!',
