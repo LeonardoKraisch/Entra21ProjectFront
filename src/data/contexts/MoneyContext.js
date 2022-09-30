@@ -82,7 +82,7 @@ export const MoneyProvider = ({ children }) => {
             var money = data.money.replace("R$", "").replace(".", "").replace(",", ".")
             var table = pressedPlus ? "inc" : "exp"
             var launch = {}
-                launch[`${table}Money`] = parseFloat(money),
+            launch[`${table}Money`] = parseFloat(money),
                 launch[`${table}Category`] = data.category,
                 launch[`${table}PaymentMethod`] = parseInt(data.payments),
                 launch[`${table}TotalPayment`] = data.totalValue,
@@ -169,7 +169,7 @@ export const MoneyProvider = ({ children }) => {
         searchLaunches: async (dateSearch) => {
             try {
                 if (dateSearch != date) {
-                    const response = await moneyInternalContext.getRegisters({
+                    const incomesSearch = await moneyInternalContext.getRegisters({
                         type: "+",
                         filterType: "[]",
                         filter: [`${dateString(dateSearch)}-1`, `${dateString(dateSearch)}-${lastDay(dateSearch)}`],
@@ -177,11 +177,24 @@ export const MoneyProvider = ({ children }) => {
                     })
                     const totalIncome = await moneyInternalContext.calcTotal(response, 'incMoney')
 
-                    setSearchIncomes(await response)
+                    setSearchIncomes(await incomesSearch)
                     setTotalSearchInc(totalIncome)
+
+                    const expensesSearch = await moneyInternalContext.getRegisters({
+                        type: "-",
+                        filterType: "[]",
+                        filter: [`${dateString(dateSearch)}-1`, `${dateString(dateSearch)}-${lastDay(dateSearch)}`],
+                        column: "expDate"
+                    })
+                    const totalExpense = await moneyInternalContext.calcTotal(response, 'expMoney')
+
+                    setSearchExpenses(await expensesSearch)
+                    setTotalSearchInc(totalExpense)
                 } else {
                     setSearchIncomes(incomes)
                     setTotalSearchInc(totalInc)
+                    setSearchExpenses(expenses)
+                    setTotalSearchExp(totalExp)
                 }
             } catch (e) {
                 console.log(e.message);
