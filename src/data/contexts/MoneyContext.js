@@ -139,8 +139,8 @@ export const MoneyProvider = ({ children }) => {
                     column: "expDate"
                 })
 
-                var totalInc = await moneyInternalContext.calcTotal(incomeArray, 'incMoney')
-                var totalExp = await moneyInternalContext.calcTotal(expensesArray, 'expMoney')
+                const totalInc = await moneyInternalContext.calcTotal(incomeArray, 'incMoney')
+                const totalExp = await moneyInternalContext.calcTotal(expensesArray, 'expMoney')
 
                 setTotalExp(totalExp)
                 setTotalInc(totalInc)
@@ -152,18 +152,16 @@ export const MoneyProvider = ({ children }) => {
                 setSearchIncomes(incomeArray)
                 setSearchExpenses(expensesArray)
 
+                var merged = await moneyInternalContext.mergeArrays(incomeArray, "incMoney", expensesArray, 'expMoney')
+                console.log(merged)
+
+                const total = totalInc - totalExp
+                setBalance(total)
+
             } catch (e) {
                 console.log(dateString(date));
                 console.log(e.message)
             }
-        },
-
-        calcTotal: async (array, camp) => {
-            var total = 0
-            array.forEach((element) => {
-                total = total + element[camp]
-            })
-            return total
         },
 
         searchLaunches: async (dateSearch) => {
@@ -175,7 +173,7 @@ export const MoneyProvider = ({ children }) => {
                         filter: [`${dateString(dateSearch)}-1`, `${dateString(dateSearch)}-${lastDay(dateSearch)}`],
                         column: "incDate"
                     })
-                    const totalIncome = await moneyInternalContext.calcTotal(response, 'incMoney')
+                    const totalIncome = await moneyInternalContext.calcTotal(incomesSearch, 'incMoney')
 
                     setSearchIncomes(await incomesSearch)
                     setTotalSearchInc(totalIncome)
@@ -186,22 +184,43 @@ export const MoneyProvider = ({ children }) => {
                         filter: [`${dateString(dateSearch)}-1`, `${dateString(dateSearch)}-${lastDay(dateSearch)}`],
                         column: "expDate"
                     })
-                    const totalExpense = await moneyInternalContext.calcTotal(response, 'expMoney')
+                    const totalExpense = await moneyInternalContext.calcTotal(expensesSearch, 'expMoney')
 
                     setSearchExpenses(await expensesSearch)
-                    setTotalSearchInc(totalExpense)
+                    setTotalSearchExp(totalExpense)
+
+                    const total = totalInc - totalExp
+                    setBalance(total)
                 } else {
                     setSearchIncomes(incomes)
                     setTotalSearchInc(totalInc)
                     setSearchExpenses(expenses)
                     setTotalSearchExp(totalExp)
+                    const total = totalInc - totalExp
+                    setBalance(total)
                 }
             } catch (e) {
                 console.log(e.message);
             }
 
+        },
+
+        calcTotal: async (array, camp) => {
+            var total = 0
+            array.forEach((element) => {
+                total += element[camp]
+            })
+            return total
+        },
+
+        mergeArrays: async (array, camp, array2, camp2) => {
+            var newArray = [...array2]
+            newArray.map(element => element[camp2] = element[camp2] * - 1)
+            var all = [...newArray, ...array]
+            return all
         }
     }
+
 
     return (
         <MoneyContext.Provider value={moneyInternalContext}>
