@@ -214,8 +214,8 @@ export const MoneyProvider = ({ children }) => {
         },
 
         mergeArrays: async (array, camp, array2, camp2) => {
-            var newArray = [...array2]
-            newArray.map(element => element[camp2] = element[camp2] * - 1)
+            var newArray = array2.map(element => ({ ...element }))
+            newArray.map(element => element[camp2] = element[camp2] * -1)
             var all = [...newArray, ...array]
             return all
         }
