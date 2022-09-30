@@ -10,38 +10,19 @@ import Report from "../components/Wallet/Report";
 
 
 export default props => {
-    const { balance, getRegisters, calcTotal, lastDay } = useMoney()
+    const { balance, searchIncomes, searchExpenses, totalSearchInc, totalSearchExp, searchLaunches } = useMoney()
 
     const [show, setShow] = useState("expenses")
     const [showFilters, setShowFilters] = useState(false)
     const [showDatePicker, setShowDatePicker] = useState(false)
     const [date, setDate] = useState(new Date())
-    const [incomes, setIncomes] = useState([])
-    const [totalInc, setTotalInc] = useState()
-    const [expenses, setExpenses] = useState([])
-
-    const dateString = moment(date).format('YYYY[-]MM')
-
-    useEffect(() => {
-        async function fetchData() {
-            const response = await getRegisters({
-                type: "+",
-                filterType: "[]",
-                filter: [`${dateString}-1`, `${dateString}-${lastDay(date)}`],
-                column: "incDate"
-            })
-            const totalIncome = await calcTotal(response, 'incMoney')
-            setIncomes(response)
-            setTotalInc(totalIncome)
-        }
-        fetchData()
-    }, [date])
 
     const dateStringUser = moment(date).format('MMMM[/]YYYY')
 
     const DatePicker = () => {
         let datePicker = <DateTimePicker display="spinner" value={date} onChange={(_, date) => {
             setDate(date)
+            searchLaunches(date)
             setShowDatePicker(false)
         }} mode='date' />
 
@@ -63,11 +44,11 @@ export default props => {
     const ShowReport = () => {
         if (show == "expenses") {
             return (
-                <Report launches={expenses} />
+                <Report launches={searchExpenses} total={totalSearchExp} />
             )
         } else if (show == "incomes") {
             return (
-                <Report launches={incomes} total={totalInc} date={date} />
+                <Report launches={searchIncomes} total={totalSearchInc} />
             )
         } else {
             return (

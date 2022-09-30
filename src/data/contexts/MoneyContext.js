@@ -20,9 +20,14 @@ export const MoneyProvider = ({ children }) => {
     const [totalExp, setTotalExp] = useState(0)
     const [date, setDate] = useState(new Date())
 
+    const [searchIncomes, setSearchIncomes] = useState([])
+    const [searchExpenses, setSearchExpenses] = useState([])
+    const [totalSearchInc, setTotalSearchInc] = useState(0)
+    const [totalSearchExp, setTotalSearchExp] = useState(0)
+
     const [coin, setCoin] = useState('R$')
 
-    const dateString = moment(date).format('YYYY[-]MM')
+    const dateString = date => moment(date).format('YYYY[-]MM')
     const lastDay = (date) => {
         var month = new Date(date).getMonth() + 1
         var year = new Date(date).getFullYear()
@@ -59,11 +64,19 @@ export const MoneyProvider = ({ children }) => {
     }
 
     const moneyInternalContext = {
-        balance,
         coin,
         date,
+        balance,
         totalInc,
         totalExp,
+        incomes,
+        expenses,
+
+        searchIncomes,
+        searchExpenses,
+        totalSearchInc,
+        totalSearchExp,
+
         lastDay,
         send: async data => {
             var money = data.money.replace("R$", "").replace(".", "").replace(",", ".")
@@ -79,8 +92,8 @@ export const MoneyProvider = ({ children }) => {
                 userCode: await userCode
             }
             try {
-                const newLaunch = await axios.post(`/${pressedPlus ? "income" : "expenses"}/new`, { launch })
-                if (newLaunch.data.registered) {
+                const newLaunch = await axios.post(`/${pressedPlus ? "income" : "expense"}/new`, { launch })
+                if (await newLaunch.data.registered) {
                     Toast.show({
                         type: 'info',
                         text1: 'Successful launch!',
@@ -105,7 +118,7 @@ export const MoneyProvider = ({ children }) => {
         },
 
         getRegisters: async data => {
-            const newQuery = await axios.post(`/${data.type == "+" ? "income" : "expenses"}/query`,
+            const newQuery = await axios.post(`/${data.type == "+" ? "income" : "expense"}/query`,
                 { filterType: data.filterType, filter: data.filter, column: data.column })
             return newQuery.data.registers
         },
@@ -115,13 +128,13 @@ export const MoneyProvider = ({ children }) => {
                 const incomeArray = await moneyInternalContext.getRegisters({
                     type: "+",
                     filterType: "[]",
-                    filter: [`${dateString}-1`, `${dateString}-${lastDay(date)}`],
+                    filter: [`${dateString(date)}-1`, `${dateString(date)}-${lastDay(date)}`],
                     column: "incDate"
                 })
                 const expensesArray = await moneyInternalContext.getRegisters({
                     type: "-",
                     filterType: "[]",
-                    filter: [`${dateString}-1`, `${dateString}-${lastDay(date)}`],
+                    filter: [`${dateString(date)}-1`, `${dateString(date)}-${lastDay(date)}`],
                     column: "expDate"
                 })
 
@@ -133,7 +146,13 @@ export const MoneyProvider = ({ children }) => {
                 setExpenses(expensesArray)
                 setIncomes(incomeArray)
 
+                setTotalSearchInc(totalInc)
+                setTotalSearchExp(totalExp)
+                setSearchIncomes(incomeArray)
+                setSearchExpenses(expensesArray)
+
             } catch (e) {
+                console.log(dateString(date));
                 console.log(e.message)
             }
         },
@@ -144,9 +163,32 @@ export const MoneyProvider = ({ children }) => {
                 total = total + element[camp]
             })
             return total
-        }
+        },
 
+        searchLaunches: async (dateSearch) => {
+            try {
+                if (dateSearch != date) {
+                    const response = await moneyInternalContext.getRegisters({
+                        type: "+",
+                        filterType: "[]",
+                        filter: [`${dateString(dateSearch)}-1`, `${dateString(dateSearch)}-${lastDay(dateSearch)}`],
+                        column: "incDate"
+                    })
+                    const totalIncome = await moneyInternalContext.calcTotal(response, 'incMoney')
+
+                    setSearchIncomes(await response)
+                    setTotalSearchInc(totalIncome)
+                } else {
+                    setSearchIncomes(incomes)
+                    setTotalSearchInc(totalInc)
+                }
+            } catch (e) {
+                console.log(e.message);
+            }
+
+        }
     }
+
     return (
         <MoneyContext.Provider value={moneyInternalContext}>
             {children}
