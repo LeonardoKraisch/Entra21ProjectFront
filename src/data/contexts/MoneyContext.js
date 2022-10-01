@@ -231,7 +231,8 @@ export const MoneyProvider = ({ children }) => {
             newArray.map(element => element[camp2] = element[camp2] * -1)
             var all = [...newArray, ...array]
             return all
-        }
+        },
+
     }
 
 

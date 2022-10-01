@@ -7,6 +7,7 @@ import {
 } from 'react-native'
 import { Ionicons } from "@expo/vector-icons";
 import MenuButton from "./MenuButton";
+import { TextMask } from "react-native-masked-text";
 
 import useMoney from '../data/hooks/useMoney'
 
@@ -29,7 +30,15 @@ export default props => {
                     <View style={styles.value}>
                         <Text style={{ color: '#FFF', fontSize: 27 }}>{coin}</Text>
                         <View>{showBalance ?
-                            <Text style={{ color: '#FFF', fontSize: 27 }}>{balance}</Text> :
+                            <TextMask type={'money'}
+                                value={balance}
+                                options={{
+                                    precision: 2,
+                                    separator: ',',
+                                    unit: '',
+                                    delimiter: '.',
+                                    suffixUnit: ''
+                                }} style={{ color: '#FFF', fontSize: 27 }} /> :
                             <Text style={{ color: '#FFF', fontSize: 27 }}>{"--------------"}</Text>}
                         </View>
                     </View>

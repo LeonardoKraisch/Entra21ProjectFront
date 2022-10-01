@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, FlatList } from 'react-native'
+import { TextMask } from "react-native-masked-text";
 
 import Register from "./Register";
 
@@ -20,7 +21,18 @@ export default props => {
                     <Text style={styles.headerTitle}>Launches</Text>
                     <View style={styles.headerValues}>
                         <Text style={styles.headerText}>Total:</Text>
-                        <Text style={styles.headerText}>{props.total}</Text>
+
+                        <TextMask type={'money'}
+                            value={props.total}
+                            style={styles.headerText}
+                            options={{
+                                precision: 2,
+                                separator: ',',
+                                unit: 'R$',
+                                delimiter: '.',
+                                suffixUnit: ''
+                            }}
+                        />
                     </View>
                 </View>
                 <View style={styles.headerBottom}>

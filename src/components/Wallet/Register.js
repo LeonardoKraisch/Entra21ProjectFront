@@ -7,6 +7,7 @@ import {
 } from 'react-native'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { TextMask } from "react-native-masked-text";
 import { MaterialIcons } from '@expo/vector-icons'
 
 export default props => {
@@ -45,7 +46,15 @@ export default props => {
                     <Text style={styles.text}>{props.parcelCode}</Text>
                 </View>
                 <View style={styles.textContainer}>
-                    <Text style={styles.text}>{props.incMoney ? props.incMoney : props.expMoney}</Text>
+                    <TextMask type={'money'}
+                        value={props.incMoney ? props.incMoney : props.expMoney}
+                        options={{
+                            precision: 2,
+                            separator: ',',
+                            unit: '',
+                            delimiter: '.',
+                            suffixUnit: ''
+                        }} style={styles.text} />
                 </View>
             </TouchableOpacity>
             <ShowDescription />
