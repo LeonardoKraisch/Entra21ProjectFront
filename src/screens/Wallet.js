@@ -10,7 +10,7 @@ import Report from "../components/Wallet/Report";
 
 
 export default props => {
-    const { balance, searchIncomes, searchExpenses, totalSearchInc, totalSearchExp, searchLaunches } = useMoney()
+    const { searchAllLaunches, searchIncomes, searchExpenses, totalSearch, totalSearchInc, totalSearchExp, searchLaunches } = useMoney()
 
     const [show, setShow] = useState("expenses")
     const [showFilters, setShowFilters] = useState(false)
@@ -52,7 +52,7 @@ export default props => {
             )
         } else {
             return (
-                <Report launches={balance} />
+                <Report launches={searchAllLaunches} total={totalSearch} />
             )
         }
     }

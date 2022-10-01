@@ -7,8 +7,8 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "image": "./assets/abelha.jpg",
+      "resizeMode": "spread",
       "backgroundColor": "#ffffff"
     },
     "updates": {

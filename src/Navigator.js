@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
+import Splash from "./Splash"
 import Home from "./screens/Home";
 import Wallet from './screens/Wallet'
 import Login from "./screens/Login";
@@ -16,10 +17,9 @@ const Stack = createNativeStackNavigator()
 
 export default props => {
 
-    const { email, name, logout, start } = useUser()
+    const { name, logout } = useUser()
 
     const Auth = () => {
-        start()
         return (
             <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
                 <Stack.Screen name="Login" component={Login} />
@@ -28,22 +28,12 @@ export default props => {
         )
     }
 
-    const AuthOrHome = () => {
-        return (
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
-                {email ?
-                    <Stack.Screen name="Main" component={HomeStack} />
-                    :
-                    <Stack.Screen name="Auth" component={Auth} />
-                }
-            </Stack.Navigator>
-        )
-    }
-
     const HomeStack = () => {
         return (
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="First" component={Home} />
+                <Stack.Screen name="Splash" component={Splash} />
+                <Stack.Screen name="Auth" component={Auth} />
+                <Stack.Screen name="Main" component={Home} />
                 <Stack.Screen name="Wallet" component={Wallet} />
             </Stack.Navigator>
         )
@@ -62,7 +52,7 @@ export default props => {
     }
 
     return (
-        <NavigationContainer>
+        <NavigationContainer initialRouteName="Splash">
             <Drawer.Navigator
                 drawerContent={props => {
                     return (
@@ -86,10 +76,10 @@ export default props => {
                     )
                 }
                 }
-                screenOptions={menuConfig} initialRouteName="AuthOrHome" >
+                screenOptions={menuConfig}>
                 <Drawer.Screen
                     name="Home"
-                    component={AuthOrHome} />
+                    component={HomeStack} />
             </Drawer.Navigator>
         </NavigationContainer>
     )

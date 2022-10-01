@@ -40,6 +40,7 @@ export default props => {
                 style={styles.chart}
                 accessor="values"
                 backgroundColor={"transparent"}
+                avoidFalseZero={true}
             />
         );
     };
