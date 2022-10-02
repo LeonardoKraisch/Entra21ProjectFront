@@ -153,7 +153,7 @@ export const MoneyProvider = ({ children }) => {
                 setTotalInc(totalInc)
                 setExpenses(expensesArray)
                 setIncomes(incomeArray)
- 
+
                 setTotalSearchInc(totalInc)
                 setTotalSearchExp(totalExp)
                 setSearchIncomes(incomeArray)
@@ -168,7 +168,6 @@ export const MoneyProvider = ({ children }) => {
                 setTotalSearch(total)
 
             } catch (e) {
-                console.log(dateString(date));
                 console.log(e.message)
             }
         },
@@ -230,6 +229,7 @@ export const MoneyProvider = ({ children }) => {
             var newArray = array2.map(element => ({ ...element }))
             newArray.map(element => element[camp2] = element[camp2] * -1)
             var all = [...newArray, ...array]
+            console.log(all)
             return all
         },
 

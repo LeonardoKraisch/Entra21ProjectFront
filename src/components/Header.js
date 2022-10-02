@@ -35,7 +35,7 @@ export default props => {
                                 options={{
                                     precision: 2,
                                     separator: ',',
-                                    unit: '',
+                                    unit: balance > 0 ? '' : '-',
                                     delimiter: '.',
                                     suffixUnit: ''
                                 }} style={{ color: '#FFF', fontSize: 27 }} /> :

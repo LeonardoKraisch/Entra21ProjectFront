@@ -28,9 +28,10 @@ export default props => {
                             options={{
                                 precision: 2,
                                 separator: ',',
-                                unit: 'R$',
+                                unit: props.total > 0 ? 'R$' : 'R$-',
                                 delimiter: '.',
                                 suffixUnit: ''
+
                             }}
                         />
                     </View>

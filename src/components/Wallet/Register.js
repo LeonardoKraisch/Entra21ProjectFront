@@ -51,7 +51,7 @@ export default props => {
                         options={{
                             precision: 2,
                             separator: ',',
-                            unit: '',
+                            unit: props.expMoney < 0 ? '-' : '',
                             delimiter: '.',
                             suffixUnit: ''
                         }} style={styles.text} />
