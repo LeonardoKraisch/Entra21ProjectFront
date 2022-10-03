@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
 import moment from 'moment'
@@ -10,7 +10,15 @@ import Report from "../components/Wallet/Report";
 
 
 export default props => {
-    const { searchAllLaunches, searchIncomes, searchExpenses, totalSearch, totalSearchInc, totalSearchExp, searchLaunches } = useMoney()
+    const { incomes, expenses, allLaunches, searchAllLaunches, searchIncomes, searchExpenses, totalSearch, totalSearchInc, totalSearchExp, searchLaunches } = useMoney()
+
+    useEffect(() => {
+        async function fetch() {
+            setDate(new Date())
+            await searchLaunches(date)
+        }
+        fetch()
+    }, [incomes, expenses, allLaunches])
 
     const [show, setShow] = useState("expenses")
     const [showFilters, setShowFilters] = useState(false)

@@ -15,9 +15,9 @@ export const MoneyProvider = ({ children }) => {
 
     const [date, setDate] = useState(new Date())
     const [balance, setBalance] = useState(0)
+
     const [incomes, setIncomes] = useState([])
     const [expenses, setExpenses] = useState([])
-
     const [totalInc, setTotalInc] = useState(0)
     const [totalExp, setTotalExp] = useState(0)
     const [allLaunches, setAllLaunches] = useState([])
@@ -28,6 +28,9 @@ export const MoneyProvider = ({ children }) => {
     const [totalSearch, setTotalSearch] = useState(0)
     const [totalSearchInc, setTotalSearchInc] = useState(0)
     const [totalSearchExp, setTotalSearchExp] = useState(0)
+
+    const [incPendings, setIncPendings] = useState([])
+    const [expPendings, setExpPendings] = useState([])
 
     const [coin, setCoin] = useState('R$')
 
@@ -70,11 +73,11 @@ export const MoneyProvider = ({ children }) => {
     const moneyInternalContext = {
         coin,
         date,
+        balance,
         incomes,
         expenses,
         totalInc,
         totalExp,
-        balance,
         allLaunches,
 
         searchIncomes,
@@ -101,13 +104,24 @@ export const MoneyProvider = ({ children }) => {
             try {
                 const newLaunch = await axios.post(`/${pressedPlus ? "income" : "expense"}/new`, { launch })
                 if (await newLaunch.data.registered) {
+                    if (pressedPlus) {
+                        setIncomes([...incomes, launch])
+                        setTotalInc(totalInc + await launch['incMoney'])
+                    } else {
+                        setExpenses([...expenses, launch])
+                        setTotalExp(totalExp + await launch['expMoney'])
+                    }
+                    setAllLaunches([...allLaunches, launch])
+                    const total = totalInc - totalExp
+                    setBalance(total)
+                    setTotalSearch(balance)
+
                     Toast.show({
                         type: 'info',
                         text1: 'Successful launch!',
                         text2: 'You updated your balance.'
                     })
                 } else {
-                    console.log(newLaunch.data.registered)
                     Toast.show({
                         type: 'info',
                         text1: 'Noooooooot Successful launch!',
@@ -124,7 +138,6 @@ export const MoneyProvider = ({ children }) => {
                 })
             }
         },
-
         getRegisters: async data => {
             const newQuery = await axios.post(`/${data.type == "+" ? "income" : "expense"}/query`,
                 { filterType: data.filterType, filter: data.filter, column: data.column })
@@ -133,39 +146,62 @@ export const MoneyProvider = ({ children }) => {
 
         fetchAllLaunches: async function () {
             try {
-                const incomeArray = await moneyInternalContext.getRegisters({
-                    type: "+",
-                    filterType: "[]",
-                    filter: [`${dateString(date)}-1`, `${dateString(date)}-${lastDay(date)}`],
-                    column: "incDate"
-                })
-                const expensesArray = await moneyInternalContext.getRegisters({
-                    type: "-",
-                    filterType: "[]",
-                    filter: [`${dateString(date)}-1`, `${dateString(date)}-${lastDay(date)}`],
-                    column: "expDate"
-                })
+                if (incomes == '' || expenses == '') {
+                    const incomeArray = await moneyInternalContext.getRegisters({
+                        type: "+",
+                        filterType: "[]",
+                        filter: [`${dateString(date)}-1`, `${dateString(date)}-${lastDay(date)}`],
+                        column: "incDate"
+                    })
+                    const expensesArray = await moneyInternalContext.getRegisters({
+                        type: "-",
+                        filterType: "[]",
+                        filter: [`${dateString(date)}-1`, `${dateString(date)}-${lastDay(date)}`],
+                        column: "expDate"
+                    })
 
-                const totalInc = await moneyInternalContext.calcTotal(incomeArray, 'incMoney')
-                const totalExp = await moneyInternalContext.calcTotal(expensesArray, 'expMoney')
+                    const totalInc = await moneyInternalContext.calcTotal(incomeArray, 'incMoney')
+                    const totalExp = await moneyInternalContext.calcTotal(expensesArray, 'expMoney')
 
-                setTotalExp(totalExp)
-                setTotalInc(totalInc)
-                setExpenses(expensesArray)
-                setIncomes(incomeArray)
+                    setTotalInc(totalInc)
+                    setTotalExp(totalExp)
+                    setIncomes(await incomeArray)
+                    setExpenses(await expensesArray)
 
-                setTotalSearchInc(totalInc)
-                setTotalSearchExp(totalExp)
-                setSearchIncomes(incomeArray)
-                setSearchExpenses(expensesArray)
+                    setTotalSearchInc(totalInc)
+                    setTotalSearchExp(totalExp)
+                    setSearchIncomes(await incomeArray)
+                    setSearchExpenses(await expensesArray)
 
-                const merged = await moneyInternalContext.mergeArrays(incomeArray, "incMoney", expensesArray, 'expMoney')
-                setAllLaunches(merged)
-                setSearchAllLaunches(merged)
+                    const merged = await moneyInternalContext.mergeArrays(await incomeArray, "incMoney", await expensesArray, 'expMoney')
+                    setAllLaunches(merged)
+                    setSearchAllLaunches(merged)
 
-                const total = totalInc - totalExp
-                setBalance(total)
-                setTotalSearch(total)
+                    const total = totalInc - totalExp
+                    setBalance(total)
+                    setTotalSearch(balance)
+                } else {
+                    const totalInc = await moneyInternalContext.calcTotal(incomes, 'incMoney')
+                    const totalExp = await moneyInternalContext.calcTotal(expenses, 'expMoney')
+
+                    setTotalInc(totalInc)
+                    setTotalExp(totalExp)
+                    setIncomes(incomes)
+                    setExpenses(expenses)
+
+                    setTotalSearchInc(totalInc)
+                    setTotalSearchExp(totalExp)
+                    setSearchIncomes(incomes)
+                    setSearchExpenses(expenses)
+
+                    const merged = await moneyInternalContext.mergeArrays(incomes, "incMoney", expenses, 'expMoney')
+                    setAllLaunches(merged)
+                    setSearchAllLaunches(merged)
+
+                    const total = totalInc - totalExp
+                    setBalance(total)
+                    setTotalSearch(balance)
+                }
 
             } catch (e) {
                 console.log(e.message)
@@ -229,10 +265,8 @@ export const MoneyProvider = ({ children }) => {
             var newArray = array2.map(element => ({ ...element }))
             newArray.map(element => element[camp2] = element[camp2] * -1)
             var all = [...newArray, ...array]
-            console.log(all)
             return all
         },
-
     }
 
 

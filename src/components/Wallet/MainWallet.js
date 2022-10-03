@@ -5,7 +5,7 @@ import { PieChart } from "react-native-chart-kit";
 import useMoney from "../../data/hooks/useMoney";
 
 export default props => {
-    const { balance, totalExp } = useMoney()
+    const { balance, totalExp, totalInc } = useMoney()
 
     const pieData = [
         {
@@ -23,7 +23,7 @@ export default props => {
             legendFontSize: 15,
 
         }
-    ] 
+    ]
 
     const chartConfig = {
         color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
@@ -41,7 +41,7 @@ export default props => {
                 accessor="values"
                 backgroundColor={"transparent"}
                 avoidFalseZero={true}
-                
+
             />
         );
     };
