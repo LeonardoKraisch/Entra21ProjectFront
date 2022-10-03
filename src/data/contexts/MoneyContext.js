@@ -182,18 +182,28 @@ export const MoneyProvider = ({ children }) => {
             setIncomes(arr1)
             setExpenses(arr2)
 
-            setTotalSearchInc(totalInc)
-            setTotalSearchExp(totalExp)
-            setSearchIncomes(arr1)
-            setSearchExpenses(arr2)
-
             const merged = await moneyInternalContext.mergeArrays(arr1, "incMoney", arr2, 'expMoney')
             setAllLaunches(merged)
-            setSearchAllLaunches(merged)
 
             const total = totalInc - totalExp
             setBalance(total)
-            setTotalSearch(balance)
+            moneyInternalContext.searchSetter(arr1, arr2, merged)
+        },
+
+        searchSetter: async (arr1, arr2, arr3) => {
+
+            const totalIncome = await moneyInternalContext.calcTotal(arr1, 'incMoney')
+            const totalExpense = await moneyInternalContext.calcTotal(arr2, 'expMoney')
+
+            setSearchIncomes(arr1)
+            setSearchExpenses(arr2)
+            setTotalSearchInc(totalIncome)
+            setTotalSearchExp(totalExpense)
+
+            setSearchAllLaunches(arr3)
+
+            const total = totalIncome - totalExpense
+            setTotalSearch(total)
         },
 
         searchLaunches: async (dateSearch) => {
@@ -205,10 +215,6 @@ export const MoneyProvider = ({ children }) => {
                         filter: [`${dateString(dateSearch)}-1`, `${dateString(dateSearch)}-${lastDay(dateSearch)}`],
                         column: "incDate"
                     })
-                    const totalIncome = await moneyInternalContext.calcTotal(incomesSearch, 'incMoney')
-
-                    setSearchIncomes(await incomesSearch)
-                    setTotalSearchInc(totalIncome)
 
                     const expensesSearch = await moneyInternalContext.getRegisters({
                         type: "-",
@@ -216,24 +222,14 @@ export const MoneyProvider = ({ children }) => {
                         filter: [`${dateString(dateSearch)}-1`, `${dateString(dateSearch)}-${lastDay(dateSearch)}`],
                         column: "expDate"
                     })
-                    const totalExpense = await moneyInternalContext.calcTotal(expensesSearch, 'expMoney')
-
-                    setSearchExpenses(await expensesSearch)
-                    setTotalSearchExp(totalExpense)
 
                     const merged = await moneyInternalContext.mergeArrays(incomesSearch, "incMoney", expensesSearch, 'expMoney')
-                    setSearchAllLaunches(merged)
-                    const total = totalIncome - totalExpense
-                    setTotalSearch(total)
+
+                    moneyInternalContext.searchSetter(incomesSearch, expensesSearch, merged)
 
                 } else {
-                    setSearchIncomes(incomes)
-                    setTotalSearchInc(totalInc)
-                    setSearchExpenses(expenses)
-                    setTotalSearchExp(totalExp)
-                    setSearchAllLaunches(allLaunches)
-                    const total = totalInc - totalExp
-                    setTotalSearch(total)
+                    moneyInternalContext.searchSetter(incomes, expenses, allLaunches)
+
                 }
             } catch (e) {
                 console.log(e.message);
