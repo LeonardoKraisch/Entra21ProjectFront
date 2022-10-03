@@ -165,7 +165,7 @@ export const MoneyProvider = ({ children }) => {
 
                 } else {
                     moneyInternalContext.balanceSetter(incomes, expenses)
-                    
+
                 }
 
             } catch (e) {
@@ -252,13 +252,13 @@ export const MoneyProvider = ({ children }) => {
             var all = [...newArray, ...array]
             return all
         },
-        
-        getLaunchesPluxFilter: async (dateSearch, filters) => {
+
+        getLaunchesPluxFilter: async (filters) => {
             return await moneyInternalContext.getRegisters({
                 type: filters.type,
                 filterType: "...",
                 filter: [
-                    [`${dateString(dateSearch)}-1`, `${dateString(dateSearch)}-${lastDay(dateSearch)}`],
+                    [filters.initDate, filters.endDate],
                     [filters.moneyFilter, filters.money, filters.moneyRange],
                     [filters.categoryFilter],
                     [filters.descriptionFilter]
@@ -266,7 +266,7 @@ export const MoneyProvider = ({ children }) => {
             })
 
         },
-        filterPlus: async (dateSearch, filtersInc, filtersExp) => {
+        filterPlus: async (filtersInc, filtersExp) => {
             balanceSetter(getLaunchesPluxFilter(dateSearch, filtersInc), getLaunchesPluxFilter(dateSearch, filtersExp))
         }
     }
