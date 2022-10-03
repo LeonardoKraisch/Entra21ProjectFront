@@ -165,6 +165,7 @@ export const MoneyProvider = ({ children }) => {
 
                 } else {
                     moneyInternalContext.balanceSetter(incomes, expenses)
+                    
                 }
 
             } catch (e) {
