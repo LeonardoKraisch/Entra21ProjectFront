@@ -252,6 +252,23 @@ export const MoneyProvider = ({ children }) => {
             var all = [...newArray, ...array]
             return all
         },
+        
+        getLaunchesPluxFilter: async (dateSearch, filters) => {
+            return await moneyInternalContext.getRegisters({
+                type: filters.type,
+                filterType: "...",
+                filter: [
+                    [`${dateString(dateSearch)}-1`, `${dateString(dateSearch)}-${lastDay(dateSearch)}`],
+                    [filters.moneyFilter, filters.money, filters.moneyRange],
+                    [filters.categoryFilter],
+                    [filters.descriptionFilter]
+                ]
+            })
+
+        },
+        filterPlus: async (dateSearch, filtersInc, filtersExp) => {
+            balanceSetter(getLaunchesPluxFilter(dateSearch, filtersInc), getLaunchesPluxFilter(dateSearch, filtersExp))
+        }
     }
 
 
