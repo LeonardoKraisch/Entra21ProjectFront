@@ -160,52 +160,40 @@ export const MoneyProvider = ({ children }) => {
                         column: "expDate"
                     })
 
-                    const totalInc = await moneyInternalContext.calcTotal(incomeArray, 'incMoney')
-                    const totalExp = await moneyInternalContext.calcTotal(expensesArray, 'expMoney')
+                    moneyInternalContext.balanceSetter(incomeArray, expensesArray)
 
-                    setTotalInc(totalInc)
-                    setTotalExp(totalExp)
-                    setIncomes(await incomeArray)
-                    setExpenses(await expensesArray)
 
-                    setTotalSearchInc(totalInc)
-                    setTotalSearchExp(totalExp)
-                    setSearchIncomes(await incomeArray)
-                    setSearchExpenses(await expensesArray)
-
-                    const merged = await moneyInternalContext.mergeArrays(await incomeArray, "incMoney", await expensesArray, 'expMoney')
-                    setAllLaunches(merged)
-                    setSearchAllLaunches(merged)
-
-                    const total = totalInc - totalExp
-                    setBalance(total)
-                    setTotalSearch(balance)
                 } else {
-                    const totalInc = await moneyInternalContext.calcTotal(incomes, 'incMoney')
-                    const totalExp = await moneyInternalContext.calcTotal(expenses, 'expMoney')
-
-                    setTotalInc(totalInc)
-                    setTotalExp(totalExp)
-                    setIncomes(incomes)
-                    setExpenses(expenses)
-
-                    setTotalSearchInc(totalInc)
-                    setTotalSearchExp(totalExp)
-                    setSearchIncomes(incomes)
-                    setSearchExpenses(expenses)
-
-                    const merged = await moneyInternalContext.mergeArrays(incomes, "incMoney", expenses, 'expMoney')
-                    setAllLaunches(merged)
-                    setSearchAllLaunches(merged)
-
-                    const total = totalInc - totalExp
-                    setBalance(total)
-                    setTotalSearch(balance)
+                    moneyInternalContext.balanceSetter(incomes, expenses)
                 }
 
             } catch (e) {
                 console.log(e.message)
             }
+        },
+
+        balanceSetter: async (arr1, arr2) => {
+
+            const totalInc = await moneyInternalContext.calcTotal(arr1, 'incMoney')
+            const totalExp = await moneyInternalContext.calcTotal(arr2, 'expMoney')
+
+            setTotalInc(totalInc)
+            setTotalExp(totalExp)
+            setIncomes(arr1)
+            setExpenses(arr2)
+
+            setTotalSearchInc(totalInc)
+            setTotalSearchExp(totalExp)
+            setSearchIncomes(arr1)
+            setSearchExpenses(arr2)
+
+            const merged = await moneyInternalContext.mergeArrays(arr1, "incMoney", arr2, 'expMoney')
+            setAllLaunches(merged)
+            setSearchAllLaunches(merged)
+
+            const total = totalInc - totalExp
+            setBalance(total)
+            setTotalSearch(balance)
         },
 
         searchLaunches: async (dateSearch) => {

@@ -10,7 +10,8 @@ import Report from "../components/Wallet/Report";
 
 
 export default props => {
-    const { incomes, expenses, allLaunches, searchAllLaunches, searchIncomes, searchExpenses, totalSearch, totalSearchInc, totalSearchExp, searchLaunches } = useMoney()
+    const { incomes, expenses, allLaunches, searchAllLaunches, searchIncomes,
+        searchExpenses, totalSearch, totalSearchInc, totalSearchExp, searchLaunches } = useMoney()
 
     useEffect(() => {
         async function fetch() {
