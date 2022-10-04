@@ -167,7 +167,7 @@ export const MoneyProvider = ({ children }) => {
                     moneyInternalContext.balanceSetter(incomes, expenses)
 
                 }
-
+                
             } catch (e) {
                 console.log(e.message)
             }
@@ -272,8 +272,33 @@ export const MoneyProvider = ({ children }) => {
 
         // },
 
-        getPendings: async () => {
+        getPendings: async (filters) => {
+            try {
 
+                const incPending = await moneyInternalContext.getRegisters(
+                    {
+                        type: "+",
+                        filterType: "[]",
+                        filter: [filters.initDate, filters.initDate],
+                        column: "incDate",
+                        pending: true
+                    }
+                )
+                const expPending = await moneyInternalContext.getRegisters(
+                    {
+                        type: "-",
+                        filterType: "[]",
+                        filter: [filters.initDate, filters.initDate],
+                        column: "expDate",
+                        pending: true
+                    }
+
+
+                )
+                console.log((incPending, expPending))
+            }catch(e){
+                console.log(e.mesage)
+            }
         }
     }
 
