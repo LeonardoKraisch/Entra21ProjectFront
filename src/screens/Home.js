@@ -11,13 +11,6 @@ export default props => {
     const { fetchAllLaunches } = useMoney()
     const wallets = [1, 2]
 
-    useEffect(() => {
-        async function fetch() {
-            fetchAllLaunches()
-        }
-        fetch()
-    }, [])
-
     return (
         <SafeAreaView style={styles.containter}>
             <Header {...props} />

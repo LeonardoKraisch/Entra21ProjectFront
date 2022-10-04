@@ -15,10 +15,6 @@ export default props => {
     const { balance, coin, fetchAllLaunches, incomes, expenses } = useMoney()
     const [showBalance, setShowBalance] = useState(false)
 
-    useEffect(() => {
-        fetchAllLaunches()
-    }, [incomes, expenses])
-
     return (
         <View style={styles.container}>
             <View style={styles.rowContainer}>

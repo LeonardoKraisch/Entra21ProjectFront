@@ -1,0 +1,241 @@
+{
+    "2022-09-03": [
+        {
+            "incCategory": "other",
+            "incCode": 51,
+            "incDate": "2022-09-03",
+            "incDescription": "😎😎😊",
+            "incMoney": 5491.8315,
+            "incPaymentMethod": 2,
+            "incPending": true,
+            "incTimes": "6",
+            "incTotalPayment": true
+        }
+    ],
+    "2022-09-29": [
+        {
+            "incCategory": "other",
+            "incCode": 44,
+            "incDate": "2022-09-29",
+            "incDescription": "😎😎😊",
+            "incMoney": 5491.8315,
+            "incPaymentMethod": 2,
+            "incPending": true,
+            "incTimes": "6",
+            "incTotalPayment": true
+        }
+    ],
+    "2022-10-03": [
+        {
+            "incCategory": "other",
+            "incCode": 41,
+            "incDate": "2022-10-03",
+            "incDescription": "",
+            "incMoney": 320,
+            "incPaymentMethod": 1,
+            "incPending": true,
+            "incTimes": "1",
+            "incTotalPayment": true
+        },
+        {
+            "incCategory": "other",
+            "incCode": 43,
+            "incDate": "2022-10-03",
+            "incDescription": "",
+            "incMoney": 210,
+            "incPaymentMethod": 1,
+            "incPending": true,
+            "incTimes": "1",
+            "incTotalPayment": true
+        },
+        {
+            "expCategory": "other",
+            "expCode": 52,
+            "expDate": "2022-10-03",
+            "expDescription": "",
+            "expMoney": 900,
+            "expPaymentMethod": 1,
+            "expPending": true,
+            "expTimes": "1",
+            "expTotalPayment": true
+        },
+        {
+            "expCategory": "other",
+            "expCode": 53,
+            "expDate": "2022-10-03",
+            "expDescription": "",
+            "expMoney": 10,
+            "expPaymentMethod": 1,
+            "expPending": true,
+            "expTimes": "1",
+            "expTotalPayment": true
+        }
+    ],
+    "2022-10-04": [
+        {
+            "incCategory": "other",
+            "incCode": 42,
+            "incDate": "2022-10-04",
+            "incDescription": "",
+            "incMoney": 20,
+            "incPaymentMethod": 1,
+            "incPending": true,
+            "incTimes": "1",
+            "incTotalPayment": true
+        },
+        {
+            "incCategory": "other",
+            "incCode": 52,
+            "incDate": "2022-10-04",
+            "incDescription": "😎😎😊",
+            "incMoney": 5491.8315,
+            "incPaymentMethod": 2,
+            "incPending": true,
+            "incTimes": "6",
+            "incTotalPayment": true
+        }
+    ],
+    "2022-10-30": [
+        {
+            "incCategory": "other",
+            "incCode": 45,
+            "incDate": "2022-10-30",
+            "incDescription": "😎😎😊",
+            "incMoney": 5491.8315,
+            "incPaymentMethod": 2,
+            "incPending": true,
+            "incTimes": "6",
+            "incTotalPayment": true
+        }
+    ],
+    "2022-11-04": [
+        {
+            "incCategory": "other",
+            "incCode": 53,
+            "incDate": "2022-11-04",
+            "incDescription": "😎😎😊",
+            "incMoney": 5491.8315,
+            "incPaymentMethod": 2,
+            "incPending": true,
+            "incTimes": "6",
+            "incTotalPayment": true
+        }
+    ],
+    "2022-11-30": [
+        {
+            "incCategory": "other",
+            "incCode": 46,
+            "incDate": "2022-11-30",
+            "incDescription": "😎😎😊",
+            "incMoney": 5491.8315,
+            "incPaymentMethod": 2,
+            "incPending": true,
+            "incTimes": "6",
+            "incTotalPayment": true
+        }
+    ],
+    "2022-12-04": [
+        {
+            "incCategory": "other",
+            "incCode": 54,
+            "incDate": "2022-12-04",
+            "incDescription": "😎😎😊",
+            "incMoney": 5491.8315,
+            "incPaymentMethod": 2,
+            "incPending": true,
+            "incTimes": "6",
+            "incTotalPayment": true
+        }
+    ],
+    "2022-12-30": [
+        {
+            "incCategory": "other",
+            "incCode": 47,
+            "incDate": "2022-12-30",
+            "incDescription": "😎😎😊",
+            "incMoney": 5491.8315,
+            "incPaymentMethod": 2,
+            "incPending": true,
+            "incTimes": "6",
+            "incTotalPayment": true
+        }
+    ],
+    "2023-01-04": [
+        {
+            "incCategory": "other",
+            "incCode": 55,
+            "incDate": "2023-01-04",
+            "incDescription": "😎😎😊",
+            "incMoney": 5491.8315,
+            "incPaymentMethod": 2,
+            "incPending": true,
+            "incTimes": "6",
+            "incTotalPayment": true
+        }
+    ],
+    "2023-01-30": [
+        {
+            "incCategory": "other",
+            "incCode": 48,
+            "incDate": "2023-01-30",
+            "incDescription": "😎😎😊",
+            "incMoney": 5491.8315,
+            "incPaymentMethod": 2,
+            "incPending": true,
+            "incTimes": "6",
+            "incTotalPayment": true
+        }
+    ],
+    "2023-02-04": [
+        {
+            "incCategory": "other",
+            "incCode": 56,
+            "incDate": "2023-02-04",
+            "incDescription": "😎😎😊",
+            "incMoney": 5491.8315,
+            "incPaymentMethod": 2,
+            "incPending": true,
+            "incTimes": "6",
+            "incTotalPayment": true
+        }
+    ],
+    "2023-02-28": [
+        {
+            "incCategory": "other",
+            "incCode": 49,
+            "incDate": "2023-02-28",
+            "incDescription": "😎😎😊",
+            "incMoney": 5491.8315,
+            "incPaymentMethod": 2,
+            "incPending": true,
+            "incTimes": "6",
+            "incTotalPayment": true
+        }
+    ],
+    "2023-03-04": [
+        {
+            "incCategory": "other",
+            "incCode": 57,
+            "incDate": "2023-03-04",
+            "incDescription": "😎😎😊",
+            "incMoney": 5491.8315,
+            "incPaymentMethod": 2,
+            "incPending": true,
+            "incTimes": "6",
+            "incTotalPayment": true
+        }
+    ],
+    "2023-03-30": [
+        {
+            "incCategory": "other",
+            "incCode": 50,
+            "incDate": "2023-03-30",
+            "incDescription": "😎�😊",
+            "incMoney": 5491.8315,
+            "incPaymentMethod": 2,
+            "incPending": true,
+            "incTimes": "6",
+            "incTotalPayment": true
+        }
+    ]
+}
