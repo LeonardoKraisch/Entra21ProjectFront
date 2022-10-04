@@ -183,11 +183,11 @@ export const MoneyProvider = ({ children }) => {
                         column: "expDate"
                     })
 
-                    moneyInternalContext.balanceSetter(incomeArray, expensesArray)
-                    moneyInternalContext.getPendings()
+                    await moneyInternalContext.balanceSetter(incomeArray, expensesArray)                 
+                    
 
                 } else {
-                    moneyInternalContext.balanceSetter(incomes, expenses)
+                    await moneyInternalContext.balanceSetter(incomes, expenses)
 
                 }
 
@@ -287,6 +287,8 @@ export const MoneyProvider = ({ children }) => {
                     [filters.descriptionFilter]
                 ]
             })
+            
+            
 
         },
 
@@ -298,6 +300,7 @@ export const MoneyProvider = ({ children }) => {
         getPendings: async () => {
             try {
 
+                console.log("sending")
                 setIncPendings(await moneyInternalContext.getRegisters(
                     {
                         type: "+",
