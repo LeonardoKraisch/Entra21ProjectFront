@@ -157,6 +157,11 @@ export const MoneyProvider = ({ children }) => {
             return newQuery.data.registers
         },
 
+        delRegister: async (data) =>{
+            const delConn = await axios.post(`/${data.type == "+" ? "income" : "expense"}/`,
+                data)
+        },
+
         fetchAllLaunches: async function () {
             try {
                 if (incomes == '' || expenses == '') {
@@ -305,7 +310,9 @@ export const MoneyProvider = ({ children }) => {
             } catch (e) {
                 console.log(e.mesage)
             }
-        }
+        },
+
+        
     }
 
 
