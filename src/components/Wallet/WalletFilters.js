@@ -10,8 +10,6 @@ import useMoney from '../../data/hooks/useMoney'
 
 export default props => {
 
-    
-
     const { filterPlus } = useMoney()
     const [date2, setDate2] = useState(new Date())
     const [showDatePicker2, setShowDatePicker2] = useState(false)

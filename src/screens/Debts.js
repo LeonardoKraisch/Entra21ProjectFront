@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Agenda } from 'react-native-calendars'
 import { Card } from "react-native-paper";
 import { TextMask } from "react-native-masked-text";
+import { MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 
 import useMoney from "../data/hooks/useMoney"
 
@@ -44,23 +46,28 @@ export default props => {
     const renderItem = (item) => {
         var table = item.incMoney ? "inc" : "exp"
         return (
-            <View>
-                <TouchableOpacity style={[styles[`${table}ItemOut`], styles.item]}>
-                    <Text style={styles.title}>{item.incMoney ? "Income" : "Expense"}</Text>
+            <View style={[styles[`${table}ItemOut`], styles.item]}>
+                <TouchableOpacity>
+                    <View>
+                        <Text style={styles.title}>{item.incMoney ? "Income" : "Expense"}</Text>
+                    </View>
                     <Card style={[styles[`${table}Item`], styles.item]}>
-                        <Card.Content style={styles.row}>
-                            <View>
+                        <Card.Content>
+                            <View style={styles.row}>
                                 <Text style={styles.labels}>Description:</Text>
-                                <Text style={styles.labels}>Category:</Text>
-                                <Text style={styles.labels}>Value:</Text>
+                                <Text style={styles.value}>{item[`${table}Description`]}</Text>
+                                <Text style={styles.value}>{item[`${table}Date`]}</Text>
                             </View>
-                            <View style={styles.values}>
-                                <Text style={styles.value}>{item[`${table}Description`]} meu gasto fudido</Text>
+                            <View style={styles.row}>
+                                <Text style={styles.labels}>Category:</Text>
                                 <Text style={styles.value}>{item[`${table}Category`]}</Text>
+                            </View>
+                            <View style={styles.row}>
+                                <Text style={styles.labels}>Value:</Text>
                                 <TextMask style={styles.value} value={item[`${table}Money`]} options={{
                                     precision: 2,
                                     separator: ',',
-                                    unit: props.expMoney < 0 ? '-' : '',
+                                    unit: 'R$',
                                     delimiter: '.',
                                     suffixUnit: ''
                                 }} type="money" />
@@ -69,6 +76,14 @@ export default props => {
                     </Card>
                 </TouchableOpacity>
             </View>
+            //     <View style={styles.buttonRow}>
+            //     <TouchableOpacity>
+            //         <MaterialIcons size={20} name="done" />
+            //     </TouchableOpacity>
+            //     <TouchableOpacity>
+            //         <FontAwesome size={20} name="trash-o" />
+            //     </TouchableOpacity>
+            // </View>
         );
     }
 
@@ -76,7 +91,7 @@ export default props => {
         <View style={styles.container}>
             <Agenda
                 items={allPendings}
-                selected={"2022-10-03"}
+                // selected={'2022-10-03'}
                 refreshControl={null}
                 showClosingKnob={true}
                 refreshing={true}
@@ -91,7 +106,6 @@ export default props => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
     },
     item: {
         flex: 1,
@@ -122,14 +136,15 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
     },
-    values: {
-        alignItems: 'flex-end'
-    },
     value: {
         fontSize: 15
     },
     row: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        flexWrap: 'wrap'
+    },
+    buttonRow: {
+        flexDirection: 'row',
     }
 });
