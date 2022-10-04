@@ -5,11 +5,11 @@ import { Card } from "react-native-paper";
 
 import useMoney from "../data/hooks/useMoney"
 
-// const timeToString = (time) => {
-//     const date = new Date(time);
-//     console.log(date)
-//     return date.toISOString().split('T')[0];
-// }
+const timeToString = (time) => {
+    const date = new Date(time);
+    console.log(date)
+    return date.toISOString().split('T')[0];
+}
 
 export default props => {
     const { getPendings, expPendings , incPendings} = useMoney()
@@ -57,7 +57,7 @@ export default props => {
                 <Card>
                     <Card.Content>
                         <View>
-                            <Text>{"oi"}</Text>
+                            <Text>{allPendings[timeToString(item)]}</Text>
                         </View>
                     </Card.Content>
                 </Card>
