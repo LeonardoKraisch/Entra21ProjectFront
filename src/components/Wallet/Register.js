@@ -66,24 +66,31 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         backgroundColor: '#FFF',
-        height: 30,
-        borderRightColor: '#999',
-        borderBottomColor: '#999',
+        height: 40,
+        borderRightColor: '#9995',
+        borderBottomColor: '#9995',
         borderBottomWidth: 1,
-        borderRightWidth: 1
+        borderRightWidth: 1,
+        alignItems: 'center',
+        marginTop: 5
     },
     right: {
         backgroundColor: 'red',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-end',
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
+        marginTop: 5,
+        height: 40
     },
     textContainer: {
         flex: 1,
         alignItems: 'center',
         margin: 5,
         justifyContent: 'space-between'
+    },
+    text: {
+        fontWeight: 'bold'
     },
     descriptionContainer: {
         backgroundColor: '#EEE',

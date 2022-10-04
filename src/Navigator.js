@@ -9,6 +9,7 @@ import Home from "./screens/Home";
 import Wallet from './screens/Wallet'
 import Login from "./screens/Login";
 import Register from "./screens/Register"
+import Debts from "./screens/Debts";
 
 import useUser from "./data/hooks/useUser";
 
@@ -35,6 +36,7 @@ export default props => {
                 <Stack.Screen name="Auth" component={Auth} />
                 <Stack.Screen name="Main" component={Home} />
                 <Stack.Screen name="Wallet" component={Wallet} />
+                <Stack.Screen name="My Debts" component={Debts} />
             </Stack.Navigator>
         )
     }
@@ -65,6 +67,12 @@ export default props => {
                                 </View>
                             </View>
                             <DrawerItemList {...props} />
+                            <DrawerItem
+                                label="My Debts"
+                                onPress={() => {
+                                    props.navigation.navigate('My Debts')
+                                }}
+                            />
                             <DrawerItem
                                 label="Logout"
                                 onPress={() => {

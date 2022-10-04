@@ -112,7 +112,7 @@ export default props => {
                 </View>
                 <DatePicker />
             </View>
-            <View style={{ maxHeight: "50%" }}>
+            <View style={{ maxHeight: "60%" }}>
                 <Filters />
                 <ShowReport />
             </View>
@@ -130,8 +130,6 @@ export default props => {
 const styles = StyleSheet.create({
     containter: {
         justifyContent: 'center',
-        width: '100%',
-        height: '100%',
         flex: 1,
         backgroundColor: '#3C3C3C',
         padding: 20,
@@ -141,7 +139,6 @@ const styles = StyleSheet.create({
         color: '#FFF',
         fontWeight: 'bold',
         margin: 2,
-        marginTop: 80
     },
     filters: {
         backgroundColor: '#32779E',
@@ -206,6 +203,7 @@ const styles = StyleSheet.create({
     row: {
         justifyContent: 'flex-end',
         flexDirection: 'row',
+
         marginTop: 15,
         width: '90%',
         alignSelf: 'center'

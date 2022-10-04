@@ -109,6 +109,6 @@ const styles = StyleSheet.create({
     },
     info: {
         flexDirection: "row",
-        maxHeight: "80%"
+        maxHeight: "85%"
     },
 })
