@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
     StyleSheet,
     Text,
@@ -12,7 +12,7 @@ import { TextMask } from "react-native-masked-text";
 import useMoney from '../data/hooks/useMoney'
 
 export default props => {
-    const { balance, coin, fetchAllLaunches, incomes, expenses } = useMoney()
+    const { balance, coin } = useMoney()
     const [showBalance, setShowBalance] = useState(false)
 
     return (
