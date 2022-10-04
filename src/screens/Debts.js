@@ -20,15 +20,14 @@ export default props => {
 
     const generalPendings = async () => {
         try {
-            await incPendings.forEach(
-                (item) => {
-                    if (allPendings[item.incDate]) {
-                        allPendings[item.incDate].push(item)
-                    } else {
-                        allPendings[item.incDate] = [item]
-                    }
+            for (let item of incPendings){
+                if (allPendings[item.incDate] != null && allPendings[item.incDate][0].incDate == item.incDate) {
+                    await allPendings[item.incDate].push(item)
+                } else {
+                    
+                    allPendings[item.incDate] = [item]
                 }
-            )
+            }
             await expPendings.forEach(
                 (item) => {
                     if (allPendings[item.expDate]) {
@@ -38,7 +37,8 @@ export default props => {
                     }
                 }
             )
-            console.log(allPendings, "aloooooooooooooooooooooooooooo")
+            
+            console.log(allPendings)
         } catch (e) {
             console.log(e.message)
         }
@@ -58,6 +58,7 @@ export default props => {
                                 <Text style={styles.labels}>Description:</Text>
                                 <Text style={styles.value}>{item[`${table}Description`]}</Text>
                                 <Text style={styles.value}>{item[`${table}Date`]}</Text>
+                                <Text style={styles.value}>{item[`${table}Code`]}</Text>
                             </View>
                             <View style={styles.row}>
                                 <Text style={styles.labels}>Category:</Text>
