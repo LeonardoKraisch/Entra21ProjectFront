@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { SafeAreaView, View, StyleSheet, FlatList } from 'react-native'
+import { SafeAreaView, View, StyleSheet, FlatList, StatusBar } from 'react-native'
 import Header from "../components/Header";
 import CustomWallet from "../components/CustomWallet";
 import MainWallet from "../components/Wallet/MainWallet";
@@ -33,6 +33,7 @@ export default props => {
                 />
                 <AddView />
             </View>
+            <StatusBar backgroundColor={'#3C3C3C'} />
         </SafeAreaView>
     )
 }

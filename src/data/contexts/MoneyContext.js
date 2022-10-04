@@ -272,7 +272,7 @@ export const MoneyProvider = ({ children }) => {
 
         // },
 
-        getPendings: async (filters) => {
+        getPendings: async () => {
             try {
 
                 setIncPendings( await moneyInternalContext.getRegisters(

@@ -3,11 +3,37 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Agenda } from 'react-native-calendars'
 import { Card } from "react-native-paper";
 
+// const timeToString = (time) => {
+//     const date = new Date(time);
+//     console.log(date)
+//     return date.toISOString().split('T')[0];
+// }
+
 export default props => {
     const [items, setItems] = useState({})
 
+    // const loadItems = (day) => {
+
+    //     setTimeout(() => {
+    //         for (let i = -15; i < 85; i++) {
+    //             const time = day.timestamp + i * 24 * 60 * 60 * 1000;
+    //             const strTime = timeToString(time);
+
+    //             if (!items[strTime]) {
+    //                 items[strTime] = [];
+    //             }
+    //         }
+
+    //         const newItems = {};
+    //         Object.keys(items).forEach(key => {
+    //             newItems[key] = items[key];
+    //         });
+    //         setItems(newItems);
+    //     }, 1000);
+    // }
 
     const renderItem = (item) => {
+        console.log(item);
         return (
             <TouchableOpacity style={styles.item}>
                 <Card>
@@ -25,20 +51,14 @@ export default props => {
         <View style={styles.container}>
             <Agenda
                 items={items}
-                loadItemsForMonth={renderItem}
+                // loadItemsForMonth={loadItems}
                 selected={new Date()}
                 refreshControl={null}
                 showClosingKnob={true}
                 refreshing={true}
                 futureScrollRange={12}
                 pastScrollRange={6}
-                renderEmptyDate={(day) => {
-                    return (
-                        <View style={{ height: 50, width: '100%', backgroundColor: '#000' }}>
-                            <Text>{day}</Text>
-                        </View>
-                    )
-                }}
+                renderItem={renderItem}
             />
         </View>
     );
