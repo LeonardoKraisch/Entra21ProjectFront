@@ -87,6 +87,9 @@ export const MoneyProvider = ({ children }) => {
         totalSearchExp,
         totalSearch,
 
+        incPendings,
+        expPendings,
+
         lastDay,
         send: async data => {
             var money = data.money.replace("R$", "").replace(".", "").replace(",", ".")
@@ -104,13 +107,23 @@ export const MoneyProvider = ({ children }) => {
             try {
                 const newLaunch = await axios.post(`/${pressedPlus ? "income" : "expense"}/new`, { launch })
                 if (await newLaunch.data.registered) {
+
                     if (pressedPlus) {
-                        setIncomes([...incomes, launch])
-                        setTotalInc(totalInc + await launch['incMoney'])
+                        if (launch["incPending"]) {
+                            setIncPendings([...incPendings, launch])
+                        } else {
+                            setIncomes([...incomes, launch])
+                            setTotalInc(totalInc + await launch['incMoney'])
+                        }
                     } else {
-                        setExpenses([...expenses, launch])
-                        setTotalExp(totalExp + await launch['expMoney'])
+                        if (launch["expPending"]) {
+                            setExpPendings([...expPendings, launch])
+                        } else {
+                            setExpenses([...expenses, launch])
+                            setTotalExp(totalExp + await launch['expMoney'])
+                        }
                     }
+                    
                     setAllLaunches([...allLaunches, launch])
                     const total = totalInc - totalExp
                     setBalance(total)
@@ -161,13 +174,13 @@ export const MoneyProvider = ({ children }) => {
                     })
 
                     moneyInternalContext.balanceSetter(incomeArray, expensesArray)
-
+                    moneyInternalContext.getPendings()
 
                 } else {
                     moneyInternalContext.balanceSetter(incomes, expenses)
 
                 }
-                
+
             } catch (e) {
                 console.log(e.message)
             }
@@ -275,7 +288,7 @@ export const MoneyProvider = ({ children }) => {
         getPendings: async () => {
             try {
 
-                setIncPendings( await moneyInternalContext.getRegisters(
+                setIncPendings(await moneyInternalContext.getRegisters(
                     {
                         type: "+",
                         pending: true
@@ -287,9 +300,9 @@ export const MoneyProvider = ({ children }) => {
                         pending: true
                     }
 
-                    )
                 )
-            }catch(e){
+                )
+            } catch (e) {
                 console.log(e.mesage)
             }
         }

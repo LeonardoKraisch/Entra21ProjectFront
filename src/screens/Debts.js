@@ -1,76 +1,82 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Agenda } from 'react-native-calendars'
 import { Card } from "react-native-paper";
+import { TextMask } from "react-native-masked-text";
 
 import useMoney from "../data/hooks/useMoney"
 
-const timeToString = (time) => {
-    const date = new Date(time);
-    console.log(date)
-    return date.toISOString().split('T')[0];
-}
-
 export default props => {
-    const { getPendings, expPendings , incPendings} = useMoney()
-    const [items, setItems] = useState({})
+    const { expPendings, incPendings } = useMoney()
     const [allPendings, setAllPendings] = useState({})
 
-    // const loadItems = (day) => {
+    useEffect(() => {
+        generalPendings()
+    }, [expPendings, incPendings])
 
-    //     setTimeout(() => {
-    //         for (let i = -15; i < 85; i++) {
-    //             const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-    //             const strTime = timeToString(time);
+    const generalPendings = async () => {
+        try {
+            await incPendings.forEach(
+                (item) => {
+                    if (allPendings[item.incDate]) {
+                        allPendings[item.incDate].push(item)
+                    } else {
+                        allPendings[item.incDate] = [item]
+                    }
 
-    //             if (!items[strTime]) {
-    //                 items[strTime] = [];
-    //             }
-    //         }
-
-    //         const newItems = {};
-    //         Object.keys(items).forEach(key => {
-    //             newItems[key] = items[key];
-    //         });
-    //         setItems(newItems);
-    //     }, 1000);
-    // }
-
-    const generaliza = () => {
-        getPendings()
-        incPendings.forEach(
-            (item) => {
-                allPendings[item.incDate] = item    
-            }
-        )
-        expPendings.forEach(
-            (item) => {
-                allPendings[item.incDate] = item    
-            }
-        )
+                }
+            )
+            await expPendings.forEach(
+                (item) => {
+                    if (allPendings[item.expDate]) {
+                        allPendings[item.expDate].push(item)
+                    } else {
+                        allPendings[item.expDate] = [item]
+                    }
+                }
+            )
+            console.log(allPendings, "aloooooooooooooooooooooooooooo")
+        } catch (e) {
+            console.log(e.message)
+        }
     }
 
     const renderItem = (item) => {
-        console.log(item);
+        var table = item.incMoney ? "inc" : "exp"
         return (
-            <TouchableOpacity style={styles.item}>
-                <Card>
-                    <Card.Content>
-                        <View>
-                            <Text>{allPendings[timeToString(item)]}</Text>
-                        </View>
-                    </Card.Content>
-                </Card>
-            </TouchableOpacity>
+            <View>
+                <TouchableOpacity style={[styles[`${table}ItemOut`], styles.item]}>
+                    <Text style={styles.title}>{item.incMoney ? "Income" : "Expense"}</Text>
+                    <Card style={[styles[`${table}Item`], styles.item]}>
+                        <Card.Content style={styles.row}>
+                            <View>
+                                <Text style={styles.labels}>Description:</Text>
+                                <Text style={styles.labels}>Category:</Text>
+                                <Text style={styles.labels}>Value:</Text>
+                            </View>
+                            <View style={styles.values}>
+                                <Text style={styles.value}>{item[`${table}Description`]} meu gasto fudido</Text>
+                                <Text style={styles.value}>{item[`${table}Category`]}</Text>
+                                <TextMask style={styles.value} value={item[`${table}Money`]} options={{
+                                    precision: 2,
+                                    separator: ',',
+                                    unit: props.expMoney < 0 ? '-' : '',
+                                    delimiter: '.',
+                                    suffixUnit: ''
+                                }} type="money" />
+                            </View>
+                        </Card.Content>
+                    </Card>
+                </TouchableOpacity>
+            </View>
         );
     }
 
     return (
         <View style={styles.container}>
             <Agenda
-                items={items}
-                // loadItemsForMonth={loadItems}
-                selected={new Date()}
+                items={allPendings}
+                selected={"2022-10-03"}
                 refreshControl={null}
                 showClosingKnob={true}
                 refreshing={true}
@@ -85,12 +91,45 @@ export default props => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+
     },
     item: {
         flex: 1,
         borderRadius: 5,
-        padding: 10,
+        padding: 5,
         marginRight: 10,
-        marginTop: 17
+        marginTop: 17,
     },
+    incItemOut: {
+        backgroundColor: '#238a17'
+    },
+    expItemOut: {
+        backgroundColor: '#8c2216'
+    },
+    incItem: {
+        backgroundColor: '#4ab53e'
+    },
+    expItem: {
+        backgroundColor: '#e05343'
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        fontStyle: 'italic',
+        color: '#222'
+    },
+    labels: {
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    values: {
+        alignItems: 'flex-end'
+    },
+    value: {
+        fontSize: 15
+    },
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    }
 });
