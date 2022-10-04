@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Modal } from "react-native";
 import { Agenda } from 'react-native-calendars'
 import { Card } from "react-native-paper";
 import { TextMask } from "react-native-masked-text";
@@ -11,6 +11,8 @@ import useMoney from "../data/hooks/useMoney"
 export default props => {
     const { expPendings, incPendings } = useMoney()
     const [allPendings, setAllPendings] = useState({})
+    const [modalVisible, setModalVisible] = useState(false)
+    const [data, setData] = useState()
 
     useEffect(() => {
         generalPendings()
@@ -25,7 +27,6 @@ export default props => {
                     } else {
                         allPendings[item.incDate] = [item]
                     }
-
                 }
             )
             await expPendings.forEach(
@@ -44,10 +45,10 @@ export default props => {
     }
 
     const renderItem = (item) => {
-        var table = item.incMoney ? "inc" : "exp"
+        const table = item.incMoney ? "inc" : "exp"
         return (
             <View style={[styles[`${table}ItemOut`], styles.item]}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => { setData(item) }}>
                     <View>
                         <Text style={styles.title}>{item.incMoney ? "Income" : "Expense"}</Text>
                     </View>
@@ -76,14 +77,6 @@ export default props => {
                     </Card>
                 </TouchableOpacity>
             </View>
-            //     <View style={styles.buttonRow}>
-            //     <TouchableOpacity>
-            //         <MaterialIcons size={20} name="done" />
-            //     </TouchableOpacity>
-            //     <TouchableOpacity>
-            //         <FontAwesome size={20} name="trash-o" />
-            //     </TouchableOpacity>
-            // </View>
         );
     }
 
@@ -91,7 +84,6 @@ export default props => {
         <View style={styles.container}>
             <Agenda
                 items={allPendings}
-                // selected={'2022-10-03'}
                 refreshControl={null}
                 showClosingKnob={true}
                 refreshing={true}
@@ -99,8 +91,53 @@ export default props => {
                 pastScrollRange={6}
                 renderItem={renderItem}
             />
+
+            <Modal animationType="slide"
+                transparent={true}
+                visible={modalVisible}>
+                <View style={[data.incMoney ? styles.incItemOut : styles.expItemOut, styles.item]}>
+                    <View>
+                        <Text style={styles.title}>{data.incMoney ? "Income" : "Expense"}</Text>
+                    </View>
+                    <Card style={[data.incMoney ? styles.incItem : styles.expItem, styles.item]}>
+                        <Card.Content>
+                            <View style={styles.row}>
+                                <Text style={styles.labels}>Description:</Text>
+                                <Text style={styles.value}>{data[data.incDescription ? "incDescription" : "expDescription"]}</Text>
+                                <Text style={styles.value}>{data[data.incDate ? "incDate" : "expDate"]}</Text>
+                            </View>
+                            <View style={styles.row}>
+                                <Text style={styles.labels}>Category:</Text>
+                                <Text style={styles.value}>{data[data.incCategory ? "incCategory" : "expCategory"]}</Text>
+                            </View>
+                            <View style={styles.row}>
+                                <Text style={styles.labels}>Value:</Text>
+                                <TextMask style={styles.value} value={data[data.incMoney ? "incMoney" : "expMoneyincMoney"]} options={{
+                                    precision: 2,
+                                    separator: ',',
+                                    unit: 'R$',
+                                    delimiter: '.',
+                                    suffixUnit: ''
+                                }} type="money" />
+                            </View>
+                        </Card.Content>
+                    </Card>
+                </View>
+
+                <View style={styles.modalButtons}>
+                    <TouchableOpacity>
+                        <MaterialIcons size={20} name="done" />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <FontAwesome size={20} name="trash-o" />
+                    </TouchableOpacity>
+                </View>
+            </Modal>
+
         </View>
     );
+
+
 }
 
 const styles = StyleSheet.create({
@@ -144,7 +181,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flexWrap: 'wrap'
     },
-    buttonRow: {
+    modalButtons: {
         flexDirection: 'row',
     }
 });
