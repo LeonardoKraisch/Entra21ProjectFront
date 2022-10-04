@@ -9,6 +9,10 @@ import { Picker } from "@react-native-picker/picker";
 import useMoney from '../../data/hooks/useMoney'
 
 export default props => {
+
+    
+
+    const { filterPlus } = useMoney()
     const [date2, setDate2] = useState(new Date())
     const [showDatePicker2, setShowDatePicker2] = useState(false)
 
@@ -153,6 +157,28 @@ export default props => {
         }
     }
 
+    const applyFilters = async () => {
+        await filterPlus({
+            filters: {
+                type: "+",
+                initDate: date1,
+                endDate: date2,
+                moneyFilter:pickerValue,
+                categoryFilter:category,
+                descriptionFilter:description
+            }
+        }, {
+            filters: {
+                type: "-",
+                initDate: date1,
+                endDate: date2,
+                moneyFilter:pickerValue,
+                categoryFilter:category,
+                descriptionFilter:description
+            }
+        })
+    }
+
     return (
         <View style={styles.secondaryFilters}>
             <View style={styles.setDate}>
@@ -182,7 +208,9 @@ export default props => {
             </View>
 
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.send}>
+                <TouchableOpacity style={styles.send}
+                    onPress={applyFilters}
+                >
                     <Text style={styles.sendText}>Filter</Text>
                 </TouchableOpacity>
             </View>
