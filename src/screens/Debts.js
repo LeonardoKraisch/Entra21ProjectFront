@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Agenda } from 'react-native-calendars'
 import { Card } from "react-native-paper";
 
+import useMoney from "../data/hooks/useMoney"
+
 // const timeToString = (time) => {
 //     const date = new Date(time);
 //     console.log(date)
@@ -10,7 +12,9 @@ import { Card } from "react-native-paper";
 // }
 
 export default props => {
+    const { getPendings, expPendings , incPendings} = useMoney()
     const [items, setItems] = useState({})
+    const [allPendings, setAllPendings] = useState({})
 
     // const loadItems = (day) => {
 
@@ -32,6 +36,20 @@ export default props => {
     //     }, 1000);
     // }
 
+    const generaliza = () => {
+        getPendings()
+        incPendings.forEach(
+            (item) => {
+                allPendings[item.incDate] = item    
+            }
+        )
+        expPendings.forEach(
+            (item) => {
+                allPendings[item.incDate] = item    
+            }
+        )
+    }
+
     const renderItem = (item) => {
         console.log(item);
         return (
@@ -39,7 +57,7 @@ export default props => {
                 <Card>
                     <Card.Content>
                         <View>
-                            <Text>{item.name}</Text>
+                            <Text>{"oi"}</Text>
                         </View>
                     </Card.Content>
                 </Card>
