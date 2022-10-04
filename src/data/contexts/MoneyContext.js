@@ -158,7 +158,12 @@ export const MoneyProvider = ({ children }) => {
         },
 
         delRegister: async (data) =>{
-            const delConn = await axios.post(`/${data.type == "+" ? "income" : "expense"}/`,
+            const delConn = await axios.post(`/${data.type == "+" ? "income" : "expense"}/delete`,
+                data)
+        },
+
+        editRegister: async (data, type) =>{
+            const delConn = await axios.post(`/${type == "+" ? "income" : "expense"}/edit`,
                 data)
         },
 
