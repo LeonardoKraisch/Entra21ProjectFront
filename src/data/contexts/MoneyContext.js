@@ -266,8 +266,14 @@ export const MoneyProvider = ({ children }) => {
             })
 
         },
-        filterPlus: async (filtersInc, filtersExp) => {
-            balanceSetter(getLaunchesPluxFilter(dateSearch, filtersInc), getLaunchesPluxFilter(dateSearch, filtersExp))
+
+        // filterPlus: async (filtersInc, filtersExp) => {
+        //     var filtered = moneyInternalContext.balanceSetter(await moneyInternalContext.getLaunchesPluxFilter(filtersInc), await moneyInternalContext.getLaunchesPluxFilter(filtersExp))
+
+        // },
+
+        getPendings: async () => {
+
         }
     }
 

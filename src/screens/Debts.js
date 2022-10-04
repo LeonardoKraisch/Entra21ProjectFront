@@ -3,11 +3,6 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Agenda } from 'react-native-calendars'
 import { Card } from "react-native-paper";
 
-const timeToString = (time) => {
-    const date = new Date(time);
-    return date.toISOString().split('T')[0];
-}
-
 export default props => {
     const [items, setItems] = useState({})
 
@@ -30,14 +25,19 @@ export default props => {
         <View style={styles.container}>
             <Agenda
                 items={items}
-                loadItemsForMonth={loadItems}
-                selected={'2022-10-02'}
+                loadItemsForMonth={renderItem}
+                selected={new Date()}
                 refreshControl={null}
                 showClosingKnob={true}
-                refreshing={false}
-                renderItem={renderItem}
-                renderEmptyData={() => {
-                    return <View />;
+                refreshing={true}
+                futureScrollRange={12}
+                pastScrollRange={6}
+                renderEmptyDate={(day) => {
+                    return (
+                        <View style={{ height: 50, width: '100%', backgroundColor: '#000' }}>
+                            <Text>{day}</Text>
+                        </View>
+                    )
                 }}
             />
         </View>
