@@ -140,7 +140,7 @@ export const MoneyProvider = ({ children }) => {
         },
         getRegisters: async data => {
             const newQuery = await axios.post(`/${data.type == "+" ? "income" : "expense"}/query`,
-                { filterType: data.filterType, filter: data.filter, column: data.column })
+                data)
             return newQuery.data.registers
         },
 
@@ -275,27 +275,20 @@ export const MoneyProvider = ({ children }) => {
         getPendings: async (filters) => {
             try {
 
-                const incPending = await moneyInternalContext.getRegisters(
+                setIncPendings( await moneyInternalContext.getRegisters(
                     {
                         type: "+",
-                        filterType: "[]",
-                        filter: [filters.initDate, filters.initDate],
-                        column: "incDate",
                         pending: true
                     }
-                )
-                const expPending = await moneyInternalContext.getRegisters(
+                ))
+                setExpPendings(await moneyInternalContext.getRegisters(
                     {
                         type: "-",
-                        filterType: "[]",
-                        filter: [filters.initDate, filters.initDate],
-                        column: "expDate",
                         pending: true
                     }
 
-
+                    )
                 )
-                console.log((incPending, expPending))
             }catch(e){
                 console.log(e.mesage)
             }
