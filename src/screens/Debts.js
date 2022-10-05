@@ -62,14 +62,15 @@ export default props => {
             return (
                 <Modal animationType="slide"
                     transparent={true}
-                    visible={modalVisible}>
+                    visible={modalVisible}
+                    onRequestClose={() => setModalVisible(false)}>
                     <View style={styles.modalExtern}>
                         <View style={styles.modalView}>
-                            <Card style={[item.incMoney ? styles.incItemOut : styles.expItemOut, styles.item]}>
+                            <Card style={[item.incMoney ? styles.incItemOut : styles.expItemOut, styles.modalItemOut]}>
                                 <View>
                                     <Text style={styles.title}>{item.incMoney ? "Income" : "Expense"}</Text>
                                 </View>
-                                <Card.Content style={[item.incMoney ? styles.incItem : styles.expItem, styles.item]}>
+                                <Card.Content style={[item.incMoney ? styles.incItem : styles.expItem, styles.modalItem]}>
                                     <View style={styles.row}>
                                         <Text style={styles.labels}>Description:</Text>
                                         <Text style={styles.value}>{item[item.incDescription ? "incDescription" : "expDescription"]}</Text>
@@ -91,13 +92,24 @@ export default props => {
                                     </View>
                                 </Card.Content>
                             </Card>
+                            <Text style={styles.textQuestion}>Do you want to set the status</Text>
+                            <Text style={styles.textQuestion}> of this launch to "Paid"?</Text>
                             <View style={styles.modalButtons}>
-                                <TouchableOpacity>
-                                    <MaterialIcons size={20} name="done" />
-                                </TouchableOpacity>
-                                <TouchableOpacity>
-                                    <FontAwesome size={20} name="trash-o" />
-                                </TouchableOpacity>
+                                <View style={styles.modalButtonsArea}>
+                                    <View style={styles.buttonTrashView}>
+                                        <TouchableOpacity style={styles.buttonTrash}>
+                                            <FontAwesome size={27} name="trash-o" color="#FFF" />
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View style={styles.modalButtonsConfirm}>
+                                        <TouchableOpacity style={styles.buttonCancel} onPress={() => setModalVisible(false)} >
+                                            <FontAwesome name="close" size={27} color="#FFF" />
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.buttonOk}>
+                                            <MaterialIcons size={28} name="done" color="#FFF" />
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
                             </View>
                         </View>
                     </View>
@@ -133,6 +145,7 @@ const styles = StyleSheet.create({
         padding: 5,
         marginRight: 10,
         marginTop: 17,
+        minWidth: '90%',
     },
     incItemOut: {
         backgroundColor: '#238a17'
@@ -168,15 +181,30 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 22
+    },
+    modalItemOut: {
+        marginTop: 20,
+        flex: 1,
+        borderRadius: 5,
+        padding: 5,
+        minWidth: '90%',
+        maxHeight: '40%'
+    },
+    modalItem: {
+        flex: 1,
+        borderRadius: 5,
+        padding: 5,
+        marginRight: 10,
+        minWidth: '90%',
     },
     modalView: {
-        margin: 20,
+        flex: 1,
         backgroundColor: "white",
-        maxHeight: '30%',
+        maxWidth: "90%",
+        maxHeight: '40%',
         borderRadius: 20,
-        paddingHorizontal: 30,
-        paddingVertical: 20,
+        paddingVertical: 5,
+        paddingHorizontal: 20,
         alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
@@ -187,8 +215,46 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5
     },
+    textQuestion: {
+        fontSize: 18,
+        padding: 2,
+        fontWeight: 'bold'
+    },
     modalButtons: {
         flexDirection: 'row',
-        
+        width: '95%',
+        marginTop: 30
+    },
+    modalButtonsArea: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        flex: 1,
+        padding: 10,
+    },
+    modalButtonsConfirm: {
+        width: '60%',
+        flexDirection: 'row',
+        justifyContent: 'flex-end'
+    },
+    buttonCancel: {
+        backgroundColor: '#22d2e6',
+        paddingVertical: 5,
+        paddingHorizontal: 9,
+        borderRadius: 20,
+    },
+    buttonOk: {
+        backgroundColor: '#22d2e6',
+        padding: 5,
+        borderRadius: 20,
+        marginLeft: 10
+    },
+    buttonTrash: {
+        backgroundColor: '#de1f29',
+        paddingVertical: 5,
+        paddingHorizontal: 9,
+        borderRadius: 20,
+    },
+    buttonTrashView: {
+        justifyContent: 'flex-start'
     }
 });
