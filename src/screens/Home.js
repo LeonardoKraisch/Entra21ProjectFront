@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView, View, StyleSheet, FlatList, StatusBar } from 'react-native'
+import { SafeAreaView, View, StyleSheet, FlatList, StatusBar, TouchableOpacity } from 'react-native'
 import Header from "../components/Header";
 import CustomWallet from "../components/CustomWallet";
 import MainWallet from "../components/Wallet/MainWallet";
@@ -19,7 +19,14 @@ export default props => {
                     numColumns={2}
                     width='97%'
                     data={wallets}
-                    renderItem={(item) => (<CustomWallet />)}
+                    renderItem={(wallet) => {
+                        <TouchableOpacity
+                            onPress={() => props.navigation.navigate("custonWallet", {wallet})}
+                        >
+                            (<CustomWallet />)
+                        </TouchableOpacity>
+                    }
+                    }
                 />
                 <AddView />
             </View>
