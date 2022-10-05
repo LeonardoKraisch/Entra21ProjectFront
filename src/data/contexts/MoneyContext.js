@@ -31,6 +31,8 @@ export const MoneyProvider = ({ children }) => {
 
     const [incPendings, setIncPendings] = useState([])
     const [expPendings, setExpPendings] = useState([])
+    const [allPendings, setAllPendings] = useState({})
+    const [pendingOne, setPendingOne] = useState({})
 
     const [coin, setCoin] = useState('R$')
 
@@ -89,6 +91,8 @@ export const MoneyProvider = ({ children }) => {
 
         incPendings,
         expPendings,
+        allPendings,
+        pendingOne,
 
         lastDay,
         send: async data => {
@@ -125,9 +129,10 @@ export const MoneyProvider = ({ children }) => {
                     }
 
                     setAllLaunches([...allLaunches, launch])
-                    const total = totalInc - totalExp
+
+                    const total = await moneyInternalContext.recalBalance()
                     setBalance(total)
-                    setTotalSearch(balance)
+                    setTotalSearch(total)
 
                     Toast.show({
                         type: 'info',
@@ -150,6 +155,10 @@ export const MoneyProvider = ({ children }) => {
                     text2: 'Please, try again.'
                 })
             }
+        },
+        recalBalance: async () => {
+            const total = totalInc - totalExp
+            return total
         },
         getRegisters: async data => {
             const newQuery = await axios.post(`/${data.type == "+" ? "income" : "expense"}/query`,
@@ -184,11 +193,13 @@ export const MoneyProvider = ({ children }) => {
                     })
 
                     await moneyInternalContext.balanceSetter(incomeArray, expensesArray)
-                    moneyInternalContext.getPendings()
+                    await moneyInternalContext.getPendings()
+                    console.log(pendingOne, 'aloooooooo')
 
                 } else {
                     await moneyInternalContext.balanceSetter(incomes, expenses)
-
+                    await moneyInternalContext.getPendings()
+                    
                 }
 
             } catch (e) {
@@ -276,7 +287,7 @@ export const MoneyProvider = ({ children }) => {
             return all
         },
 
-        getLaunchesPluxFilter: async (filters) => {
+        getLaunchesPlusFilter: async (filters) => {
             return await moneyInternalContext.getRegisters({
                 type: filters.type,
                 filterType: "...",
@@ -288,25 +299,18 @@ export const MoneyProvider = ({ children }) => {
                 ]
             })
 
-
-
         },
-
-        // filterPlus: async (filtersInc, filtersExp) => {
-        //     var filtered = moneyInternalContext.balanceSetter(await moneyInternalContext.getLaunchesPluxFilter(filtersInc), await moneyInternalContext.getLaunchesPluxFilter(filtersExp))
-
-        // },
 
         getPendings: async () => {
             try {
 
-                console.log("sending")
                 setIncPendings(await moneyInternalContext.getRegisters(
                     {
                         type: "+",
                         pending: true
                     }
                 ))
+
                 setExpPendings(await moneyInternalContext.getRegisters(
                     {
                         type: "-",
@@ -315,12 +319,34 @@ export const MoneyProvider = ({ children }) => {
 
                 )
                 )
+                setPendingOne(await moneyInternalContext.generalPendings())
+                console.log(pendingOne, 'aloooooooo')
             } catch (e) {
-                console.log(e.mesage)
+                console.log(e.message)
             }
         },
 
-
+        generalPendings: async () => {
+            try {
+                for (let item of incPendings) {
+                    if (allPendings[item.incDate] != null && allPendings[item.incDate][0].incDate == item.incDate) {
+                        await allPendings[item.incDate].push(item)
+                    } else {
+                        allPendings[item.incDate] = [item]
+                    }
+                }
+                for (let item of expPendings) {
+                    if (allPendings[item.expDate] != null && allPendings[item.expDate][0].expDate == item.expDate) {
+                        await allPendings[item.expDate].push(item)
+                    } else {
+                        allPendings[item.expDate] = [item]
+                    }
+                }
+                return allPendings[0]
+            } catch (e) {
+                console.log(e.message)
+            }
+        }
     }
 
 

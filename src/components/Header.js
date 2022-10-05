@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     StyleSheet,
     Text,
@@ -12,8 +12,16 @@ import { TextMask } from "react-native-masked-text";
 import useMoney from '../data/hooks/useMoney'
 
 export default props => {
-    const { balance, coin } = useMoney()
+    const { totalInc, totalExp, coin, recalBalance } = useMoney()
+    const [data, setData] = useState()
     const [showBalance, setShowBalance] = useState(false)
+
+    useEffect(() => {
+        async function fetch() {
+            setData(await recalBalance())
+        }
+        fetch()
+    }, [totalInc, totalExp])
 
     return (
         <View style={styles.container}>
@@ -31,11 +39,11 @@ export default props => {
                         <Text style={{ color: '#FFF', fontSize: 27 }}>{coin}</Text>
                         <View>{showBalance ?
                             <TextMask type={'money'}
-                                value={balance}
+                                value={data}
                                 options={{
                                     precision: 2,
                                     separator: ',',
-                                    unit: balance > 0 ? '' : '-',
+                                    unit: data > 0 ? '' : '-',
                                     delimiter: '.',
                                     suffixUnit: ''
                                 }} style={{ color: '#FFF', fontSize: 27 }} /> :
