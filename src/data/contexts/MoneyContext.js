@@ -123,7 +123,7 @@ export const MoneyProvider = ({ children }) => {
                             setTotalExp(totalExp + await launch['expMoney'])
                         }
                     }
-                    
+
                     setAllLaunches([...allLaunches, launch])
                     const total = totalInc - totalExp
                     setBalance(total)
@@ -157,12 +157,12 @@ export const MoneyProvider = ({ children }) => {
             return newQuery.data.registers
         },
 
-        delRegister: async (data) =>{
+        delRegister: async (data) => {
             const delConn = await axios.post(`/${data.type == "+" ? "income" : "expense"}/delete`,
                 data)
         },
 
-        editRegister: async (data, type) =>{
+        editRegister: async (data, type) => {
             const delConn = await axios.post(`/${type == "+" ? "income" : "expense"}/edit`,
                 data)
         },
@@ -183,8 +183,8 @@ export const MoneyProvider = ({ children }) => {
                         column: "expDate"
                     })
 
-                    await moneyInternalContext.balanceSetter(incomeArray, expensesArray)                 
-                    
+                    await moneyInternalContext.balanceSetter(incomeArray, expensesArray)
+                    moneyInternalContext.getPendings()
 
                 } else {
                     await moneyInternalContext.balanceSetter(incomes, expenses)
@@ -287,8 +287,8 @@ export const MoneyProvider = ({ children }) => {
                     [filters.descriptionFilter]
                 ]
             })
-            
-            
+
+
 
         },
 
@@ -320,7 +320,7 @@ export const MoneyProvider = ({ children }) => {
             }
         },
 
-        
+
     }
 
 

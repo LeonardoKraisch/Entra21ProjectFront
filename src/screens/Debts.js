@@ -12,19 +12,24 @@ export default props => {
     const { expPendings, incPendings } = useMoney()
     const [allPendings, setAllPendings] = useState({})
     const [modalVisible, setModalVisible] = useState(false)
-    const [data, setData] = useState()
+    const [data, setData] = useState({})
 
     useEffect(() => {
-        generalPendings()
+        async function fetch() {
+            generalPendings()
+            setData(await allPendings[0])
+            console.log(data);
+        }
+        fetch()
     }, [expPendings, incPendings])
 
     const generalPendings = async () => {
         try {
-            for (let item of incPendings){
+            for (let item of incPendings) {
                 if (allPendings[item.incDate] != null && allPendings[item.incDate][0].incDate == item.incDate) {
                     await allPendings[item.incDate].push(item)
                 } else {
-                    
+
                     allPendings[item.incDate] = [item]
                 }
             }
@@ -37,7 +42,7 @@ export default props => {
                     }
                 }
             )
-            
+
             console.log(allPendings)
         } catch (e) {
             console.log(e.message)
@@ -93,7 +98,7 @@ export default props => {
                 renderItem={renderItem}
             />
 
-            <Modal animationType="slide"
+            {/* <Modal animationType="slide"
                 transparent={true}
                 visible={modalVisible}>
                 <View style={[data.incMoney ? styles.incItemOut : styles.expItemOut, styles.item]}>
@@ -104,16 +109,16 @@ export default props => {
                         <Card.Content>
                             <View style={styles.row}>
                                 <Text style={styles.labels}>Description:</Text>
-                                <Text style={styles.value}>{data[data.incDescription ? "incDescription" : "expDescription"]}</Text>
-                                <Text style={styles.value}>{data[data.incDate ? "incDate" : "expDate"]}</Text>
+                                <Text style={styles.value}>{data[0][data[0].incDescription ? "incDescription" : "expDescription"]}</Text>
+                                <Text style={styles.value}>{data[0][data[0].incDate ? "incDate" : "expDate"]}</Text>
                             </View>
                             <View style={styles.row}>
                                 <Text style={styles.labels}>Category:</Text>
-                                <Text style={styles.value}>{data[data.incCategory ? "incCategory" : "expCategory"]}</Text>
+                                <Text style={styles.value}>{data[0][data[0].incCategory ? "incCategory" : "expCategory"]}</Text>
                             </View>
                             <View style={styles.row}>
                                 <Text style={styles.labels}>Value:</Text>
-                                <TextMask style={styles.value} value={data[data.incMoney ? "incMoney" : "expMoneyincMoney"]} options={{
+                                <TextMask style={styles.value} value={data[0][data[0].incMoney ? "incMoney" : "expMoneyincMoney"]} options={{
                                     precision: 2,
                                     separator: ',',
                                     unit: 'R$',
@@ -133,7 +138,7 @@ export default props => {
                         <FontAwesome size={20} name="trash-o" />
                     </TouchableOpacity>
                 </View>
-            </Modal>
+            </Modal> */}
 
         </View>
     );
