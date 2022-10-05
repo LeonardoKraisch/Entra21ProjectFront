@@ -32,7 +32,6 @@ export const MoneyProvider = ({ children }) => {
     const [incPendings, setIncPendings] = useState([])
     const [expPendings, setExpPendings] = useState([])
     const [allPendings, setAllPendings] = useState({})
-    const [pendingOne, setPendingOne] = useState({})
 
     const [coin, setCoin] = useState('R$')
 
@@ -92,7 +91,6 @@ export const MoneyProvider = ({ children }) => {
         incPendings,
         expPendings,
         allPendings,
-        pendingOne,
 
         lastDay,
         send: async data => {
@@ -194,12 +192,11 @@ export const MoneyProvider = ({ children }) => {
 
                     await moneyInternalContext.balanceSetter(incomeArray, expensesArray)
                     await moneyInternalContext.getPendings()
-                    console.log(pendingOne, 'aloooooooo')
 
                 } else {
                     await moneyInternalContext.balanceSetter(incomes, expenses)
                     await moneyInternalContext.getPendings()
-                    
+
                 }
 
             } catch (e) {
@@ -319,8 +316,6 @@ export const MoneyProvider = ({ children }) => {
 
                 )
                 )
-                setPendingOne(await moneyInternalContext.generalPendings())
-                console.log(pendingOne, 'aloooooooo')
             } catch (e) {
                 console.log(e.message)
             }
@@ -342,16 +337,17 @@ export const MoneyProvider = ({ children }) => {
                         allPendings[item.expDate] = [item]
                     }
                 }
-                return allPendings[0]
+
+                return allPendings[Object.keys(allPendings)[0]][0]
             } catch (e) {
                 console.log(e.message)
             }
+
         }
     }
 
-
     return (
-        <MoneyContext.Provider value={moneyInternalContext}>
+        <MoneyContext.Provider value={moneyInternalContext} >
             {children}
         </MoneyContext.Provider >
     )

@@ -9,9 +9,9 @@ import { FontAwesome } from "@expo/vector-icons";
 import useMoney from "../data/hooks/useMoney"
 
 export default props => {
-    const { generalPendings, allPendings, pendingOne } = useMoney()
+    const { generalPendings, allPendings } = useMoney()
     const [modalVisible, setModalVisible] = useState(false)
-    const [item, setItem] = useState(pendingOne)
+    const [item, setItem] = useState()
 
     useEffect(() => {
         async function fetch() {
@@ -57,13 +57,57 @@ export default props => {
         );
     }
 
-    // const ModalFunc = () => {
-    //     if (item) {
-    //         return (
+    const ModalView = () => {
+        if (item) {
+            return (
+                <Modal animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}>
+                    <View style={styles.modalExtern}>
+                        <View style={styles.modalView}>
+                            <View style={[item.incMoney ? styles.incItemOut : styles.expItemOut, styles.item]}>
+                                <View>
+                                    <Text style={styles.title}>{item.incMoney ? "Income" : "Expense"}</Text>
+                                </View>
+                                <Card style={[item.incMoney ? styles.incItem : styles.expItem, styles.item]}>
+                                    <Card.Content>
+                                        <View style={styles.row}>
+                                            <Text style={styles.labels}>Description:</Text>
+                                            <Text style={styles.value}>{item[item.incDescription ? "incDescription" : "expDescription"]}</Text>
+                                            <Text style={styles.value}>{item[item.incDate ? "incDate" : "expDate"]}</Text>
+                                        </View>
+                                        <View style={styles.row}>
+                                            <Text style={styles.labels}>Category:</Text>
+                                            <Text style={styles.value}>{item[item.incCategory ? "incCategory" : "expCategory"]}</Text>
+                                        </View>
+                                        <View style={styles.row}>
+                                            <Text style={styles.labels}>Value:</Text>
+                                            <TextMask style={styles.value} value={item[item.incMoney ? "incMoney" : "expMoney"]} options={{
+                                                precision: 2,
+                                                separator: ',',
+                                                unit: 'R$',
+                                                delimiter: '.',
+                                                suffixUnit: ''
+                                            }} type="money" />
+                                        </View>
+                                    </Card.Content>
+                                </Card>
+                            </View>
 
-    //         )
-    //     }
-    // }
+                            <View style={styles.modalButtons}>
+                                <TouchableOpacity>
+                                    <MaterialIcons size={20} name="done" />
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <FontAwesome size={20} name="trash-o" />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+            )
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -76,50 +120,9 @@ export default props => {
                 pastScrollRange={6}
                 renderItem={renderItem}
             />
-            <Modal animationType="slide"
-                transparent={true}
-                visible={modalVisible}>
-                <View style={[item["incMoney"] ? styles.incItemOut : styles.expItemOut, styles.item]}>
-                    <View>
-                        <Text style={styles.title}>{item.incMoney ? "Income" : "Expense"}</Text>
-                    </View>
-                    <Card style={[item.incMoney ? styles.incItem : styles.expItem, styles.item]}>
-                        <Card.Content>
-                            <View style={styles.row}>
-                                <Text style={styles.labels}>Description:</Text>
-                                <Text style={styles.value}>{item[item.incDescription ? "incDescription" : "expDescription"]}</Text>
-                                <Text style={styles.value}>{item[item.incDate ? "incDate" : "expDate"]}</Text>
-                            </View>
-                            <View style={styles.row}>
-                                <Text style={styles.labels}>Category:</Text>
-                                <Text style={styles.value}>{item[item.incCategory ? "incCategory" : "expCategory"]}</Text>
-                            </View>
-                            <View style={styles.row}>
-                                <Text style={styles.labels}>Value:</Text>
-                                <TextMask style={styles.value} value={item[item.incMoney ? "incMoney" : "expMoneyincMoney"]} options={{
-                                    precision: 2,
-                                    separator: ',',
-                                    unit: 'R$',
-                                    delimiter: '.',
-                                    suffixUnit: ''
-                                }} type="money" />
-                            </View>
-                        </Card.Content>
-                    </Card>
-                </View>
-
-                <View style={styles.modalButtons}>
-                    <TouchableOpacity>
-                        <MaterialIcons size={20} name="done" />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <FontAwesome size={20} name="trash-o" />
-                    </TouchableOpacity>
-                </View>
-            </Modal>
+            <ModalView />
         </View>
     );
-
 
 }
 
@@ -163,6 +166,27 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         flexWrap: 'wrap'
+    },
+    modalExtern: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
     },
     modalButtons: {
         flexDirection: 'row',
