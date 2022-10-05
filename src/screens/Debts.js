@@ -65,35 +65,32 @@ export default props => {
                     visible={modalVisible}>
                     <View style={styles.modalExtern}>
                         <View style={styles.modalView}>
-                            <View style={[item.incMoney ? styles.incItemOut : styles.expItemOut, styles.item]}>
+                            <Card style={[item.incMoney ? styles.incItemOut : styles.expItemOut, styles.item]}>
                                 <View>
                                     <Text style={styles.title}>{item.incMoney ? "Income" : "Expense"}</Text>
                                 </View>
-                                <Card style={[item.incMoney ? styles.incItem : styles.expItem, styles.item]}>
-                                    <Card.Content>
-                                        <View style={styles.row}>
-                                            <Text style={styles.labels}>Description:</Text>
-                                            <Text style={styles.value}>{item[item.incDescription ? "incDescription" : "expDescription"]}</Text>
-                                            <Text style={styles.value}>{item[item.incDate ? "incDate" : "expDate"]}</Text>
-                                        </View>
-                                        <View style={styles.row}>
-                                            <Text style={styles.labels}>Category:</Text>
-                                            <Text style={styles.value}>{item[item.incCategory ? "incCategory" : "expCategory"]}</Text>
-                                        </View>
-                                        <View style={styles.row}>
-                                            <Text style={styles.labels}>Value:</Text>
-                                            <TextMask style={styles.value} value={item[item.incMoney ? "incMoney" : "expMoney"]} options={{
-                                                precision: 2,
-                                                separator: ',',
-                                                unit: 'R$',
-                                                delimiter: '.',
-                                                suffixUnit: ''
-                                            }} type="money" />
-                                        </View>
-                                    </Card.Content>
-                                </Card>
-                            </View>
-
+                                <Card.Content style={[item.incMoney ? styles.incItem : styles.expItem, styles.item]}>
+                                    <View style={styles.row}>
+                                        <Text style={styles.labels}>Description:</Text>
+                                        <Text style={styles.value}>{item[item.incDescription ? "incDescription" : "expDescription"]}</Text>
+                                        <Text style={styles.value}>{item[item.incDate ? "incDate" : "expDate"]}</Text>
+                                    </View>
+                                    <View style={styles.row}>
+                                        <Text style={styles.labels}>Category:</Text>
+                                        <Text style={styles.value}>{item[item.incCategory ? "incCategory" : "expCategory"]}</Text>
+                                    </View>
+                                    <View style={styles.row}>
+                                        <Text style={styles.labels}>Value:</Text>
+                                        <TextMask style={styles.value} value={item[item.incMoney ? "incMoney" : "expMoney"]} options={{
+                                            precision: 2,
+                                            separator: ',',
+                                            unit: 'R$',
+                                            delimiter: '.',
+                                            suffixUnit: ''
+                                        }} type="money" />
+                                    </View>
+                                </Card.Content>
+                            </Card>
                             <View style={styles.modalButtons}>
                                 <TouchableOpacity>
                                     <MaterialIcons size={20} name="done" />
@@ -176,8 +173,10 @@ const styles = StyleSheet.create({
     modalView: {
         margin: 20,
         backgroundColor: "white",
+        maxHeight: '30%',
         borderRadius: 20,
-        padding: 35,
+        paddingHorizontal: 30,
+        paddingVertical: 20,
         alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
@@ -190,5 +189,6 @@ const styles = StyleSheet.create({
     },
     modalButtons: {
         flexDirection: 'row',
+        
     }
 });
