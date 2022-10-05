@@ -91,7 +91,6 @@ export default props => {
 
     return (
         <View style={styles.containter}>
-            <Text style={styles.title}>Wallet</Text>
             <View style={styles.filters}>
                 <View style={styles.mainFilters}>
                     <TouchableOpacity onPress={() => setShow("expenses")}>
@@ -112,8 +111,8 @@ export default props => {
                 </View>
                 <DatePicker />
             </View>
-            <View style={{ maxHeight: "60%" }}>
-                <Filters />
+            <Filters />
+            <View style={{ maxHeight: "60%", padding: 10 }}>
                 <ShowReport />
             </View>
             <View style={styles.row}>
@@ -131,14 +130,7 @@ const styles = StyleSheet.create({
     containter: {
         justifyContent: 'center',
         flex: 1,
-        backgroundColor: '#3C3C3C',
-        padding: 10
-    },
-    title: {
-        fontSize: 30,
-        color: '#FFF',
-        fontWeight: 'bold',
-        margin: 2,
+        backgroundColor: '#666',
     },
     filters: {
         backgroundColor: '#32779E',
@@ -184,14 +176,12 @@ const styles = StyleSheet.create({
         borderBottomEndRadius: 3,
     },
     buttonContainer: {
-        width: '23%',
-        paddingHorizontal: 2,
-        marginHorizontal: 2,
+        width: '27%',
+        paddingHorizontal: 15,
         backgroundColor: '#32779E',
         borderColor: '#CCC',
         borderBottomWidth: 1,
         borderRightWidth: 1,
-        borderLeftWidth: 1,
         borderBottomStartRadius: 5,
         borderBottomEndRadius: 50
     },

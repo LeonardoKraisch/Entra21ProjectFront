@@ -65,7 +65,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#EEE',
         borderRadius: 5,
         alignSelf: 'center',
-        padding: 5
+        padding: 5,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
     },
     header: {
         width: '100%',

@@ -47,21 +47,16 @@ export default props => {
     };
 
     return (
-        <View style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={() => props.navigation.navigate("Wallet")}>
             <View style={styles.label}>
                 <Text style={styles.labelText}>
                     Main Wallet
                 </Text>
-                <TouchableOpacity onPress={() => props.navigation.navigate("Wallet")}>
-                    <Text style={styles.labelButton}>
-                        Details
-                    </Text>
-                </TouchableOpacity>
             </View>
             <View style={styles.chartContainer}>
                 <MyPieChart />
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 
@@ -84,9 +79,6 @@ const styles = StyleSheet.create({
         color: '#FFF',
         fontWeight: 'bold',
         fontSize: 16
-    },
-    labelButton: {
-        color: '#FFF',
     },
     chartContainer: {
         flexDirection: 'row',
