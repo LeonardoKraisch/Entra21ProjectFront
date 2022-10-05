@@ -4,9 +4,10 @@ import Header from "../components/Header";
 import CustomWallet from "../components/MiniWallet";
 import MainWallet from "../components/Wallet/MainWallet";
 import AddView from "../components/AddLaunch/AddView";
+import useMoney from "../data/hooks/useMoney";
 
 export default props => {
-    const wallets = [1, 2]
+    const { getWallets } = useMoney()
 
     return (
         <SafeAreaView style={styles.containter}>
@@ -18,9 +19,9 @@ export default props => {
                 <FlatList
                     numColumns={2}
                     width='97%'
-                    data={wallets}
+                    data={() => getWallets()}
                     renderItem={(wallet) =>
-                        <CustomWallet wallet={wallet}/>
+                        <CustomWallet wallet={wallet} />
                     }
                 />
                 <AddView />

@@ -1,11 +1,13 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 export default props => {
+
     return (
         <View style={styles.container}>
-            <Text>
-                Custom Wallet
-            </Text>
+            <TouchableOpacity>
+                <Text>{props.wallet.walletName}</Text>
+                <Text>{props.wallet.walletDesc}</Text>
+            </TouchableOpacity>
         </View>
     )
 }

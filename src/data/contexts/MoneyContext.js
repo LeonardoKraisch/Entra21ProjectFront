@@ -343,6 +343,10 @@ export const MoneyProvider = ({ children }) => {
                 console.log(e.message)
             }
 
+        },
+         
+        getWallets: async () => {
+            return axios.post("wallets/get", moneyInternalContext.userCode)
         }
     }
 
