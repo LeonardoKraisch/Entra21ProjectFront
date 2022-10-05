@@ -1,7 +1,7 @@
 import React from "react";
-import { SafeAreaView, View, StyleSheet, FlatList, StatusBar } from 'react-native'
+import { SafeAreaView, View, StyleSheet, FlatList, StatusBar, TouchableOpacity } from 'react-native'
 import Header from "../components/Header";
-import CustomWallet from "../components/CustomWallet";
+import CustomWallet from "../components/MiniWallet";
 import MainWallet from "../components/Wallet/MainWallet";
 import AddView from "../components/AddLaunch/AddView";
 
@@ -19,7 +19,9 @@ export default props => {
                     numColumns={2}
                     width='97%'
                     data={wallets}
-                    renderItem={(item) => (<CustomWallet />)}
+                    renderItem={(wallet) =>
+                        <CustomWallet wallet={wallet}/>
+                    }
                 />
                 <AddView />
             </View>
