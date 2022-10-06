@@ -28,9 +28,9 @@ export default props => {
                     width='97%'
                     data={wallets}
                     renderItem={(wallet) =>
-                        <MiniWallet
-                            wallet={wallet}
-                            navigation={props.navigation}
+                        <MiniWallet 
+                        wallet={wallet} 
+                        navigation={props.navigation}
                         />
                     }
                 />
