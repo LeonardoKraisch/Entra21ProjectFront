@@ -211,11 +211,13 @@ export default props => {
                 </View>
             </View>
 
-            <View style={styles.container}>
-                <Text style={styles.titles}>Values</Text>
-                <ValuePicker />
+            <View style={{ backgroundColor: '#23a2e2', borderRadius: 40, paddingHorizontal: 5, marginBottom: 5 }}>
+                <View style={styles.container}>
+                    <Text style={styles.titles}>Values</Text>
+                    <ValuePicker />
+                </View>
+                <ValueInput />
             </View>
-            <ValueInput />
 
             <View style={styles.container}>
                 <Text style={styles.titles}>Categories: </Text>
@@ -248,7 +250,11 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: 'center',
         flexDirection: 'row',
-        margin: 5
+        margin: 5,
+        backgroundColor: '#23a2e2',
+        borderRadius: 20,
+        paddingHorizontal: 10,
+        marginBottom: 5
     },
     datePicker: {
         paddingHorizontal: 5,
@@ -267,7 +273,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     pickerItem: {
-        backgroundColor: '#42779E',
+        backgroundColor: '#23a2e2',
         color: '#FFF',
         fontSize: 15,
     },
@@ -280,13 +286,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         width: '85%',
+        backgroundColor: '#23a2e2',
+        borderRadius: 40,
+        paddingHorizontal: 10,
+        marginBottom: 5
     },
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         width: '90%',
-        marginBottom: 2
+        marginBottom: 2,
+        backgroundColor: '#23a2e2',
+        borderRadius: 40,
+        paddingHorizontal: 10,
+        marginBottom: 5
     },
     inputMoney: {
         borderBottomColor: '#CCC',

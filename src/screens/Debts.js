@@ -9,7 +9,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import useMoney from "../data/hooks/useMoney"
 
 export default props => {
-    const { generalPendings, allPendings } = useMoney()
+    const { generalPendings, allPendings, delRegister } = useMoney()
     const [modalVisible, setModalVisible] = useState(false)
     const [item, setItem] = useState()
 
@@ -57,6 +57,14 @@ export default props => {
         );
     }
 
+    const deleteEntry = async (type, id) => {
+        delRegister({
+            type: type,
+            code: id
+        })
+        setModalVisible(false)
+    }
+
     const ModalView = () => {
         if (item) {
             return (
@@ -97,7 +105,7 @@ export default props => {
                             <View style={styles.modalButtons}>
                                 <View style={styles.modalButtonsArea}>
                                     <View style={styles.buttonTrashView}>
-                                        <TouchableOpacity style={styles.buttonTrash}>
+                                        <TouchableOpacity onPress={() => deleteEntry(item.incCode ? ("+", item.incCode) : ("-", item.expCode))} style={styles.buttonTrash}>
                                             <FontAwesome size={27} name="trash-o" color="#FFF" />
                                         </TouchableOpacity>
                                     </View>
@@ -128,6 +136,7 @@ export default props => {
                 futureScrollRange={12}
                 pastScrollRange={6}
                 renderItem={renderItem}
+                renderEmptyData={() => <View style={styles.negation}><Text style={styles.negationText}>There are no launches for this day.</Text></View>}
             />
             <ModalView />
         </View>
@@ -138,6 +147,14 @@ export default props => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    negation: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    negationText: {
+        fontSize: 17,
     },
     item: {
         flex: 1,
@@ -245,13 +262,13 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end'
     },
     buttonCancel: {
-        backgroundColor: '#22d2e6',
+        backgroundColor: '#23a2e2',
         paddingVertical: 5,
         paddingHorizontal: 9,
         borderRadius: 20,
     },
     buttonOk: {
-        backgroundColor: '#22d2e6',
+        backgroundColor: '#23a2e2',
         padding: 5,
         borderRadius: 20,
         marginLeft: 10

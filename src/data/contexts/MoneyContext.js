@@ -167,8 +167,14 @@ export const MoneyProvider = ({ children }) => {
         },
 
         delRegister: async (data) => {
-            const delConn = await axios.post(`/${data.type == "+" ? "income" : "expense"}/delete`,
-                data)
+            try {
+                const delConn = await axios.post(`/${data.type == "+" ? "income" : "expense"}/delete`,
+                    { code: data.code })
+            } catch (e) {
+                console.log(e.message);
+            }
+
+
         },
 
         editRegister: async (data, type) => {
@@ -198,7 +204,7 @@ export const MoneyProvider = ({ children }) => {
                 } else {
                     await moneyInternalContext.balanceSetter(incomes, expenses)
                     await moneyInternalContext.getPendings()
-                    
+
                 }
                 setWallets(await moneyInternalContext.getWallets())
 
@@ -356,7 +362,7 @@ export const MoneyProvider = ({ children }) => {
             }
 
         },
-         
+
         getWallets: async () => {
             return axios.post("/wallet/get", moneyInternalContext.userCode)
         }
