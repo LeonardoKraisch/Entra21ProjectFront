@@ -11,9 +11,9 @@ export default props => {
     const [wallets, setWallets] = useState()
     useEffect(() => {
         async function loadWallets() {
-            return await getWallets()
+            setWallets(await getWallets())
         }
-        setWallets(loadWallets())
+        loadWallets()
     }, [])
 
     return (

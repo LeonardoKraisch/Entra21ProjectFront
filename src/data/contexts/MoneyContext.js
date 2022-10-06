@@ -392,15 +392,15 @@ export const MoneyProvider = ({ children }) => {
                 const toWalletInc = await moneyInternalContext.getRegisters({
                     type: "+",
                     filterType: "=",
-                    filter: walletCode,
-                    column: "walletCode"
+                    filter: userCode,//walletCode
+                    column: "userCode"//walletCode
                 })
                 console.log(toWalletInc, "toWalletInc");
                 const toWalletExp = await moneyInternalContext.getRegisters({
                     type: "-",
                     filterType: "=",
-                    filter: walletCode,
-                    column: "walletCode"
+                    filter: userCode,//walletCode
+                    column: "userCode"//walletCode
                 })
                 console.log(toWalletExp, "toWalletExp");
                 return ([...toWalletInc, ...toWalletExp])
