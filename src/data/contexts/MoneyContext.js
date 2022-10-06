@@ -193,9 +193,34 @@ export const MoneyProvider = ({ children }) => {
 
         },
 
-        editRegister: async (data, type) => {
-            const delConn = await axios.post(`/${type == "+" ? "income" : "expense"}/edit`,
-                data)
+        editRegister: async (data) => {
+            try {
+                const ediConn = await axios.post(`/${data.type == "+" ? "income" : "expense"}/edit`,
+                    {
+                        launch: {
+                            code: data.code,
+                            column: data.type == "+" ? { "incPending": false } : { "expPending": false }
+                        }
+                    })
+
+                if (data.type == "+" && ediConn.data) {
+                    var newPendings = incPendings.filter((pending) => {
+                        return pending.incCode != data.code
+                    })
+                    setIncPendings(newPendings)
+
+                } else if (data.type == "-" && ediConn.data) {
+                    var newPendings = expPendings.filter((pending) => {
+                        return pending.expCode != data.code
+                    })
+                    setExpPendings(newPendings)
+
+                }
+
+                await moneyInternalContext.generalPendings()
+            } catch (e) {
+                console.log(e.message);
+            }
         },
 
         fetchAllLaunches: async function () {

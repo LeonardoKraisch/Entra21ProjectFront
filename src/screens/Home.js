@@ -75,8 +75,8 @@ const styles = StyleSheet.create({
         maxHeight: '16%',
         width: '93%',
         borderTopColor: '#FFF',
-        borderTopWidth: 2,
-        paddingTop: 8
+        borderTopWidth: 1,
+        paddingTop: 10
 
     },
     newButton: {

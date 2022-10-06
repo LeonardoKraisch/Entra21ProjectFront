@@ -9,7 +9,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import useMoney from "../data/hooks/useMoney"
 
 export default props => {
-    const { allPendings, delRegister, generalPendings } = useMoney()
+    const { allPendings, delRegister, editRegister, generalPendings } = useMoney()
     const [modalVisible, setModalVisible] = useState(false)
     const [item, setItem] = useState()
 
@@ -61,6 +61,11 @@ export default props => {
 
     const deleteEntry = async (del) => {
         delRegister(del)
+        setModalVisible(false)
+    }
+
+    const editEntry = async (ok) => {
+        editRegister(ok)
         setModalVisible(false)
     }
 
@@ -120,7 +125,15 @@ export default props => {
                                         <TouchableOpacity style={styles.buttonCancel} onPress={() => setModalVisible(false)} >
                                             <FontAwesome name="close" size={27} color="#FFF" />
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={styles.buttonOk}>
+                                        <TouchableOpacity onPress={() => editEntry(item.incCode ?
+                                            {
+                                                type: "+",
+                                                code: item.incCode
+                                            } : {
+                                                type: "-",
+                                                code: item.expCode
+                                            }
+                                        )} style={styles.buttonOk}>
                                             <MaterialIcons size={28} name="done" color="#FFF" />
                                         </TouchableOpacity>
                                     </View>
