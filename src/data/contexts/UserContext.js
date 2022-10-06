@@ -63,10 +63,14 @@ export const UserProvider = ({ children }) => {
                         type: 'info',
                         text1: 'Your account was successfully created!',
                     })
-                }
+                }else Toast.show({
+                        type: 'error',
+                        text1:newUser.data.error
+                    })
+                
             } catch (err) {
                 Toast.show({
-                    type: 'info',
+                    type: 'error',
                     text1: 'An error has occurred. Please, try again.',
                     text2: err.message
                 })
