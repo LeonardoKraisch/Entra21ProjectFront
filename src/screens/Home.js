@@ -11,8 +11,7 @@ export default props => {
     const [wallets, setWallets] = useState()
     useEffect(() => {
         async function loadWallets() {
-            const miniw = await getWallets()
-            setWallets(await miniw)
+            setWallets(await getWallets())
         }
         loadWallets()
     }, [])

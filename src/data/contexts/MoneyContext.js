@@ -399,20 +399,20 @@ export const MoneyProvider = ({ children }) => {
             const connWallets = await axios.post("/wallet/get", { userCode })
             return connWallets.data.registers
         },
-        getAllRegistersToWallet: async () => {
+        getAllRegistersToWallet: async (walletCode) => {
             try {
                 const toWalletInc = await moneyInternalContext.getRegisters({
                     type: "+",
                     filterType: "=",
-                    filter: userCode,
-                    column: "userCode"
+                    filter: userCode,//walletCode
+                    column: "userCode"//walletCode
                 })
                 console.log(toWalletInc, "toWalletInc");
                 const toWalletExp = await moneyInternalContext.getRegisters({
                     type: "-",
                     filterType: "=",
-                    filter: userCode,
-                    column: "userCode"
+                    filter: userCode,//walletCode
+                    column: "userCode"//walletCode
                 })
                 console.log(toWalletExp, "toWalletExp");
                 return ([...toWalletInc, ...toWalletExp])

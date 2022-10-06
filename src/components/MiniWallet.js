@@ -4,7 +4,7 @@ export default props => {
     return (
         <View style={styles.container}>
             <TouchableOpacity
-                onPress={() => props.navigation.navigate("CustomWallet", { wallet: props.wallet.item.walletCode })}
+            onPress={() => props.navigation.navigate("CustomWallet", {wallet: props.wallet.item})}
             >
                 <Text>{props.wallet.item.walletCode.walletName}</Text>
                 <Text>{props.wallet.item.walletCode.walletDesc}</Text>
