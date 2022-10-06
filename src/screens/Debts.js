@@ -16,6 +16,7 @@ export default props => {
     useEffect(() => {
         async function fetch() {
             await generalPendings()
+            console.log(Object.keys(allPendings)[0])
             return allPendings[Object.keys(allPendings)[0]][0]
         }
         setItem(fetch())
@@ -138,7 +139,8 @@ export default props => {
                 items={allPendings}
                 refreshControl={null}
                 showClosingKnob={true}
-                refreshing={false}
+                selected={Object.keys(allPendings)[0]}
+                refreshing={true}
                 futureScrollRange={12}
                 pastScrollRange={6}
                 renderItem={renderItem}

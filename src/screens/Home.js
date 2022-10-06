@@ -8,11 +8,12 @@ import useMoney from "../data/hooks/useMoney";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 export default props => {
-    const { getWallets } = useMoney()
+    const { getWallets, getPendings } = useMoney()
     const [wallets, setWallets] = useState()
     useEffect(() => {
         async function loadWallets() {
             setWallets(await getWallets())
+            getPendings()
         }
         loadWallets()
     }, [])
@@ -74,16 +75,16 @@ const styles = StyleSheet.create({
         maxHeight: '16%',
         width: '93%',
         borderTopColor: '#FFF',
-        borderTopWidth: 2
+        borderTopWidth: 2,
+        paddingTop: 8
 
     },
     newButton: {
-        marginTop: 7,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '42%',
-        height: '70%',
+        width: '40%',
+        height: '73%',
         padding: 10,
         borderRadius: 5,
         flexWrap: 'wrap',

@@ -380,21 +380,22 @@ export const MoneyProvider = ({ children }) => {
                     Object.keys(newIncPendings).forEach((key) => {
                         merged[key] = []
                     })
-                    Object.keys(merged).forEach((key)=>{
-                        try{
-                        newIncPendings[key].forEach((item)=>{
-                            merged[key].push(item)
-                        })
-                        newExpPendings[key].forEach((item)=>{
-                            merged[key].push(item)
-                        })
-                        }catch{}
-                        
+                    Object.keys(merged).forEach((key) => {
+                        try {
+                            newIncPendings[key].forEach((item) => {
+                                merged[key].push(item)
+                            })
+
+                        } catch { }
+                        try {
+                            newExpPendings[key].forEach((item) => {
+                                merged[key].push(item)
+                            })
+                        } catch { }
+
                     })
                     return merged
                 }
-
-                console.log(await getAll());
                 setAllPendings(await getAll())
             } catch (e) {
                 console.log(e.message)
@@ -414,14 +415,12 @@ export const MoneyProvider = ({ children }) => {
                     filter: userCode,//walletCode
                     column: "userCode"//walletCode
                 })
-                console.log(toWalletInc, "toWalletInc");
                 const toWalletExp = await moneyInternalContext.getRegisters({
                     type: "-",
                     filterType: "=",
                     filter: userCode,//walletCode
                     column: "userCode"//walletCode
                 })
-                console.log(toWalletExp, "toWalletExp");
                 return ([...toWalletInc, ...toWalletExp])
             } catch (e) {
                 console.log(e.message)
