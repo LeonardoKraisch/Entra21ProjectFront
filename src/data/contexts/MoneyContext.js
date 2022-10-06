@@ -170,6 +170,22 @@ export const MoneyProvider = ({ children }) => {
             try {
                 const delConn = await axios.post(`/${data.type == "+" ? "income" : "expense"}/delete`,
                     { code: data.code })
+
+                if (data.type == "+" && delConn.data) {
+                    var newPendings = incPendings.filter((pending) => {
+                        return pending.incCode != data.code
+                    })
+                    setIncPendings(newPendings)
+
+                } else if (data.type == "-" && delConn.data) {
+                    var newPendings = expPendings.filter((pending) => {
+                        return pending.expCode != data.code
+                    })
+                    setExpPendings(newPendings)
+
+                }
+
+                await moneyInternalContext.generalPendings()
             } catch (e) {
                 console.log(e.message);
             }
@@ -309,7 +325,6 @@ export const MoneyProvider = ({ children }) => {
         filterPlus: async (filter1, filter2) => {
             const filteredIncomes = await moneyInternalContext.getRegistersFiltered(filter1)
             const filteredExpenses = await moneyInternalContext.getRegistersFiltered(filter2)
-            // console.log("-----------------", filteredExpenses);
             const filteredAllRegisters = await moneyInternalContext.mergeArrays(filteredIncomes, "incMoney", filteredExpenses, 'expMoney')
 
             await moneyInternalContext.searchSetter(await filteredIncomes, await filteredExpenses, filteredAllRegisters)
@@ -331,8 +346,9 @@ export const MoneyProvider = ({ children }) => {
                         pending: true
                     }
 
-                )
-                )
+                ))
+
+                await moneyInternalContext.generalPendings()
             } catch (e) {
                 console.log(e.message)
             }
@@ -340,22 +356,27 @@ export const MoneyProvider = ({ children }) => {
 
         generalPendings: async () => {
             try {
-                for (let item of incPendings) {
-                    if (allPendings[item.incDate] != null && allPendings[item.incDate][0].incDate == item.incDate) {
-                        await allPendings[item.incDate].push(item)
-                    } else {
-                        allPendings[item.incDate] = [item]
+                async function getAll() {
+                    var newIncPendings = {}
+                    for (let item of incPendings) {
+                        if (newIncPendings[item.incDate] != null && newIncPendings[item.incDate][0].incDate == item.incDate) {
+                            newIncPendings[item.incDate].push(item)
+                        } else {
+                            newIncPendings[item.incDate] = [item]
+                        }
                     }
-                }
-                for (let item of expPendings) {
-                    if (allPendings[item.expDate] != null && allPendings[item.expDate][0].expDate == item.expDate) {
-                        await allPendings[item.expDate].push(item)
-                    } else {
-                        allPendings[item.expDate] = [item]
+                    var newExpPendings = {}
+                    for (let item of expPendings) {
+                        if (newExpPendings[item.expDate] != null && newExpPendings[item.expDate][0].expDate == item.expDate) {
+                            newExpPendings[item.expDate].push(item)
+                        } else {
+                            newExpPendings[item.expDate] = [item]
+                        }
                     }
+                    return { ...newIncPendings, ...newExpPendings }
                 }
 
-                return allPendings[Object.keys(allPendings)[0]][0]
+                setAllPendings(await getAll())
             } catch (e) {
                 console.log(e.message)
             }
@@ -374,14 +395,14 @@ export const MoneyProvider = ({ children }) => {
                     filter: walletCode,
                     column: "walletCode"
                 })
-                console.log(toWalletInc,"toWalletInc");
+                console.log(toWalletInc, "toWalletInc");
                 const toWalletExp = await moneyInternalContext.getRegisters({
                     type: "-",
                     filterType: "=",
                     filter: walletCode,
                     column: "walletCode"
                 })
-                console.log(toWalletExp,"toWalletExp");
+                console.log(toWalletExp, "toWalletExp");
                 return ([...toWalletInc, ...toWalletExp])
             } catch (e) {
                 console.log(e.message)

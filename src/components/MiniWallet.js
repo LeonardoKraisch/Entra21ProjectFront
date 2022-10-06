@@ -19,9 +19,17 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#32779E',
         borderRadius: 3,
-        margin: 10
+        margin: 10,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 4
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 10
     },
-    walletButton:{
-        flex:1
+    walletButton: {
+        flex: 1
     }
 })

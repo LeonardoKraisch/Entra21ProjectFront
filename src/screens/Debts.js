@@ -9,16 +9,17 @@ import { FontAwesome } from "@expo/vector-icons";
 import useMoney from "../data/hooks/useMoney"
 
 export default props => {
-    const { generalPendings, allPendings, delRegister } = useMoney()
+    const { allPendings, delRegister, generalPendings } = useMoney()
     const [modalVisible, setModalVisible] = useState(false)
     const [item, setItem] = useState()
 
     useEffect(() => {
         async function fetch() {
-            setItem(await generalPendings())
+            await generalPendings()
+            return allPendings[Object.keys(allPendings)[0]][0]
         }
-        fetch()
-    }, [allPendings])
+        setItem(fetch())
+    }, [])
 
     const renderItem = (item) => {
         const table = item.incMoney ? "inc" : "exp"
@@ -57,11 +58,8 @@ export default props => {
         );
     }
 
-    const deleteEntry = async (type, id) => {
-        delRegister({
-            type: type,
-            code: id
-        })
+    const deleteEntry = async (del) => {
+        delRegister(del)
         setModalVisible(false)
     }
 
@@ -105,7 +103,15 @@ export default props => {
                             <View style={styles.modalButtons}>
                                 <View style={styles.modalButtonsArea}>
                                     <View style={styles.buttonTrashView}>
-                                        <TouchableOpacity onPress={() => deleteEntry(item.incCode ? ("+", item.incCode) : ("-", item.expCode))} style={styles.buttonTrash}>
+                                        <TouchableOpacity onPress={() => deleteEntry(item.incCode ?
+                                            {
+                                                type: "+",
+                                                code: item.incCode
+                                            } : {
+                                                type: "-",
+                                                code: item.expCode
+                                            }
+                                        )} style={styles.buttonTrash}>
                                             <FontAwesome size={27} name="trash-o" color="#FFF" />
                                         </TouchableOpacity>
                                     </View>
@@ -132,7 +138,7 @@ export default props => {
                 items={allPendings}
                 refreshControl={null}
                 showClosingKnob={true}
-                refreshing={true}
+                refreshing={false}
                 futureScrollRange={12}
                 pastScrollRange={6}
                 renderItem={renderItem}
