@@ -12,7 +12,7 @@ export const UserProvider = ({ children }) => {
     const [phone, setPhone] = useState('')
     const [email, setEmail] = useState('')
     const [userCode, setUserCode] = useState('')
-    
+
     const userInternalContext = {
         name,
         phone,
@@ -34,10 +34,11 @@ export const UserProvider = ({ children }) => {
                         setPhone(decoded.user.userPhone)
                         setUserCode(decoded.user.userCode)
                         setEmail(decoded.user.userPhone)
-                    } else {Toast.show({
-                        type: 'error',
-                        text1: 'Invalide Credencials!',
-                    })
+                    } else {
+                        Toast.show({
+                            type: 'error',
+                            text1: 'Invalide Credencials!',
+                        })
                         await AsyncStorage.removeItem('token')
                         return
                     }
@@ -70,11 +71,11 @@ export const UserProvider = ({ children }) => {
                         type: 'success',
                         text1: 'Your account was successfully created!',
                     })
-                }else Toast.show({
-                        type: 'error',
-                        text1:newUser.data.error
-                    })
-                
+                } else Toast.show({
+                    type: 'error',
+                    text1: newUser.data.error
+                })
+
             } catch (err) {
                 Toast.show({
                     type: 'error',
@@ -93,9 +94,8 @@ export const UserProvider = ({ children }) => {
                     }
                 })
 
-                const decoded = JWT.decode(await userConnect.data.token, "segredo", { timeSkew: 300 })
-                if (decoded.logged) {
-
+                try {
+                    const decoded = JWT.decode(await userConnect.data.token, "segredo", { timeSkew: 300 })
                     setName(decoded.user.userName)
                     setPhone(decoded.user.userPhone)
                     setUserCode(decoded.user.userCode)
@@ -107,12 +107,14 @@ export const UserProvider = ({ children }) => {
                         text1: 'Login success',
                         text2: 'Welcome!'
                     })
+                } catch (e) {
+                    if (userConnect.data.token.logged == false) {
+                        Toast.show({
+                            type: 'error',
+                            text1: userConnect.data.token.error
+                        })
+                    }
 
-                } else {
-                    Toast.show({
-                        type: 'error',
-                        text1: data.token.error
-                    })
                 }
 
             } catch (err) {
