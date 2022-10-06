@@ -20,12 +20,12 @@ export default props => {
                     width='97%'
                     data={wallets}
                     renderItem={(wallet) =>
-                        <CustomWallet wallet={wallet}/>
+                        <CustomWallet wallet={wallet} />
                     }
                 />
                 <AddView />
             </View>
-            <StatusBar backgroundColor={'#3C3C3C'} />
+            <StatusBar backgroundColor={'#32779E'} />
         </SafeAreaView>
     )
 }
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     },
     body: {
         flex: 1,
-        backgroundColor: '#3C3C3C',
+        backgroundColor: '#555',
         width: '100%',
         height: '100%',
         alignItems: 'center'
@@ -50,7 +50,5 @@ const styles = StyleSheet.create({
         height: '30%',
         alignItems: 'center',
         justifyContent: 'center',
-        borderBottomWidth: 3,
-        borderBottomColor: '#333'
     }
 })

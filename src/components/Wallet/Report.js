@@ -61,6 +61,7 @@ export default props => {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
+        minHeight: '60%',
         margin: 10,
         backgroundColor: '#EEE',
         borderRadius: 5,
@@ -117,6 +118,6 @@ const styles = StyleSheet.create({
     },
     info: {
         flexDirection: "row",
-        maxHeight: "85%"
+        maxHeight: '85%'
     },
 })

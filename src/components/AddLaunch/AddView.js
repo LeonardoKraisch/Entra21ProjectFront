@@ -41,6 +41,14 @@ const styles = StyleSheet.create({
         borderLeftWidth: 3,
         paddingBottom: 1,
         borderColor: '#32779E',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 5
+        },
+        shadowOpacity: 0.30,
+        shadowRadius: 4,
+        elevation: 10
 
     },
     containerButton: {
