@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, View, StyleSheet, FlatList, StatusBar, TouchableOpacity, Text } from 'react-native'
+import { View, StyleSheet, FlatList, StatusBar, TouchableOpacity, Text } from 'react-native'
 import Header from "../components/Header";
 import MiniWallet from "../components/MiniWallet";
 import MainWallet from "../components/Wallet/MainWallet";
 import AddView from "../components/AddLaunch/AddView";
 import useMoney from "../data/hooks/useMoney";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default props => {
     const { getWallets, getPendings } = useMoney()
@@ -19,7 +20,7 @@ export default props => {
     }, [])
 
     return (
-        <SafeAreaView style={styles.containter}>
+        <LinearGradient colors={['#192f6a', '#3b5998', '#4c669f']} style={styles.containter}>
             <Header {...props} />
             <View style={styles.body}>
                 <View style={styles.mainContainer}>
@@ -44,8 +45,8 @@ export default props => {
                 </View>
                 <AddView />
             </View>
-            <StatusBar backgroundColor={'#32779E'} />
-        </SafeAreaView>
+            <StatusBar backgroundColor={'#192f6a'} />
+        </LinearGradient>
     )
 }
 
@@ -58,7 +59,6 @@ const styles = StyleSheet.create({
     },
     body: {
         flex: 1,
-        backgroundColor: '#555',
         width: '100%',
         height: '100%',
         alignItems: 'center'
