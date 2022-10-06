@@ -7,7 +7,7 @@ import AddView from "../components/AddLaunch/AddView";
 import useMoney from "../data/hooks/useMoney";
 
 export default props => {
-    const { getWallets } = useMoney()
+    const { wallets } = useMoney()
 
     return (
         <SafeAreaView style={styles.containter}>
@@ -19,10 +19,10 @@ export default props => {
                 <FlatList
                     numColumns={2}
                     width='97%'
-                    data={() => getWallets()}
-                    renderItem={(wallet) =>
+                    data={wallets}
+                    renderItem={(wallet) =>{
                         <CustomWallet wallet={wallet} />
-                    }
+                    }}
                 />
                 <AddView />
             </View>

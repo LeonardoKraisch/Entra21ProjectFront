@@ -33,6 +33,8 @@ export const MoneyProvider = ({ children }) => {
     const [expPendings, setExpPendings] = useState([])
     const [allPendings, setAllPendings] = useState({})
 
+    const [walltes, setWallets] = useState([])
+
     const [coin, setCoin] = useState('R$')
 
     const dateString = date => moment(date).format('YYYY[-]MM')
@@ -196,8 +198,9 @@ export const MoneyProvider = ({ children }) => {
                 } else {
                     await moneyInternalContext.balanceSetter(incomes, expenses)
                     await moneyInternalContext.getPendings()
-
+                    
                 }
+                setWallets(await moneyInternalContext.getWallets())
 
             } catch (e) {
                 console.log(e.message)
@@ -346,7 +349,7 @@ export const MoneyProvider = ({ children }) => {
         },
          
         getWallets: async () => {
-            return axios.post("wallets/get", moneyInternalContext.userCode)
+            return axios.post("/wallet/get", moneyInternalContext.userCode)
         }
     }
 
