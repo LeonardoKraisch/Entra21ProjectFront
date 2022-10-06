@@ -11,10 +11,9 @@ export default props => {
     const [wallets, setWallets] = useState()
     useEffect(() => {
         async function loadWallets() {
-            const miniw = await getWallets()
-            setWallets(await miniw)
+            return await getWallets()
         }
-        loadWallets()
+        setWallets(loadWallets())
     }, [])
 
     return (
@@ -29,9 +28,9 @@ export default props => {
                     width='97%'
                     data={wallets}
                     renderItem={(wallet) =>
-                        <MiniWallet 
-                        wallet={wallet} 
-                        navigation={props.navigation}
+                        <MiniWallet
+                            wallet={wallet}
+                            navigation={props.navigation}
                         />
                     }
                 />

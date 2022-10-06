@@ -9,15 +9,16 @@ import { FontAwesome } from "@expo/vector-icons";
 import useMoney from "../data/hooks/useMoney"
 
 export default props => {
-    const { allPendings, delRegister } = useMoney()
+    const { allPendings, delRegister, generalPendings } = useMoney()
     const [modalVisible, setModalVisible] = useState(false)
     const [item, setItem] = useState()
 
     useEffect(() => {
         async function fetch() {
-            setItem(allPendings[Object.keys(allPendings)[0]][0])
+            await generalPendings()
+            return allPendings[Object.keys(allPendings)[0]][0]
         }
-        fetch()
+        setItem(fetch())
     }, [])
 
     const renderItem = (item) => {

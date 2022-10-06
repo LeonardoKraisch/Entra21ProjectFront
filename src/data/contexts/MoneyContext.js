@@ -325,7 +325,6 @@ export const MoneyProvider = ({ children }) => {
         filterPlus: async (filter1, filter2) => {
             const filteredIncomes = await moneyInternalContext.getRegistersFiltered(filter1)
             const filteredExpenses = await moneyInternalContext.getRegistersFiltered(filter2)
-            // console.log("-----------------", filteredExpenses);
             const filteredAllRegisters = await moneyInternalContext.mergeArrays(filteredIncomes, "incMoney", filteredExpenses, 'expMoney')
 
             await moneyInternalContext.searchSetter(await filteredIncomes, await filteredExpenses, filteredAllRegisters)
@@ -358,22 +357,23 @@ export const MoneyProvider = ({ children }) => {
         generalPendings: async () => {
             try {
                 async function getAll() {
-                    var newPendings = []
+                    var newIncPendings = {}
                     for (let item of incPendings) {
-                        if (newPendings[item.incDate] != null && newPendings[item.incDate][0].incDate == item.incDate) {
-                            newPendings[item.incDate].push(item)
+                        if (newIncPendings[item.incDate] != null && newIncPendings[item.incDate][0].incDate == item.incDate) {
+                            newIncPendings[item.incDate].push(item)
                         } else {
-                            newPendings[item.incDate] = [item]
+                            newIncPendings[item.incDate] = [item]
                         }
                     }
+                    var newExpPendings = {}
                     for (let item of expPendings) {
-                        if (newPendings[item.expDate] != null && newPendings[item.expDate][0].expDate == item.expDate) {
-                            newPendings[item.expDate].push(item)
+                        if (newExpPendings[item.expDate] != null && newExpPendings[item.expDate][0].expDate == item.expDate) {
+                            newExpPendings[item.expDate].push(item)
                         } else {
-                            newPendings[item.expDate] = [item]
+                            newExpPendings[item.expDate] = [item]
                         }
                     }
-                    return newPendings
+                    return { ...newIncPendings, ...newExpPendings }
                 }
 
                 setAllPendings(await getAll())
@@ -395,14 +395,14 @@ export const MoneyProvider = ({ children }) => {
                     filter: userCode,
                     column: "userCode"
                 })
-                console.log(toWalletInc,"toWalletInc");
+                console.log(toWalletInc, "toWalletInc");
                 const toWalletExp = await moneyInternalContext.getRegisters({
                     type: "-",
                     filterType: "=",
                     filter: userCode,
                     column: "userCode"
                 })
-                console.log(toWalletExp,"toWalletExp");
+                console.log(toWalletExp, "toWalletExp");
                 return ([...toWalletInc, ...toWalletExp])
             } catch (e) {
                 console.log(e.message)
