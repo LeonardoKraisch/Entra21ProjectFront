@@ -8,7 +8,8 @@ export default props => {
     const [launches, setLaunches] = useState()
     useEffect(()=>{
         async function loadRegisters(){
-            await setLaunches(await getAllRegistersToWallet())
+            console.log(props.route.params);
+            await setLaunches(await getAllRegistersToWallet(1))
         }
         loadRegisters()
     },[])
@@ -19,7 +20,7 @@ export default props => {
                     width='97%'
                     data={launches}
                     renderItem={(wallet) =>
-                        <Register {...wallet.item}/>
+                        <Register {...walletCode.wallet.item}/>
                         // console.log(wallet.item)
                     }/>
         </View>
