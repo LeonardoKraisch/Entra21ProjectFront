@@ -16,7 +16,7 @@ export default props => {
                 rollSideAnim,
                 {
                     toValue: 390,
-                    duration: 150,
+                    duration: 200,
                     useNativeDriver: false
                 }
             ).start()
@@ -27,7 +27,7 @@ export default props => {
                 rollSideAnim,
                 {
                     toValue: 190,
-                    duration: 150,
+                    duration: 200,
                     useNativeDriver: false
                 }
             ).start()
@@ -45,7 +45,7 @@ export default props => {
                 rollUpAnim,
                 {
                     toValue: 630,
-                    duration: 150,
+                    duration: 200,
                     useNativeDriver: false
                 }
             ).start()
@@ -56,7 +56,7 @@ export default props => {
                 rollUpAnim,
                 {
                     toValue: 46,
-                    duration: 150,
+                    duration: 200,
                     useNativeDriver: false
                 }
             ).start()
@@ -65,7 +65,7 @@ export default props => {
 
 
     return (
-        <Animated.View style={{ ...props.style, width: rollSideAnim, height: rollUpAnim }}>
+        <Animated.View style={{ ...props.style, width: rollSideAnim || 190, height: rollUpAnim || 46 }}>
             {props.children}
         </Animated.View>
     )

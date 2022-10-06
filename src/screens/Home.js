@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, FlatList, StatusBar, TouchableOpacity, Text } from 'react-native'
+import { BackHandler, Alert, View, StyleSheet, FlatList, StatusBar, TouchableOpacity, Text } from 'react-native'
 import Header from "../components/Header";
 import MiniWallet from "../components/MiniWallet";
 import MainWallet from "../components/Wallet/MainWallet";
@@ -11,13 +11,32 @@ import { LinearGradient } from "expo-linear-gradient";
 export default props => {
     const { getWallets, getPendings } = useMoney()
     const [wallets, setWallets] = useState()
+
     useEffect(() => {
         async function loadWallets() {
             setWallets(await getWallets())
             getPendings()
         }
         loadWallets()
+        BackHandler.addEventListener("hardwareBackPress", backAction);
+        return () =>
+            BackHandler.removeEventListener("hardwareBackPress", backAction);
     }, [])
+
+    const backAction = () => {
+        Alert.alert("Do you want to leave the app?", "", [
+            {
+                text: "Cancel",
+                onPress: () => null,
+                style: "cancel"
+            },
+            {
+                text: "Yes",
+                onPress: () => BackHandler.exitApp()
+            }
+        ]);
+        return true;
+    };
 
     return (
         <LinearGradient colors={['#192b6a', '#3b348f', '#3d4986']} style={styles.containter}>
@@ -38,7 +57,7 @@ export default props => {
                     }
                 />
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.newButton}>
+                    <TouchableOpacity onPress={() => props.navigation.navigate("CreateWallet")} style={styles.newButton}>
                         <FontAwesome5 name="plus" size={25} color="#FFF" />
                         <Text style={styles.newButtonText}>Create Wallet</Text>
                     </TouchableOpacity>

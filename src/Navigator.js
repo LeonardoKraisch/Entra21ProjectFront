@@ -11,6 +11,7 @@ import CustomWallet from './screens/CustomWallet'
 import Login from "./screens/Login";
 import Register from "./screens/Register"
 import Debts from "./screens/Debts";
+import CreateWallet from "./screens/CreateWallet";
 
 import useUser from "./data/hooks/useUser";
 
@@ -30,15 +31,16 @@ export default props => {
         )
     }
 
-    const HomeStack = () => {
+    const HomeStack = props => {
         return (
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="Splash" component={Splash} />
                 <Stack.Screen name="Auth" component={Auth} />
-                <Stack.Screen name="Main" component={Home} />
+                <Stack.Screen name="Main" {...props} component={Home} />
                 <Stack.Screen name="Wallet" component={Wallet} />
                 <Stack.Screen name="CustomWallet" component={CustomWallet} />
-                <Stack.Screen name="My Debts" component={Debts} />
+                <Stack.Screen name="MyDebts" component={Debts} />
+                <Stack.Screen name="CreateWallet" component={CreateWallet} />
             </Stack.Navigator>
         )
     }
@@ -72,7 +74,7 @@ export default props => {
                             <DrawerItem
                                 label="My Debts"
                                 onPress={() => {
-                                    props.navigation.navigate('My Debts')
+                                    props.navigation.navigate('MyDebts')
                                 }}
                             />
                             <DrawerItem
@@ -88,7 +90,7 @@ export default props => {
                 }
                 screenOptions={menuConfig}>
                 <Drawer.Screen
-                    name="Home"
+                    name="Home" {...props}
                     component={HomeStack} />
             </Drawer.Navigator>
         </NavigationContainer>
