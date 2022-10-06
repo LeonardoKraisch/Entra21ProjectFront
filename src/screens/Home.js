@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SafeAreaView, View, StyleSheet, FlatList, StatusBar, TouchableOpacity } from 'react-native'
 import Header from "../components/Header";
 import CustomWallet from "../components/MiniWallet";
@@ -7,7 +7,11 @@ import AddView from "../components/AddLaunch/AddView";
 import useMoney from "../data/hooks/useMoney";
 
 export default props => {
-    const { wallets } = useMoney()
+    const { wallets, fetchAllLaunches } = useMoney()
+
+    useEffect(() => {
+        fetchAllLaunches()
+    }, [])
 
     return (
         <SafeAreaView style={styles.containter}>
@@ -20,7 +24,7 @@ export default props => {
                     numColumns={2}
                     width='97%'
                     data={wallets}
-                    renderItem={(wallet) =>{
+                    renderItem={(wallet) => {
                         <CustomWallet wallet={wallet} />
                     }}
                 />
