@@ -1,16 +1,20 @@
-import React, { useEffect } from "react";
-import { SafeAreaView, View, StyleSheet, FlatList, StatusBar, TouchableOpacity } from 'react-native'
+import React, { useEffect, useState } from "react";
+import { SafeAreaView, View, StyleSheet, FlatList, StatusBar, TouchableOpacity, Text } from 'react-native'
 import Header from "../components/Header";
-import CustomWallet from "../components/MiniWallet";
+import MiniWallet from "../components/MiniWallet";
 import MainWallet from "../components/Wallet/MainWallet";
 import AddView from "../components/AddLaunch/AddView";
 import useMoney from "../data/hooks/useMoney";
 
 export default props => {
-    const { wallets, fetchAllLaunches } = useMoney()
-
+    const { getWallets } = useMoney()
+    const [wallets, setWallets] = useState()
     useEffect(() => {
-        fetchAllLaunches()
+        async function loadWallets() {
+            const miniw = await getWallets()
+            setWallets(await miniw)
+        }
+        loadWallets()
     }, [])
 
     return (
@@ -24,9 +28,12 @@ export default props => {
                     numColumns={2}
                     width='97%'
                     data={wallets}
-                    renderItem={(wallet) => {
-                        <CustomWallet wallet={wallet} />
-                    }}
+                    renderItem={(wallet) =>
+                        <MiniWallet 
+                        wallet={wallet} 
+                        navigation={props.navigation}
+                        />
+                    }
                 />
                 <AddView />
             </View>
