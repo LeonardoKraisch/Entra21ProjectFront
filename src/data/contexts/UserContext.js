@@ -26,11 +26,18 @@ export const UserProvider = ({ children }) => {
                     var userData = JSON.parse(userDataJson)
                     const decoded = JWT.decode(userData, "segredo", { timeSkew: 300 })
                     if (decoded.logged) {
+                        Toast.show({
+                            type: 'success',
+                            text1: 'Login successfull!',
+                        })
                         setName(decoded.user.userName)
                         setPhone(decoded.user.userPhone)
                         setUserCode(decoded.user.userCode)
                         setEmail(decoded.user.userPhone)
-                    } else {
+                    } else {Toast.show({
+                        type: 'error',
+                        text1: 'Invalide Credencials!',
+                    })
                         await AsyncStorage.removeItem('token')
                         return
                     }
@@ -60,7 +67,7 @@ export const UserProvider = ({ children }) => {
                     setPhone(user.phone)
                     setUserCode(newUser.data.userCode)
                     Toast.show({
-                        type: 'info',
+                        type: 'success',
                         text1: 'Your account was successfully created!',
                     })
                 }else Toast.show({
@@ -96,16 +103,15 @@ export const UserProvider = ({ children }) => {
                     setEmail(email)
 
                     Toast.show({
-                        type: 'info',
+                        type: 'success',
                         text1: 'Login success',
                         text2: 'Welcome!'
                     })
 
                 } else {
                     Toast.show({
-                        type: 'info',
-                        text1: 'Ivalid Token',
-                        text2: 'Login required'
+                        type: 'error',
+                        text1: data.token.error
                     })
                 }
 
