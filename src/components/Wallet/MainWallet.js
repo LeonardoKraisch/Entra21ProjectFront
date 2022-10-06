@@ -66,6 +66,14 @@ const styles = StyleSheet.create({
         width: '90%',
         backgroundColor: '#32779E',
         borderRadius: 3,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 4
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 10
     },
     label: {
         borderBottomColor: '#CCC',

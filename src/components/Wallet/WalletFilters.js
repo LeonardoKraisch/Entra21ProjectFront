@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native'
+import { TextInputMask } from "react-native-masked-text";
 
 import moment from 'moment'
 import DateTimePicker from '@react-native-community/datetimepicker'
@@ -13,21 +14,43 @@ export default props => {
     const { filterPlus } = useMoney()
     const [date2, setDate2] = useState(new Date())
     const [showDatePicker2, setShowDatePicker2] = useState(false)
-
     const lastMonth = new Date()
     lastMonth.setMonth(date2.getMonth() - 1)
+    const dateString2 = moment(date2).format('YYYY[-]M[-]D')
+
     const [date1, setDate1] = useState(lastMonth)
     const [showDatePicker1, setShowDatePicker1] = useState(false)
-
     const dateString1 = moment(date1).format('YYYY[-]M[-]D')
-    const dateString2 = moment(date2).format('YYYY[-]M[-]D')
 
     const [category, setCategory] = useState("all")
     const [description, setDescription] = useState('')
 
-    const [pickerValue, setPickerValue] = useState("higher")
+    const [pickerValue, setPickerValue] = useState(">")
     const [value1, setValue1] = useState(0)
     const [value2, setValue2] = useState(0)
+
+
+    const applyFilters = async () => {
+        await filterPlus({
+            type: "+",
+            initDate: dateString1,
+            endDate: dateString2,
+            moneyFilter: pickerValue,
+            money: value1,
+            moneyRange: value2,
+            categoryFilter: category,
+            descriptionFilter: description
+        }, {
+            type: "-",
+            initDate: dateString1,
+            endDate: dateString2,
+            moneyFilter: pickerValue,
+            money: value1,
+            moneyRange: value2,
+            categoryFilter: category,
+            descriptionFilter: description
+        })
+    }
 
     const DatePicker1 = () => {
         let datePicker = <DateTimePicker value={date1} onChange={(_, date) => {
@@ -35,7 +58,7 @@ export default props => {
             setShowDatePicker1(false)
         }} mode='date' />
 
-        const dateStringUser1 = moment(date1).format('M[/]D[/]YYYY')
+        const dateStringUser1 = moment(date1).format('D[/]M[/]YYYY')
 
         if (Platform.OS === 'android') {
             datePicker = (
@@ -58,7 +81,7 @@ export default props => {
             setShowDatePicker2(false)
         }} mode='date' />
 
-        const dateStringUser2 = moment(date2).format('M[/]D[/]YYYY')
+        const dateStringUser2 = moment(date2).format('D[/]M[/]YYYY')
 
         if (Platform.OS === 'android') {
             datePicker = (
@@ -130,51 +153,49 @@ export default props => {
     const ValuePicker = () => {
         return (
             <Picker dropdownIconColor='#FFF' selectedValue={pickerValue} onValueChange={setPickerValue} style={styles.picker}>
-                <Picker.Item style={styles.pickerItem} label="higher than:" value="higher" />
-                <Picker.Item style={styles.pickerItem} label="lower than:" value="lower" />
-                <Picker.Item style={styles.pickerItem} label="between:" value="between" />
+                <Picker.Item style={styles.pickerItem} label="higher than:" value=">" />
+                <Picker.Item style={styles.pickerItem} label="lower than:" value="<" />
+                <Picker.Item style={styles.pickerItem} label="between:" value="[]" />
             </Picker>
         )
     }
 
     const ValueInput = () => {
-        if (pickerValue == 'higher' || pickerValue == 'lower') {
+        if (pickerValue == '<' || pickerValue == '>') {
             return (
                 <View style={styles.inputContainer}>
-                    <TextInput style={styles.inputMoney} keyboardType='number-pad' value={value1} onChangeText={setValue1} placeholder="Value" />
+                    <TextInputMask style={styles.inputMoney} value={value1} onChangeText={setValue1} options={{
+                        precision: 2,
+                        separator: ',',
+                        unit: 'R$',
+                        delimiter: '.',
+                        suffixUnit: ''
+                    }} type="money" />
                 </View>
             )
         } else {
             return (
                 <View style={styles.inputContainer}>
-                    <TextInput style={styles.inputMoney} keyboardType='number-pad' value={value2} onChangeText={setValue2} placeholder="Lower value" />
+                    <TextInputMask style={styles.inputMoney} value={value1} onChangeText={setValue1}
+                        options={{
+                            precision: 2,
+                            separator: ',',
+                            unit: 'R$',
+                            delimiter: '.',
+                            suffixUnit: ''
+                        }} type="money" />
                     <Text style={styles.titles}>and</Text>
-                    <TextInput style={styles.inputMoney} keyboardType='number-pad' value={value1} onChangeText={setValue1} placeholder="Higher value" />
+                    <TextInputMask style={styles.inputMoney} value={value2} onChangeText={setValue2}
+                        options={{
+                            precision: 2,
+                            separator: ',',
+                            unit: 'R$',
+                            delimiter: '.',
+                            suffixUnit: ''
+                        }} type="money" />
                 </View>
             )
         }
-    }
-
-    const applyFilters = async () => {
-        await filterPlus({
-            filters: {
-                type: "+",
-                initDate: date1,
-                endDate: date2,
-                moneyFilter:pickerValue,
-                categoryFilter:category,
-                descriptionFilter:description
-            }
-        }, {
-            filters: {
-                type: "-",
-                initDate: date1,
-                endDate: date2,
-                moneyFilter:pickerValue,
-                categoryFilter:category,
-                descriptionFilter:description
-            }
-        })
     }
 
     return (
@@ -207,8 +228,7 @@ export default props => {
 
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.send}
-                    onPress={applyFilters}
-                >
+                    onPress={() => applyFilters()}>
                     <Text style={styles.sendText}>Filter</Text>
                 </TouchableOpacity>
             </View>
@@ -247,7 +267,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     pickerItem: {
-        backgroundColor: '#32779E',
+        backgroundColor: '#42779E',
         color: '#FFF',
         fontSize: 15,
     },
@@ -273,6 +293,8 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         paddingHorizontal: 5,
         marginHorizontal: 10,
+        textAlign: 'right',
+        color: '#FFF',
         flex: 1,
         fontSize: 16
     },

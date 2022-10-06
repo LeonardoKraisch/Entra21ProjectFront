@@ -146,6 +146,14 @@ const styles = StyleSheet.create({
         marginRight: 10,
         marginTop: 17,
         minWidth: '90%',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 4
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 10
     },
     incItemOut: {
         backgroundColor: '#238a17'

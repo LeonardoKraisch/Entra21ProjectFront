@@ -226,7 +226,6 @@ export const MoneyProvider = ({ children }) => {
         },
 
         searchSetter: async (arr1, arr2, arr3) => {
-
             const totalIncome = await moneyInternalContext.calcTotal(arr1, 'incMoney')
             const totalExpense = await moneyInternalContext.calcTotal(arr2, 'expMoney')
 
@@ -287,8 +286,8 @@ export const MoneyProvider = ({ children }) => {
             return all
         },
 
-        getLaunchesPlusFilter: async (filters) => {
-            return await moneyInternalContext.getRegisters({
+        getRegistersFiltered: async (filters) => {
+            const obj = {
                 type: filters.type,
                 filterType: "...",
                 filter: [
@@ -297,8 +296,18 @@ export const MoneyProvider = ({ children }) => {
                     [filters.categoryFilter],
                     [filters.descriptionFilter]
                 ]
-            })
+            }
+            console.log(filters, obj);
+            return await moneyInternalContext.getRegisters(obj)
+        },
 
+        filterPlus: async (filter1, filter2) => {
+            const filteredIncomes = await moneyInternalContext.getRegistersFiltered(filter1)
+            const filteredExpenses = await moneyInternalContext.getRegistersFiltered(filter2)
+            // console.log("-----------------", filteredExpenses);
+            const filteredAllRegisters = await moneyInternalContext.mergeArrays(filteredIncomes, "incMoney", filteredExpenses, 'expMoney')
+
+            await moneyInternalContext.searchSetter(await filteredIncomes, await filteredExpenses, filteredAllRegisters)
         },
 
         getPendings: async () => {

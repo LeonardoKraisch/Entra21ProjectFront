@@ -112,7 +112,7 @@ export default props => {
                 <DatePicker />
             </View>
             <Filters />
-            <View style={{ maxHeight: "60%", padding: 10 }}>
+            <View style={{ flex: 1, padding: 10 }}>
                 <ShowReport />
             </View>
             <View style={styles.row}>
@@ -128,15 +128,14 @@ export default props => {
 
 const styles = StyleSheet.create({
     containter: {
-        justifyContent: 'center',
         flex: 1,
-        backgroundColor: '#666',
+        backgroundColor: '#555',
     },
     filters: {
         backgroundColor: '#32779E',
         borderRadius: 3,
-        marginTop: 5,
-        paddingBottom: 3,
+        paddingTop: 50,
+        paddingBottom: 10,
         alignItems: 'center',
         justifyContent: 'center',
         borderBottomColor: '#CCC',
@@ -178,6 +177,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         width: '27%',
         paddingHorizontal: 15,
+        paddingVertical: 2,
         backgroundColor: '#32779E',
         borderColor: '#CCC',
         borderBottomWidth: 1,
@@ -193,8 +193,8 @@ const styles = StyleSheet.create({
     row: {
         justifyContent: 'flex-end',
         flexDirection: 'row',
-
         marginTop: 15,
+        minHeight: '15%',
         width: '90%',
         alignSelf: 'center'
     },
