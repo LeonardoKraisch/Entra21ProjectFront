@@ -373,9 +373,21 @@ export const MoneyProvider = ({ children }) => {
                             newExpPendings[item.expDate] = [item]
                         }
                     }
-                    return { ...newIncPendings, ...newExpPendings }
+
+                    var merged = { ...newIncPendings }
+                    for (let item in newExpPendings) {
+                        if (merged[item] == item) {
+                            merged[item] = [{ ...merged[item], ...item }]
+                        } else {
+                            merged[item] = [item]
+                        }
+                    }
+
+                    return merged
+
                 }
 
+                console.log(await getAll());
                 setAllPendings(await getAll())
             } catch (e) {
                 console.log(e.message)
