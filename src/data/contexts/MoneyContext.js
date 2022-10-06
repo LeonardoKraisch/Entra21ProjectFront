@@ -198,9 +198,8 @@ export const MoneyProvider = ({ children }) => {
                 } else {
                     await moneyInternalContext.balanceSetter(incomes, expenses)
                     await moneyInternalContext.getPendings()
-                    
+
                 }
-                setWallets(await moneyInternalContext.getWallets())
 
             } catch (e) {
                 console.log(e.message)
@@ -356,11 +355,36 @@ export const MoneyProvider = ({ children }) => {
             }
 
         },
-         
+
         getWallets: async () => {
-            return axios.post("/wallet/get", moneyInternalContext.userCode)
-        }
+            const connWallets = await axios.post("/wallet/get", { userCode })
+            return connWallets.data.registers
+        },
+        getAllRegistersToWallet: async () => {
+            try {
+                const toWalletInc = await moneyInternalContext.getRegisters({
+                    type: "+",
+                    filterType: "=",
+                    filter: userCode,
+                    column: "userCode"
+                })
+                console.log(toWalletInc,"toWalletInc");
+                const toWalletExp = await moneyInternalContext.getRegisters({
+                    type: "-",
+                    filterType: "=",
+                    filter: userCode,
+                    column: "userCode"
+                })
+                console.log(toWalletExp,"toWalletExp");
+                return ([...toWalletInc, ...toWalletExp])
+            } catch (e) {
+                console.log(e.message)
+                return e.message
+            }
+        },
+
     }
+
 
     return (
         <MoneyContext.Provider value={moneyInternalContext} >

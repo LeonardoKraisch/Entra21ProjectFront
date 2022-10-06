@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Splash from "./Splash"
 import Home from "./screens/Home";
 import Wallet from './screens/Wallet'
+import CustomWallet from './screens/CustomWallet'
 import Login from "./screens/Login";
 import Register from "./screens/Register"
 import Debts from "./screens/Debts";
@@ -36,6 +37,7 @@ export default props => {
                 <Stack.Screen name="Auth" component={Auth} />
                 <Stack.Screen name="Main" component={Home} />
                 <Stack.Screen name="Wallet" component={Wallet} />
+                <Stack.Screen name="CustomWallet" component={CustomWallet} />
                 <Stack.Screen name="My Debts" component={Debts} />
             </Stack.Navigator>
         )
