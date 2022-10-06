@@ -20,7 +20,7 @@ export default props => {
     }, [])
 
     return (
-        <LinearGradient colors={['#192f6a', '#3b5998', '#4c669f']} style={styles.containter}>
+        <LinearGradient colors={['#192b6a', '#3b348f', '#3d4986']} style={styles.containter}>
             <Header {...props} />
             <View style={styles.body}>
                 <View style={styles.mainContainer}>
@@ -45,7 +45,7 @@ export default props => {
                 </View>
                 <AddView />
             </View>
-            <StatusBar backgroundColor={'#192f6a'} />
+            <StatusBar backgroundColor={'#192b6a'} />
         </LinearGradient>
     )
 }
