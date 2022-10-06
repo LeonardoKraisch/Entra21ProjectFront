@@ -170,6 +170,22 @@ export const MoneyProvider = ({ children }) => {
             try {
                 const delConn = await axios.post(`/${data.type == "+" ? "income" : "expense"}/delete`,
                     { code: data.code })
+
+                if (data.type == "+" && delConn.data) {
+                    var newPendings = incPendings.filter((pending) => {
+                        return pending.incCode != data.code
+                    })
+                    setIncPendings(newPendings)
+
+                } else if (data.type == "-" && delConn.data) {
+                    var newPendings = expPendings.filter((pending) => {
+                        return pending.expCode != data.code
+                    })
+                    setExpPendings(newPendings)
+
+                }
+
+                await moneyInternalContext.generalPendings()
             } catch (e) {
                 console.log(e.message);
             }
@@ -332,8 +348,9 @@ export const MoneyProvider = ({ children }) => {
                         pending: true
                     }
 
-                )
-                )
+                ))
+
+                await moneyInternalContext.generalPendings()
             } catch (e) {
                 console.log(e.message)
             }
@@ -341,22 +358,26 @@ export const MoneyProvider = ({ children }) => {
 
         generalPendings: async () => {
             try {
-                for (let item of incPendings) {
-                    if (allPendings[item.incDate] != null && allPendings[item.incDate][0].incDate == item.incDate) {
-                        await allPendings[item.incDate].push(item)
-                    } else {
-                        allPendings[item.incDate] = [item]
+                async function getAll() {
+                    var newPendings = []
+                    for (let item of incPendings) {
+                        if (newPendings[item.incDate] != null && newPendings[item.incDate][0].incDate == item.incDate) {
+                            newPendings[item.incDate].push(item)
+                        } else {
+                            newPendings[item.incDate] = [item]
+                        }
                     }
-                }
-                for (let item of expPendings) {
-                    if (allPendings[item.expDate] != null && allPendings[item.expDate][0].expDate == item.expDate) {
-                        await allPendings[item.expDate].push(item)
-                    } else {
-                        allPendings[item.expDate] = [item]
+                    for (let item of expPendings) {
+                        if (newPendings[item.expDate] != null && newPendings[item.expDate][0].expDate == item.expDate) {
+                            newPendings[item.expDate].push(item)
+                        } else {
+                            newPendings[item.expDate] = [item]
+                        }
                     }
+                    return newPendings
                 }
 
-                return allPendings[Object.keys(allPendings)[0]][0]
+                setAllPendings(await getAll())
             } catch (e) {
                 console.log(e.message)
             }
