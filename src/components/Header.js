@@ -58,7 +58,6 @@ export default props => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#32779E',
         width: '100%',
         height: '20%',
         justifyContent: 'flex-end',

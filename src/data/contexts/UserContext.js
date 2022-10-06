@@ -37,7 +37,7 @@ export const UserProvider = ({ children }) => {
                     } else {
                         Toast.show({
                             type: 'error',
-                            text1: 'Invalide Credencials!',
+                            text1: 'Invalid Credencials!',
                         })
                         await AsyncStorage.removeItem('token')
                         return
