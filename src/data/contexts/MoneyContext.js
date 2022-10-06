@@ -373,18 +373,25 @@ export const MoneyProvider = ({ children }) => {
                             newExpPendings[item.expDate] = [item]
                         }
                     }
-
-                    var merged = { ...newIncPendings }
-                    for (let item in newExpPendings) {
-                        if (merged[item] == item) {
-                            merged[item] = [{ ...merged[item], ...item }]
-                        } else {
-                            merged[item] = [item]
-                        }
-                    }
-
+                    const merged = {}
+                    Object.keys(newExpPendings).forEach((key) => {
+                        merged[key] = []
+                    })
+                    Object.keys(newIncPendings).forEach((key) => {
+                        merged[key] = []
+                    })
+                    Object.keys(merged).forEach((key)=>{
+                        try{
+                        newIncPendings[key].forEach((item)=>{
+                            merged[key].push(item)
+                        })
+                        newExpPendings[key].forEach((item)=>{
+                            merged[key].push(item)
+                        })
+                        }catch{}
+                        
+                    })
                     return merged
-
                 }
 
                 console.log(await getAll());
