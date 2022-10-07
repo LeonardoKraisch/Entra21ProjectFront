@@ -13,6 +13,7 @@ import Register from "./screens/Register"
 import Debts from "./screens/Debts";
 import CreateWallet from "./screens/CreateWallet";
 import ShareWallet from "./screens/ShareWallet";
+import WalletInvites from "./screens/WalletInvites";
 
 import useUser from "./data/hooks/useUser";
 

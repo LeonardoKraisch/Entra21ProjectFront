@@ -30,7 +30,8 @@ export default function App() {
 			Home:{
 				screens:{
 					Wallet:"Wallet",
-					ShareWallet:"ShareWallet"
+					ShareWallet:"ShareWallet",
+					Home:"Home"
 				}
 			}
 
