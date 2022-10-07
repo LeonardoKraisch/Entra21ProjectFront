@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 5
     },
     labelText: {
-        color: '#FFF',
+        color: '#0FF',
         fontWeight: 'bold',
         fontSize: 16
     },

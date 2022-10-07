@@ -20,8 +20,8 @@ export default props => {
                 <View style={{ opacity: show ? 1 : 0 }}>
                     <Text>This is the Custom Wallet session, where you can create a special area to track specific type of launches.</Text>
                     <Text>For example, if you want to keep a portion of your income separate to save money;</Text>
-                    <Text>Or if you live with other people and split the bills;</Text>
-                    <Text>This wallet you can share with them and every member can launch and track their expenses.</Text>
+                    <Text>Or if you live with other people and split the bills,</Text>
+                    <Text>whit this wallet you can share with them and every member can launch and track their expenses.</Text>
                 </View>
                 <TouchableOpacity onPress={() => setShow(true)} style>
                     <Text>?</Text>
