@@ -172,23 +172,36 @@ export const MoneyProvider = ({ children }) => {
                 const delConn = await axios.post(`/${data.type == "+" ? "income" : "expense"}/delete`,
                     { code: data.code })
 
-                if (data.type == "+" && delConn.data) {
+                if (data.type == "+" && delConn.data.result.successful) {
                     var newPendings = incPendings.filter((pending) => {
                         return pending.incCode != data.code
                     })
                     setIncPendings(newPendings)
 
-                } else if (data.type == "-" && delConn.data) {
+                } else if (data.type == "-" && delConn.data.result.successful) {
                     var newPendings = expPendings.filter((pending) => {
                         return pending.expCode != data.code
                     })
                     setExpPendings(newPendings)
 
                 }
-
+                delConn.data.result.successful ?
+                    Toast.show({
+                        type: 'success',
+                        text1: 'Delete successfull!',
+                    })
+                    :
+                    Toast.show({
+                        type: 'success',
+                        text1: `error: ${delConn.data.result.error}`,
+                    })
                 await moneyInternalContext.generalPendings()
             } catch (e) {
                 console.log(e.message, " - error in delRegister")
+                Toast.show({
+                    type: 'success',
+                    text1: `error: ${e.message}`,
+                })
             }
 
 
@@ -204,22 +217,35 @@ export const MoneyProvider = ({ children }) => {
                         }
                     })
 
-                if (data.type == "+" && ediConn.data) {
+                if (data.type == "+" && ediConn.data.result.successful) {
                     var newPendings = incPendings.filter((pending) => {
                         return pending.incCode != data.code
                     })
                     setIncPendings(newPendings)
 
-                } else if (data.type == "-" && ediConn.data) {
+                } else if (data.type == "-" && ediConn.data.result.successful) {
                     var newPendings = expPendings.filter((pending) => {
                         return pending.expCode != data.code
                     })
                     setExpPendings(newPendings)
 
                 }
-
+                ediConn.data.result.successful ?
+                    Toast.show({
+                        type: 'success',
+                        text1: 'Edit successfull!',
+                    })
+                    :
+                    Toast.show({
+                        type: 'error',
+                        text1: `error: ${ediConn.data.result.error}`,
+                    })
                 await moneyInternalContext.generalPendings()
             } catch (e) {
+                Toast.show({
+                    type: 'error',
+                    text1: `error: ${e.message}`,
+                })
                 console.log(e.message, " - error in editRegister");
             }
         },
@@ -320,25 +346,25 @@ export const MoneyProvider = ({ children }) => {
 
         calcTotal: async (array, camp) => {
             var total = 0
-            try{
-            array.forEach((element) => {
-                total += element[camp]
-            })
-            return total
-        }catch(e){
-            return total
-        }
+            try {
+                array.forEach((element) => {
+                    total += element[camp]
+                })
+                return total
+            } catch (e) {
+                return total
+            }
         },
 
         mergeArrays: async (array, camp, array2, camp2) => {
-            try{
-            var newArray = array2.map(element => ({ ...element }))
-            newArray.map(element => element[camp2] = element[camp2] * -1)
-            var all = [...newArray, ...array]
-            return all
-        }catch(e){
-            return []
-        }
+            try {
+                var newArray = array2.map(element => ({ ...element }))
+                newArray.map(element => element[camp2] = element[camp2] * -1)
+                var all = [...newArray, ...array]
+                return all
+            } catch (e) {
+                return []
+            }
         },
 
         getRegistersFiltered: async (filters) => {
@@ -468,7 +494,7 @@ export const MoneyProvider = ({ children }) => {
                 return e.message
             }
         },
-        addCoWallet: async (wallet) =>{
+        addCoWallet: async (wallet) => {
             wallet[userCode] = userCode
             const newCoWallet = await axios.post("/wallet/get", { wallet })
             return newCoWallet.data.results
