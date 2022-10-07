@@ -429,7 +429,7 @@ export const MoneyProvider = ({ children }) => {
 
         },
         addWallets: async () => {
-            const newWallets = await axios.post("/wallet/get", { wallet })
+            const newWallets = await axios.post("/wallet/new", { wallet })
             return newWallets.data.result
         }
         ,
