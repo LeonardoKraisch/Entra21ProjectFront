@@ -7,7 +7,7 @@ import useMoney from "../data/hooks/useMoney";
 
 
 export default props => {
-    const { addCoWallet } = useMoney()
+    const { addWallets } = useMoney()
     const [walletName, setWalletName] = useState("")
     const [walletDesc, setWalletDesc] = useState("")
     const [walletPassword, setWalletPassword] = useState("")
@@ -16,7 +16,7 @@ export default props => {
     const [show, setShow] = useState(false)
 
     const createWallet = async () => {
-        const results = await addCoWallet({
+        const results = await addWallets({
             walletDesc,
             walletName,
             walletPassword
