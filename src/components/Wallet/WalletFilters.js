@@ -210,8 +210,7 @@ export default props => {
                     <DatePicker2 />
                 </View>
             </View>
-
-            <View style={{ backgroundColor: '#23a2e2', borderRadius: 40, paddingHorizontal: 5, marginBottom: 5 }}>
+            <View style={{ borderRadius: 40, paddingHorizontal: 5, marginBottom: 5 }}>
                 <View style={styles.container}>
                     <Text style={styles.titles}>Values</Text>
                     <ValuePicker />
@@ -239,11 +238,12 @@ export default props => {
 }
 const styles = StyleSheet.create({
     secondaryFilters: {
-        backgroundColor: '#42779E',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 3
+        borderRadius: 3,
+        borderBottomColor: '#CCC',
+        borderBottomWidth: 2,
     },
     setDate: {
         width: '85%',
@@ -251,7 +251,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         margin: 5,
-        backgroundColor: '#23a2e2',
         borderRadius: 20,
         paddingHorizontal: 10,
         marginBottom: 5
@@ -273,7 +272,6 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     pickerItem: {
-        backgroundColor: '#23a2e2',
         color: '#FFF',
         fontSize: 15,
     },
@@ -286,7 +284,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         width: '85%',
-        backgroundColor: '#23a2e2',
         borderRadius: 40,
         paddingHorizontal: 10,
         marginBottom: 5
@@ -297,7 +294,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         width: '90%',
         marginBottom: 2,
-        backgroundColor: '#23a2e2',
         borderRadius: 40,
         paddingHorizontal: 10,
         marginBottom: 5

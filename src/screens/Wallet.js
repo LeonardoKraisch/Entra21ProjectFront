@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { LinearGradient } from "expo-linear-gradient";
 
 import moment from 'moment'
 import DateTimePicker from '@react-native-community/datetimepicker'
@@ -90,8 +91,15 @@ export default props => {
     }
 
     return (
-        <View style={styles.containter}>
+        <LinearGradient colors={['#192b6a', '#3b348f', '#3d4986']} style={styles.container}>
             <View style={styles.filters}>
+                <View style={styles.row}>
+                    <TouchableOpacity
+                        style={{ justifyContent: 'center' }}
+                        onPress={() => props.navigation.goBack()}>
+                        <Text style={styles.textReturn}>Return</Text>
+                    </TouchableOpacity>
+                </View>
                 <View style={styles.mainFilters}>
                     <TouchableOpacity onPress={() => setShow("expenses")}>
                         <Text style={[show == "expenses" ? styles.selected : styles.unselect]}>
@@ -115,26 +123,17 @@ export default props => {
             <View style={{ flex: 1, padding: 10 }}>
                 <ShowReport />
             </View>
-            <View style={styles.row}>
-                <TouchableOpacity
-                    style={{ justifyContent: 'center' }}
-                    onPress={() => props.navigation.goBack()}>
-                    <Text style={styles.textReturn}>Return</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
+        </LinearGradient>
     )
 }
 
 const styles = StyleSheet.create({
-    containter: {
+    container: {
         flex: 1,
-        backgroundColor: '#555',
     },
     filters: {
-        backgroundColor: '#32779E',
         borderRadius: 3,
-        paddingTop: 50,
+        paddingTop: 30,
         paddingBottom: 10,
         alignItems: 'center',
         justifyContent: 'center',
@@ -146,7 +145,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         width: '95%',
-        padding: 10,
+        padding: 5,
         marginBottom: 5,
         borderBottomColor: '#CCC',
         borderBottomWidth: 1,
@@ -170,7 +169,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     secondaryContainer: {
-        backgroundColor: '#32779E',
         borderBottomStartRadius: 3,
         borderBottomEndRadius: 3,
     },
@@ -178,7 +176,6 @@ const styles = StyleSheet.create({
         width: '27%',
         paddingHorizontal: 15,
         paddingVertical: 2,
-        backgroundColor: '#32779E',
         borderColor: '#CCC',
         borderBottomWidth: 1,
         borderRightWidth: 1,
@@ -193,9 +190,8 @@ const styles = StyleSheet.create({
     row: {
         justifyContent: 'flex-end',
         flexDirection: 'row',
-        marginTop: 15,
-        minHeight: '15%',
-        width: '90%',
+        width: '92%',
+        paddingBottom: 12,
         alignSelf: 'center'
     },
     textReturn: {
