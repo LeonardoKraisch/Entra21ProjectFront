@@ -468,7 +468,7 @@ export const MoneyProvider = ({ children }) => {
                 return e.message
             }
         },
-        addCoWallet: async (walletCode, userCode) =>{
+        addCoWallet: async (wallet) =>{
             const newCoWallet = await axios.post("/wallet/get", { wallet })
             return newCoWallet.data.results
         }
