@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
         width: '60%'
     },
     pickerItem: {
-        backgroundColor: '#333',
+        backgroundColor: '#353935',
         color: '#FFF',
         fontSize: 15,
     },
@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         borderColor: '#3155d6',
         borderRadius: 5,
-        backgroundColor: '#333',
+        backgroundColor: '#353935',
         paddingVertical: 5,
         paddingHorizontal: 20,
         marginTop: 10
