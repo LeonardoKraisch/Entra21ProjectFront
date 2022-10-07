@@ -188,7 +188,7 @@ export const MoneyProvider = ({ children }) => {
 
                 await moneyInternalContext.generalPendings()
             } catch (e) {
-                console.log(e.message);
+                console.log(e.message, " - error in delRegister")
             }
 
 
@@ -220,7 +220,7 @@ export const MoneyProvider = ({ children }) => {
 
                 await moneyInternalContext.generalPendings()
             } catch (e) {
-                console.log(e.message);
+                console.log(e.message, " - error in editRegister");
             }
         },
 
@@ -250,7 +250,7 @@ export const MoneyProvider = ({ children }) => {
                 }
 
             } catch (e) {
-                console.log(e.message)
+                console.log(e.message, " - error in fetch all launches")
             }
         },
 
@@ -313,7 +313,7 @@ export const MoneyProvider = ({ children }) => {
 
                 }
             } catch (e) {
-                console.log(e.message);
+                console.log(e.message, " - error i searchLaunches");
             }
 
         },
@@ -384,7 +384,7 @@ export const MoneyProvider = ({ children }) => {
 
                 await moneyInternalContext.generalPendings()
             } catch (e) {
-                console.log(e.message)
+                console.log(e.message, " - error in getPendings")
             }
         },
 
@@ -432,7 +432,8 @@ export const MoneyProvider = ({ children }) => {
                 }
                 setAllPendings(await getAll())
             } catch (e) {
-                console.log(e.message)
+                console.log(e.message, " - error in generalPendings")
+                return {}
             }
 
         },
@@ -463,7 +464,7 @@ export const MoneyProvider = ({ children }) => {
                 })
                 return ([...toWalletInc, ...toWalletExp])
             } catch (e) {
-                console.log(e.message)
+                console.log(e.message, " - error in getAllRegistersToWallet")
                 return e.message
             }
         },
