@@ -50,10 +50,19 @@ export default props => {
                     width='97%'
                     data={wallets}
                     renderItem={(wallet) =>
-                        <MiniWallet
+                        <View><MiniWallet
                             wallet={wallet}
                             navigation={props.navigation}
                         />
+                            
+                                <TouchableOpacity onPress={() => props.navigation.navigate("ShareWallet", {wallet})} 
+                                                style={styles.shareButton}
+                                                >
+                                    <FontAwesome5 name="plus" size={25} color="#FFF" />
+                                    <Text style={styles.newButtonText}>Share Wallet</Text>
+                                </TouchableOpacity>
+                            
+                        </View>
                     }
                 />
                 <View style={styles.buttonContainer}>
@@ -62,6 +71,7 @@ export default props => {
                         <Text style={styles.newButtonText}>Create Wallet</Text>
                     </TouchableOpacity>
                 </View>
+
                 <AddView />
             </View>
             <StatusBar backgroundColor={'#192b6a'} />
@@ -122,5 +132,25 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         paddingLeft: 4,
+    },
+    shareButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '92%',
+        height: '50%',
+        padding: 10,
+        left:10,
+        borderRadius: 5,
+        flexWrap: 'wrap',
+        backgroundColor: '#32779E',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 4
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 10
     }
 })

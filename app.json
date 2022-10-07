@@ -1,34 +1,37 @@
 {
-  "expo": {
-    "name": "MoneyPanther",
-    "slug": "MoneyPanther",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/abelha.jpg",
-      "resizeMode": "spread",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      },
-      "softwareKeyboardLayoutMode": "pan"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    }
-  }
+	"expo": {
+		"scheme":"beez",
+		"name": "MoneyPanther",
+		"plugins": ["./plugins/withAndroidVerifiedLinksWorkaround"],
+		"slug": "MoneyPanther",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./assets/icon.png",
+		"userInterfaceStyle": "automatic",
+		"splash": {
+			"image": "./assets/abelha.jpg",
+			"resizeMode": "spread",
+			"backgroundColor": "#ffffff"
+		},
+		"updates": {
+			"fallbackToCacheTimeout": 0
+		},
+		"assetBundlePatterns": [
+			"**/*"
+		],
+		"ios": {
+			"supportsTablet": true,
+			"associatedDomains": ["applinks:expo.dev"]
+		},
+		"android": {
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/adaptive-icon.png",
+				"backgroundColor": "#FFFFFF"
+			},
+			"softwareKeyboardLayoutMode": "pan"
+		},
+		"web": {
+			"favicon": "./assets/favicon.png"
+		}
+	}
 }
