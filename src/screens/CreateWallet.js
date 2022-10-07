@@ -3,11 +3,36 @@ import { View, Text, TouchableOpacity, StyleSheet, Modal } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Card, Button, TextInput } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
+import useMoney from "../data/hooks/useMoney";
 
 
 export default props => {
+    const { addCoWallet } = useMoney()
+    const [walletName, setWalletName] = useState("")
+    const [walletDesc, setWalletDesc] = useState("")
+    const [walletPassword, setWalletPassword] = useState("")
+
 
     const [show, setShow] = useState(false)
+
+    const createWallet = async () => {
+        const results = await addCoWallet({
+            walletDesc,
+            walletName,
+            walletPassword
+        })
+        if (results.successful)
+            Toast.show({
+                type: 'success',
+                text1: 'Sucessful wallet create!',
+            })
+            else
+            Toast.show({
+                type: 'error',
+                text1: 'Error in wallet create!',
+                text2:`error: ${results.error}`
+            })
+    }
 
     return (
         <LinearGradient colors={['#192b6a', '#243e9c', '#3155d6']} style={styles.container}>
@@ -24,7 +49,7 @@ export default props => {
             </Button>
             <View style={styles.bodyContainer}>
                 <View >
-                    <TextInput label={"What is the name of your wallet?"}/>
+                    <TextInput label={"What is the name of your wallet?"} />
                 </View>
             </View>
             <Modal visible={show}
