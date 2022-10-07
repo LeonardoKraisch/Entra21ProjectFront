@@ -54,14 +54,14 @@ export default props => {
                             wallet={wallet}
                             navigation={props.navigation}
                         />
-                            
-                                <TouchableOpacity onPress={() => props.navigation.navigate("ShareWallet", {wallet})} 
-                                                style={styles.shareButton}
-                                                >
-                                    <FontAwesome5 name="plus" size={25} color="#FFF" />
-                                    <Text style={styles.newButtonText}>Share Wallet</Text>
-                                </TouchableOpacity>
-                            
+
+                            <TouchableOpacity onPress={() => props.navigation.navigate("ShareWallet", { wallet })}
+                                style={styles.shareButton}
+                            >
+                                <FontAwesome5 name="plus" size={25} color="#FFF" />
+                                <Text style={styles.newButtonText}>Share Wallet</Text>
+                            </TouchableOpacity>
+
                         </View>
                     }
                 />
@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+        flexWrap: 'wrap',
         width: '40%',
         height: '73%',
         padding: 10,
@@ -140,7 +141,7 @@ const styles = StyleSheet.create({
         width: '92%',
         height: '50%',
         padding: 10,
-        left:10,
+        left: 10,
         borderRadius: 5,
         flexWrap: 'wrap',
         backgroundColor: '#32779E',

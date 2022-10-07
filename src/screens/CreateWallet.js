@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Modal } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Card, Button } from "react-native-paper";
+import { Card, Button, TextInput } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
 
 
@@ -22,6 +22,11 @@ export default props => {
                     Back
                 </Text>
             </Button>
+            <View style={styles.bodyContainer}>
+                <View >
+                    <TextInput label={"What is the name of your wallet?"}/>
+                </View>
+            </View>
             <Modal visible={show}
                 animationType="slide"
                 transparent={true}
@@ -47,10 +52,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         height: '100%',
-        width: '100%'
+        width: '100%',
     },
     helpCont: {
-        height: '10%',
+        maxHeight: '10%',
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'flex-end'
@@ -72,6 +77,10 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 3
     },
+    bodyContainer: {
+        flex: 1,
+        maxHeight: '80%'
+    },
     textHelpModal: {
         width: '80%',
         padding: 10,
@@ -80,7 +89,8 @@ const styles = StyleSheet.create({
     },
     textModal: {
         padding: 5,
-        fontSize: 17
+        fontSize: 17,
+        fontWeight: "500"
     },
     modalView: {
         flex: 1,
