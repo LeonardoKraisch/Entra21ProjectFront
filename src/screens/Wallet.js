@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { LinearGradient } from "expo-linear-gradient";
+import { Button } from "react-native-paper";
 
 import moment from 'moment'
 import DateTimePicker from '@react-native-community/datetimepicker'
@@ -90,7 +92,7 @@ export default props => {
     }
 
     return (
-        <View style={styles.containter}>
+        <LinearGradient colors={['#192b6a', '#243e9c', '#3155d6']} style={styles.container}>
             <View style={styles.filters}>
                 <View style={styles.mainFilters}>
                     <TouchableOpacity onPress={() => setShow("expenses")}>
@@ -115,26 +117,22 @@ export default props => {
             <View style={{ flex: 1, padding: 10 }}>
                 <ShowReport />
             </View>
-            <View style={styles.row}>
-                <TouchableOpacity
-                    style={{ justifyContent: 'center' }}
-                    onPress={() => props.navigation.goBack()}>
-                    <Text style={styles.textReturn}>Return</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
+            <Button onPress={() => props.navigation.goBack()} style={styles.buttonBack}>
+                <Text style={styles.buttonBackText}>
+                    Back
+                </Text>
+            </Button>
+        </LinearGradient>
     )
 }
 
 const styles = StyleSheet.create({
-    containter: {
+    container: {
         flex: 1,
-        backgroundColor: '#555',
     },
     filters: {
-        backgroundColor: '#32779E',
         borderRadius: 3,
-        paddingTop: 50,
+        paddingTop: 30,
         paddingBottom: 10,
         alignItems: 'center',
         justifyContent: 'center',
@@ -146,7 +144,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         width: '95%',
-        padding: 10,
+        padding: 5,
         marginBottom: 5,
         borderBottomColor: '#CCC',
         borderBottomWidth: 1,
@@ -170,7 +168,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     secondaryContainer: {
-        backgroundColor: '#32779E',
         borderBottomStartRadius: 3,
         borderBottomEndRadius: 3,
     },
@@ -178,7 +175,6 @@ const styles = StyleSheet.create({
         width: '27%',
         paddingHorizontal: 15,
         paddingVertical: 2,
-        backgroundColor: '#32779E',
         borderColor: '#CCC',
         borderBottomWidth: 1,
         borderRightWidth: 1,
@@ -190,16 +186,25 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold'
     },
-    row: {
-        justifyContent: 'flex-end',
-        flexDirection: 'row',
-        marginTop: 15,
-        minHeight: '15%',
-        width: '90%',
-        alignSelf: 'center'
+    buttonBack: {
+        flex: 1,
+        right: 10,
+        bottom: 10,
+        position: 'absolute',
+        backgroundColor: '#353935',
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 7,
+            height: 7
+        },
+        shadowOpacity: 0.30,
+        shadowRadius: 4,
+        elevation: 3
     },
-    textReturn: {
-        color: '#22EEFB'
+    buttonBackText: {
+        color: '#FFF'
     }
 })
 

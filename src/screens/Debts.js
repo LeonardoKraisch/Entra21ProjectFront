@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Modal } from "react-native";
 import { Agenda } from 'react-native-calendars'
-import { Card } from "react-native-paper";
+import { Card, Button } from "react-native-paper";
 import { TextMask } from "react-native-masked-text";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
@@ -158,6 +158,11 @@ export default props => {
                 renderEmptyData={() => <View style={styles.negation}><Text style={styles.negationText}>There are no launches for this day.</Text></View>}
             />
             <ModalView />
+            <Button onPress={() => props.navigation.goBack()} style={styles.buttonBack}>
+                <Text style={styles.buttonBackText}>
+                    Back
+                </Text>
+            </Button>
         </View>
     );
 
@@ -300,5 +305,25 @@ const styles = StyleSheet.create({
     },
     buttonTrashView: {
         justifyContent: 'flex-start'
+    },
+    buttonBack: {
+        flex: 1,
+        right: 10,
+        bottom: 10,
+        position: 'absolute',
+        backgroundColor: '#23a2e2',
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 7,
+            height: 7
+        },
+        shadowOpacity: 0.30,
+        shadowRadius: 4,
+        elevation: 3
+    },
+    buttonBackText: {
+        color: '#FFF'
     }
 });

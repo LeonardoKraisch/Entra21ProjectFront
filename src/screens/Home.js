@@ -39,7 +39,7 @@ export default props => {
     };
 
     return (
-        <LinearGradient colors={['#192b6a', '#3b348f', '#3d4986']} style={styles.containter}>
+        <LinearGradient colors={['#192b6a', '#243e9c', '#3155d6']} style={styles.container}>
             <Header {...props} />
             <View style={styles.body}>
                 <View style={styles.mainContainer}>
@@ -80,7 +80,7 @@ export default props => {
 }
 
 const styles = StyleSheet.create({
-    containter: {
+    container: {
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 5,
         flexWrap: 'wrap',
-        backgroundColor: '#32779E',
+        backgroundColor: '#353935',
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
