@@ -29,7 +29,7 @@ export default props => {
 const styles = StyleSheet.create({
     container: {
         maxHeight: '100%',
-        backgroundColor: '#333',
+        backgroundColor: '#353935',
         justifyContent: "space-between",
         position: 'absolute',
         bottom: 0,
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         borderTopWidth: 3,
         borderLeftWidth: 3,
         paddingBottom: 1,
-        borderColor: '#32779E',
+        borderColor: '#CCC',
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     containerButton: {
         flexDirection: 'row',
         width: 180,
-        backgroundColor: '#333',
+        backgroundColor: '#353935',
         justifyContent: "space-between",
         borderTopStartRadius: 40
     },

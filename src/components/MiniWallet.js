@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     container: {
         height: 100,
         flex: 1,
-        backgroundColor: '#32779E',
+        backgroundColor: '#353935',
         borderRadius: 3,
         margin: 10,
         shadowColor: "#000",

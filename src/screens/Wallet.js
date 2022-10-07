@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { LinearGradient } from "expo-linear-gradient";
+import { Button } from "react-native-paper";
 
 import moment from 'moment'
 import DateTimePicker from '@react-native-community/datetimepicker'
@@ -91,15 +92,8 @@ export default props => {
     }
 
     return (
-        <LinearGradient colors={['#192b6a', '#3b348f', '#3d4986']} style={styles.container}>
+        <LinearGradient colors={['#192b6a', '#243e9c', '#3155d6']} style={styles.container}>
             <View style={styles.filters}>
-                <View style={styles.row}>
-                    <TouchableOpacity
-                        style={{ justifyContent: 'center' }}
-                        onPress={() => props.navigation.goBack()}>
-                        <Text style={styles.textReturn}>Return</Text>
-                    </TouchableOpacity>
-                </View>
                 <View style={styles.mainFilters}>
                     <TouchableOpacity onPress={() => setShow("expenses")}>
                         <Text style={[show == "expenses" ? styles.selected : styles.unselect]}>
@@ -123,6 +117,11 @@ export default props => {
             <View style={{ flex: 1, padding: 10 }}>
                 <ShowReport />
             </View>
+            <Button onPress={() => props.navigation.goBack()} style={styles.buttonBack}>
+                <Text style={styles.buttonBackText}>
+                    Back
+                </Text>
+            </Button>
         </LinearGradient>
     )
 }
@@ -187,15 +186,25 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold'
     },
-    row: {
-        justifyContent: 'flex-end',
-        flexDirection: 'row',
-        width: '92%',
-        paddingBottom: 12,
-        alignSelf: 'center'
+    buttonBack: {
+        flex: 1,
+        right: 10,
+        bottom: 10,
+        position: 'absolute',
+        backgroundColor: '#353935',
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 7,
+            height: 7
+        },
+        shadowOpacity: 0.30,
+        shadowRadius: 4,
+        elevation: 3
     },
-    textReturn: {
-        color: '#22EEFB'
+    buttonBackText: {
+        color: '#FFF'
     }
 })
 

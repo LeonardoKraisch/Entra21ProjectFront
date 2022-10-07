@@ -163,7 +163,7 @@ export const MoneyProvider = ({ children }) => {
         getRegisters: async data => {
             data["userCode"] = userCode
             const newQuery = await axios.post(`/${data.type == "+" ? "income" : "expense"}/query`,
-            data)
+                data)
             return newQuery.data.registers
         },
 
@@ -428,16 +428,17 @@ export const MoneyProvider = ({ children }) => {
             }
 
         },
+
         addWallets: async () => {
             const newWallets = await axios.post("/wallet/new", { wallet })
             return newWallets.data.result
-        }
-        ,
+        },
 
         getWallets: async () => {
             const connWallets = await axios.post("/wallet/get", { userCode })
             return connWallets.data.registers
         },
+
         getAllRegistersToWallet: async (walletCode) => {
             try {
                 const toWalletInc = await moneyInternalContext.getRegisters({

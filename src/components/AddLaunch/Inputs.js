@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         width: '92%',
-        backgroundColor: '#32779E',
+        backgroundColor: '#3155d6',
         borderRadius: 3,
         marginTop: 5
     },
@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
     },
     datePicker: {
         borderWidth: 3,
-        borderColor: '#32779E',
+        borderColor: '#3155d6',
         borderRadius: 5,
         backgroundColor: '#333',
         paddingVertical: 5,
@@ -287,7 +287,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     send: {
-        backgroundColor: '#32779E',
+        backgroundColor: '#3155d6',
         width: '100%',
         alignSelf: 'center',
         marginTop: 38,
