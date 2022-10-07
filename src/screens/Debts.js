@@ -15,8 +15,13 @@ export default props => {
 
     useEffect(() => {
         async function fetch() {
-            await generalPendings()
-            return allPendings[Object.keys(allPendings)[0]][0]
+            try {
+                await generalPendings()
+                return allPendings[Object.keys(allPendings)[0]][0]
+            } catch (e) {
+                console.log(e);
+                return []
+            }
         }
         setItem(fetch())
     }, [])
