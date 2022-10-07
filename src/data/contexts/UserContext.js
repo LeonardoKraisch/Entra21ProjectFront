@@ -11,7 +11,7 @@ export const UserProvider = ({ children }) => {
     const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
     const [email, setEmail] = useState('')
-    const [userCode, setUserCode] = useState('')
+    const [userCode, setUserCode] = useState(-1)
 
     const userInternalContext = {
         name,
@@ -53,8 +53,10 @@ export const UserProvider = ({ children }) => {
         },
         signUp: async user => {
             try {
+                console.log(user.email,"emailllllllllllllllllllllllllllllllll");
                 const newUser = await axios.post("/user/signUp", {
                     newUser: {
+                        userCode,
                         userName: user.name,
                         userPhone: user.phone,
                         userEmail: user.email,
