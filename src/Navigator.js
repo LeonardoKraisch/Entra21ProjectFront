@@ -12,13 +12,17 @@ import Login from "./screens/Login";
 import Register from "./screens/Register"
 import Debts from "./screens/Debts";
 import CreateWallet from "./screens/CreateWallet";
+import ShareWallet from "./screens/ShareWallet";
 
 import useUser from "./data/hooks/useUser";
+
+
 
 const Drawer = createDrawerNavigator()
 const Stack = createNativeStackNavigator()
 
 export default props => {
+   
 
     const { name, logout } = useUser()
 
@@ -41,6 +45,8 @@ export default props => {
                 <Stack.Screen name="CustomWallet" component={CustomWallet} />
                 <Stack.Screen name="MyDebts" component={Debts} />
                 <Stack.Screen name="CreateWallet" component={CreateWallet} />
+                <Stack.Screen name="ShareWallet" component={ShareWallet} />
+                <Stack.Screen name="WalletInvites" component={WalletInvites} />
             </Stack.Navigator>
         )
     }
@@ -56,9 +62,11 @@ export default props => {
             backgroundColor: '#34669E',
         },
     }
-
     return (
-        <NavigationContainer initialRouteName="Splash">
+        <NavigationContainer
+            initialRouteName="Splash"
+            linking={props.linking}
+        >
             <Drawer.Navigator
                 drawerContent={props => {
                     return (
