@@ -27,16 +27,17 @@ export default function App() {
 	const prefix = Linking.createURL("/")
 	const config = {
 		screens: {
-			Home:{
-				screens:{
-					Wallet:"Wallet",
-					ShareWallet:"ShareWallet",
-					Home:"Home"
-				}
+			Home: {
+				screens: {
+					WalletInvites: "WalletInvites",
+					Main: "Home"
+				},
 			}
-
 		}
+
 	}
+
+
 
 	const linking = {
 		prefixes: [prefix],

@@ -1,12 +1,16 @@
 import { StyleSheet, View } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
+import {createURL} from 'expo-linking'
+import { useEffect, useState } from 'react'
+
+
 
 export default props => {
-    console.log(props.route.params.wallet.item.wuCode)
+    console.log(`${createURL("/")}inviteWallet/${props.route.params.wallet.item.wuCode}`)
     return (
         <View style={styles.containter} >
             <QRCode style={styles.qrcode}
-                value={`Olá, está e a wallet de codigo: ${props.route.params.wallet.item.wuCode}`}
+                value={`${createURL("/")}inviteWallet/${props.route.params.wallet.item.wuCode}`}
                 size={390}
             /></View>
 
