@@ -320,17 +320,25 @@ export const MoneyProvider = ({ children }) => {
 
         calcTotal: async (array, camp) => {
             var total = 0
+            try{
             array.forEach((element) => {
                 total += element[camp]
             })
             return total
+        }catch(e){
+            return total
+        }
         },
 
         mergeArrays: async (array, camp, array2, camp2) => {
+            try{
             var newArray = array2.map(element => ({ ...element }))
             newArray.map(element => element[camp2] = element[camp2] * -1)
             var all = [...newArray, ...array]
             return all
+        }catch(e){
+            return []
+        }
         },
 
         getRegistersFiltered: async (filters) => {
@@ -399,6 +407,7 @@ export const MoneyProvider = ({ children }) => {
                             newExpPendings[item.expDate] = [item]
                         }
                     }
+                    try{
                     const merged = {}
                     Object.keys(newExpPendings).forEach((key) => {
                         merged[key] = []
@@ -420,6 +429,7 @@ export const MoneyProvider = ({ children }) => {
                         } catch { }
 
                     })
+                }catch(e){}
                     return merged
                 }
                 setAllPendings(await getAll())
