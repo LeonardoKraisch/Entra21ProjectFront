@@ -407,7 +407,6 @@ export const MoneyProvider = ({ children }) => {
                             newExpPendings[item.expDate] = [item]
                         }
                     }
-                    try{
                     const merged = {}
                     Object.keys(newExpPendings).forEach((key) => {
                         merged[key] = []
@@ -429,7 +428,6 @@ export const MoneyProvider = ({ children }) => {
                         } catch { }
 
                     })
-                }catch(e){}
                     return merged
                 }
                 setAllPendings(await getAll())
