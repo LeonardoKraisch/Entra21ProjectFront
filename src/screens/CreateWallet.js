@@ -16,22 +16,11 @@ export default props => {
     const [show, setShow] = useState(false)
 
     const createWallet = async () => {
-        const results = await addWallets({
+        await showToast( await addWallets({
             walletDesc,
             walletName,
             walletPassword
-        })
-        if (results.successful)
-            Toast.show({
-                type: 'success',
-                text1: 'Sucessful wallet create!',
-            })
-            else
-            Toast.show({
-                type: 'error',
-                text1: 'Error in wallet create!',
-                text2:`error: ${results.error}`
-            })
+        }), "Create Wallet")
     }
 
     return (

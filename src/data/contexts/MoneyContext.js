@@ -185,17 +185,8 @@ export const MoneyProvider = ({ children }) => {
                     setExpPendings(newPendings)
 
                 }
-                delConn.data.result.successful ?
-                    Toast.show({
-                        type: 'success',
-                        text1: 'Delete successfull!',
-                    })
-                    :
-                    Toast.show({
-                        type: 'success',
-                        text1: `error: ${delConn.data.result.error}`,
-                    })
                 await moneyInternalContext.generalPendings()
+                return delConn.data.result
             } catch (e) {
                 console.log(e.message, " - error in delRegister")
                 Toast.show({
@@ -498,6 +489,18 @@ export const MoneyProvider = ({ children }) => {
             wallet[userCode] = userCode
             const newCoWallet = await axios.post("/wallet/get", { wallet })
             return newCoWallet.data.results
+        },
+        showToast: async (results, action) =>{
+            results.successful ?
+            Toast.show({
+                type: 'success',
+                text1: `${action} successfull!`,
+            })
+            :
+            Toast.show({
+                type: 'success',
+                text1: `error: ${results.error}`,
+            })
         }
     }
 

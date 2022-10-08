@@ -53,7 +53,6 @@ export const UserProvider = ({ children }) => {
         },
         signUp: async user => {
             try {
-                console.log(user.email,"emailllllllllllllllllllllllllllllllll");
                 const newUser = await axios.post("/user/signUp", {
                     newUser: {
                         userCode,
