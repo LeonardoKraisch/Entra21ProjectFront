@@ -9,7 +9,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import useMoney from "../data/hooks/useMoney"
 
 export default props => {
-    const { allPendings, delRegister, editRegister, generalPendings } = useMoney()
+    const { allPendings, delRegister, editRegister, generalPendings, showToast } = useMoney()
     const [modalVisible, setModalVisible] = useState(false)
     const [item, setItem] = useState()
 
@@ -63,13 +63,15 @@ export default props => {
         );
     }
 
-    const deleteEntry = async (del) => {
-        delRegister(del)
+
+    
+    const deleteEntry = async (code) => {
+        await showToast(await delRegister(code), "Delete")
         setModalVisible(false)
     }
 
-    const editEntry = async (ok) => {
-        editRegister(ok)
+    const editEntry = async (register) => {
+        await showToast(await editRegister(register,), "Edit")
         setModalVisible(false)
     }
 

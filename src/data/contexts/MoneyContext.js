@@ -172,23 +172,27 @@ export const MoneyProvider = ({ children }) => {
                 const delConn = await axios.post(`/${data.type == "+" ? "income" : "expense"}/delete`,
                     { code: data.code })
 
-                if (data.type == "+" && delConn.data) {
+                if (data.type == "+" && delConn.data.result.successful) {
                     var newPendings = incPendings.filter((pending) => {
                         return pending.incCode != data.code
                     })
                     setIncPendings(newPendings)
 
-                } else if (data.type == "-" && delConn.data) {
+                } else if (data.type == "-" && delConn.data.result.successful) {
                     var newPendings = expPendings.filter((pending) => {
                         return pending.expCode != data.code
                     })
                     setExpPendings(newPendings)
 
                 }
-
                 await moneyInternalContext.generalPendings()
+                return delConn.data.result
             } catch (e) {
-                console.log(e.message);
+                console.log(e.message, " - error in delRegister")
+                Toast.show({
+                    type: 'success',
+                    text1: `error: ${e.message}`,
+                })
             }
 
 
@@ -204,23 +208,36 @@ export const MoneyProvider = ({ children }) => {
                         }
                     })
 
-                if (data.type == "+" && ediConn.data) {
+                if (data.type == "+" && ediConn.data.result.successful) {
                     var newPendings = incPendings.filter((pending) => {
                         return pending.incCode != data.code
                     })
                     setIncPendings(newPendings)
 
-                } else if (data.type == "-" && ediConn.data) {
+                } else if (data.type == "-" && ediConn.data.result.successful) {
                     var newPendings = expPendings.filter((pending) => {
                         return pending.expCode != data.code
                     })
                     setExpPendings(newPendings)
 
                 }
-
+                ediConn.data.result.successful ?
+                    Toast.show({
+                        type: 'success',
+                        text1: 'Edit successfull!',
+                    })
+                    :
+                    Toast.show({
+                        type: 'error',
+                        text1: `error: ${ediConn.data.result.error}`,
+                    })
                 await moneyInternalContext.generalPendings()
             } catch (e) {
-                console.log(e.message);
+                Toast.show({
+                    type: 'error',
+                    text1: `error: ${e.message}`,
+                })
+                console.log(e.message, " - error in editRegister");
             }
         },
 
@@ -250,7 +267,7 @@ export const MoneyProvider = ({ children }) => {
                 }
 
             } catch (e) {
-                console.log(e.message)
+                console.log(e.message, " - error in fetch all launches")
             }
         },
 
@@ -313,32 +330,32 @@ export const MoneyProvider = ({ children }) => {
 
                 }
             } catch (e) {
-                console.log(e.message);
+                console.log(e.message, " - error i searchLaunches");
             }
 
         },
 
         calcTotal: async (array, camp) => {
             var total = 0
-            try{
-            array.forEach((element) => {
-                total += element[camp]
-            })
-            return total
-        }catch(e){
-            return total
-        }
+            try {
+                array.forEach((element) => {
+                    total += element[camp]
+                })
+                return total
+            } catch (e) {
+                return total
+            }
         },
 
         mergeArrays: async (array, camp, array2, camp2) => {
-            try{
-            var newArray = array2.map(element => ({ ...element }))
-            newArray.map(element => element[camp2] = element[camp2] * -1)
-            var all = [...newArray, ...array]
-            return all
-        }catch(e){
-            return []
-        }
+            try {
+                var newArray = array2.map(element => ({ ...element }))
+                newArray.map(element => element[camp2] = element[camp2] * -1)
+                var all = [...newArray, ...array]
+                return all
+            } catch (e) {
+                return []
+            }
         },
 
         getRegistersFiltered: async (filters) => {
@@ -384,7 +401,7 @@ export const MoneyProvider = ({ children }) => {
 
                 await moneyInternalContext.generalPendings()
             } catch (e) {
-                console.log(e.message)
+                console.log(e.message, " - error in getPendings")
             }
         },
 
@@ -432,7 +449,8 @@ export const MoneyProvider = ({ children }) => {
                 }
                 setAllPendings(await getAll())
             } catch (e) {
-                console.log(e.message)
+                console.log(e.message, " - error in generalPendings")
+                return {}
             }
 
         },
@@ -463,13 +481,26 @@ export const MoneyProvider = ({ children }) => {
                 })
                 return ([...toWalletInc, ...toWalletExp])
             } catch (e) {
-                console.log(e.message)
+                console.log(e.message, " - error in getAllRegistersToWallet")
                 return e.message
             }
         },
-        addCoWallet: async (walletCode, userCode) =>{
-            const newCoWallet = await axios.post("/wallet/get", { walletCode, userCode })
+        addCoWallet: async (wallet) => {
+            wallet[userCode] = userCode
+            const newCoWallet = await axios.post("/wallet/get", { wallet })
             return newCoWallet.data.results
+        },
+        showToast: async (results, action) =>{
+            results.successful ?
+            Toast.show({
+                type: 'success',
+                text1: `${action} successfull!`,
+            })
+            :
+            Toast.show({
+                type: 'success',
+                text1: `error: ${results.error}`,
+            })
         }
     }
 

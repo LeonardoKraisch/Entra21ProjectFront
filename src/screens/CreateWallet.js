@@ -3,13 +3,27 @@ import { View, TouchableOpacity, StyleSheet, Modal, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Card, Button, TextInput, SegmentedButtons } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
+import useMoney from "../data/hooks/useMoney";
 
 
 
 export default props => {
+    const { addWallets } = useMoney()
+    const [walletName, setWalletName] = useState("")
+    const [walletDesc, setWalletDesc] = useState("")
+    const [walletPassword, setWalletPassword] = useState("")
+
 
     const [show, setShow] = useState(false)
     const [solo, setSolo] = useState("solo")
+
+    const createWallet = async () => {
+        await showToast( await addWallets({
+            walletDesc,
+            walletName,
+            walletPassword
+        }), "Create Wallet")
+    }
 
     return (
         <LinearGradient colors={['#192b6a', '#243e9c', '#3155d6']} style={styles.container}>
