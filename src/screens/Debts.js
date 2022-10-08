@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 10
+        elevation: 5
     },
     incItemOut: {
         backgroundColor: '#238a17'

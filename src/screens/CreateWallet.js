@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Modal } from "react-native";
+import { View, TouchableOpacity, StyleSheet, Modal, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Card, Button, TextInput } from "react-native-paper";
+import { Card, Button, TextInput, SegmentedButtons } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
 import useMoney from "../data/hooks/useMoney";
+
 
 
 export default props => {
@@ -14,6 +15,7 @@ export default props => {
 
 
     const [show, setShow] = useState(false)
+    const [solo, setSolo] = useState("solo")
 
     const createWallet = async () => {
         await showToast( await addWallets({
@@ -30,16 +32,35 @@ export default props => {
                     <Text style={styles.buttonHelpText}>?</Text>
                 </TouchableOpacity>
             </View>
-
             <Button onPress={() => props.navigation.goBack()} style={styles.buttonBack}>
                 <Text style={styles.buttonBackText}>
                     Back
                 </Text>
             </Button>
             <View style={styles.bodyContainer}>
-                <View >
-                    <TextInput label={"What is the name of your wallet?"} />
-                </View>
+                <Card style={styles.card}>
+                    <Card.Title titleStyle={{ color: '#FFF', fontSize: 20, fontWeight: "800" }} title="New Wallet" />
+                    <Card.Content style={styles.inputs}>
+                        <TextInput style={styles.inputName} label={"What is the name of your wallet?"} />
+                        <Text style={styles.groupTitle}>Will you share this wallet?</Text>
+                        <SegmentedButtons style={styles.group} value={solo}
+                            onValueChange={setSolo}
+                            buttons={[
+                                {
+                                    value: "solo",
+                                    label: 'Solo',
+                                    icon: 'human-male',
+                                    style: styles.segmentedButton
+                                },
+                                {
+                                    value: "common",
+                                    label: 'Common',
+                                    icon: 'human-queue',
+                                    style: styles.segmentedButton
+                                },
+                            ]} />
+                    </Card.Content>
+                </Card>
             </View>
             <Modal visible={show}
                 animationType="slide"
@@ -93,7 +114,43 @@ const styles = StyleSheet.create({
     },
     bodyContainer: {
         flex: 1,
-        maxHeight: '80%'
+        maxHeight: '80%',
+        alignItems: 'center'
+    },
+    card: {
+        width: '95%',
+        backgroundColor: '#35393550',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 5,
+            height: 4
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+    },
+    inputs: {
+        width: '100%',
+        alignItems: 'center'
+    },
+    inputName: {
+        width: '100%'
+    },
+    group: {
+        width: '60%',
+    },
+    segmentedButton: {
+        width: '50%',
+    },
+    groupTitle: {
+        marginTop: 12,
+        paddingBottom: 5,
+        color: '#FFF',
+        fontSize: 16,
+        fontWeight: "800"
+    },
+    title: {
+        color: '#FFF'
     },
     textHelpModal: {
         width: '80%',
