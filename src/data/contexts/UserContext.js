@@ -74,7 +74,7 @@ export const UserProvider = ({ children }) => {
                     })
                 } else Toast.show({
                     type: 'error',
-                    text1: newUser.data.error
+                    text1: newUser.data.result.error
                 })
 
             } catch (err) {

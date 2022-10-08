@@ -12,7 +12,7 @@ export default props => {
     const { allPendings, delRegister, editRegister, generalPendings, showToast } = useMoney()
     const [modalVisible, setModalVisible] = useState(false)
     const [item, setItem] = useState()
-
+    const [refresh, setRefresh] = useState(null)
     useEffect(() => {
         async function fetch() {
             try {
@@ -24,7 +24,7 @@ export default props => {
             }
         }
         setItem(fetch())
-    }, [])
+    }, [refresh])
 
     const renderItem = (item) => {
         const table = item.incMoney ? "inc" : "exp"
@@ -67,11 +67,13 @@ export default props => {
     
     const deleteEntry = async (code) => {
         await showToast(await delRegister(code), "Delete")
+        setRefresh(null)
         setModalVisible(false)
     }
 
     const editEntry = async (register) => {
         await showToast(await editRegister(register,), "Edit")
+        setRefresh(null)
         setModalVisible(false)
     }
 
