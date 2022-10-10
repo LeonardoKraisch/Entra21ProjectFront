@@ -43,7 +43,6 @@ export default props => {
                 <Stack.Screen name="Main" {...props} component={Home} />
                 <Stack.Screen name="Wallet" component={Wallet} />
                 <Stack.Screen name="CustomWallet" component={CustomWallet} />
-                <Stack.Screen name="MyDebts" component={Debts} />
                 <Stack.Screen name="ShareWallet" component={ShareWallet} />
                 <Stack.Screen name="WalletInvites" component={WalletInvites} />
                 <Stack.Screen name="Register" component={Register} />
@@ -56,12 +55,16 @@ export default props => {
     const menuConfig = {
         headerShown: false,
         drawerStyle: {
-            backgroundColor: '#32779E'
+            backgroundColor: '#192b6a'
         },
         drawerItemStyle: {
-            height: 60,
-            backgroundColor: '#34669E',
+            height: 46,
+            backgroundColor: '#243e9c',
         },
+        drawerLabelStyle: {
+            color: '#FFF'
+        }
+
     }
     return (
         <NavigationContainer
@@ -81,12 +84,6 @@ export default props => {
                             </View>
                             <DrawerItemList {...props} />
                             <DrawerItem
-                                label="My Debts"
-                                onPress={() => {
-                                    props.navigation.navigate('MyDebts')
-                                }}
-                            />
-                            <DrawerItem
                                 label="Logout"
                                 onPress={() => {
                                     logout()
@@ -101,6 +98,7 @@ export default props => {
                 <Drawer.Screen
                     name="Home" {...props}
                     component={HomeStack} />
+                <Drawer.Screen name="My Debts" component={Debts} />
             </Drawer.Navigator>
         </NavigationContainer>
     )
