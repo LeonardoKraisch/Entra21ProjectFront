@@ -8,7 +8,7 @@ export default props => {
 
     const { signIn } = useUser()
 
-  const refPassword = useRef();
+  const refPassword = useRef()
 
     return (
         <View style={styles.containter}>

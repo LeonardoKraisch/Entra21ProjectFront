@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { Card, Button, TextInput, Text } from "react-native-paper";
 import useMoney from "../data/hooks/useMoney";
 
 export default props => {
-    const { addWallets, showToast } = useMoney()
+    const { joinWallet, showToast } = useMoney()
     const [walletCode, setWalletCode] = useState("")
     const [walletPassword, setWalletPassword] = useState("")
+    const refPassword = useRef()
 
     const join = async () => {
         await showToast(await joinWallet({
-            walletCode,
+            walletCode: parseInt(walletCode),
             walletPassword
         }), "Join Wallet")
         props.pressProps()
@@ -21,10 +22,24 @@ export default props => {
             <Card style={styles.card}>
                 <Card.Title titleStyle={{ color: '#FFF', fontSize: 20, fontWeight: "800" }} title="Join Wallet" />
                 <Card.Content style={styles.inputs}>
-                    <TextInput style={styles.input} autoFocus={true} value={walletCode} onChange={setWalletCode} label={"What is the code of the wallet?"} />
-                    <TextInput style={styles.input} value={walletPassword} onChange={setWalletPassword} label={"And the password?"} />
+                    <TextInput style={styles.input}
+                        autoFocus={true}
+                        value={walletCode}
+                        onChangeText={setWalletCode}
+                        label={"What is the code of the wallet?"}
+                        returnKeyType="next"
+                        onSubmitEditing={() => refPassword.current.focus()}
+                    />
+                    <TextInput style={styles.input}
+                        value={walletPassword}
+                        onChangeText={setWalletPassword}
+                        label={"And the password?"}
+                        returnKeyType="send"
+                        ref={refPassword}
+                        onSubmitEditing={join}
+                    />
                 </Card.Content>
-                <Button style={styles.buttonCreate} onPress={() => join()}>
+                <Button style={styles.buttonCreate} onPress={join}>
                     <Text style={styles.createText}>
                         Join
                     </Text>
