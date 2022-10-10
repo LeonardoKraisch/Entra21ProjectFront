@@ -7,10 +7,26 @@ import useMoney from "../../data/hooks/useMoney";
 export default props => {
     const { balance, totalExp, totalInc } = useMoney()
 
-    const pieData = [
+    const pieData = balance > 0 ? [
+            {
+                name: 'Total Left',
+                values: balance,
+                color: '#ffffff',
+                legendFontColor: '#FFF',
+                legendFontSize: 15,
+            },
+            {
+                name: 'Expenses',
+                values: totalExp,
+                color: '#c63222',
+                legendFontColor: '#FFF',
+                legendFontSize: 15,
+    
+            }
+    ] : [
         {
             name: 'Total Left',
-            values: balance,
+            values: totalInc,
             color: '#ffffff',
             legendFontColor: '#FFF',
             legendFontSize: 15,
@@ -23,23 +39,30 @@ export default props => {
             legendFontSize: 15,
 
         }
-    ]
+]
 
-    const chartConfig = {
-        color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-    };
 
     const MyPieChart = () => {
         return (
             <PieChart
                 data={pieData}
-                width={350}
+                width={320}
                 height={120}
-                center={[-10, 0]}
-                chartConfig={chartConfig}
-                style={styles.chart}
+                // center={[-10, 0]}
+
+                chartConfig={{
+                    backgroundColor: '#213154',
+                    backgroundGradientFrom: '#432411',
+                    backgroundGradientTo: '#efefef',
+                    decimalPlaces: 2,
+                    color: (opacity = 1) => `rgba(230, 103, 0, ${opacity})`,
+                    style: {
+                        borderRadius: 16,
+                    },
+                }}
+                paddingLeft="15"
+                absolute
                 accessor="values"
-                backgroundColor={"transparent"}
                 avoidFalseZero={true}
 
             />
@@ -89,10 +112,8 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     chartContainer: {
-        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        flex: 1
     },
     chart: {
         paddingVertical: 10,
