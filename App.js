@@ -8,8 +8,6 @@ import { AnimationProvider } from './src/data/contexts/AnimationContext';
 import { MoneyProvider } from './src/data/contexts/MoneyContext';
 
 import Navigator from './src/Navigator';
-
-import { useEffect } from 'react';
 import * as Linking from 'expo-linking';
 
 axios.defaults.baseURL = API_URL
