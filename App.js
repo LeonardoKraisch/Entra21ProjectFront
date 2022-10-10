@@ -11,14 +11,6 @@ import Navigator from './src/Navigator';
 
 import { useEffect } from 'react';
 
-
-
-// axios.defaults.baseURL = "https://e21project-be.herokuapp.com"
-// axios.defaults.baseURL = "http://10.10.204.187:8080"
-axios.defaults.baseURL = API_URL
-console.log(API_URL)
-console.log("config")
-
 import * as Linking from 'expo-linking';
 
 
@@ -34,16 +26,13 @@ export default function App() {
 				},
 			}
 		}
-
 	}
-
-
 
 	const linking = {
 		prefixes: [prefix],
 		config: config
-
 	}
+
 	return (
 		<UserProvider>
 			<AnimationProvider>
@@ -53,6 +42,6 @@ export default function App() {
 				</MoneyProvider>
 			</AnimationProvider>
 		</UserProvider>
-	);
+	)
 }
 
