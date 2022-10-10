@@ -455,8 +455,8 @@ export const MoneyProvider = ({ children }) => {
 
         },
 
-        addWallets: async () => {
-            const newWallets = await axios.post("/wallet/new", { wallet })
+        addWallets: async (wallet) => {
+            const newWallets = await axios.post("/wallet/new", { wallet, userCode })
             return newWallets.data.result
         },
 
@@ -488,7 +488,7 @@ export const MoneyProvider = ({ children }) => {
         joinWallet: async (wallet) => {
             wallet[userCode] = userCode
             const newCoWallet = await axios.post("/wallet/join", { wallet })
-            return newCoWallet.data.results
+            return newCoWallet.data.result
         },
         showToast: async (results, action) =>{
             results.successful ?

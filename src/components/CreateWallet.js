@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { Card, Button, TextInput, Text } from "react-native-paper";
 import useMoney from "../data/hooks/useMoney";
@@ -10,6 +10,8 @@ export default props => {
     const [walletName, setWalletName] = useState("")
     const [walletDesc, setWalletDesc] = useState("")
     const [walletPassword, setWalletPassword] = useState("")
+    const refPassword = useRef()
+    const refDescription = useRef()
 
     const createWallet = async () => {
         await showToast(await addWallets({
@@ -25,9 +27,29 @@ export default props => {
             <Card style={styles.card}>
                 <Card.Title titleStyle={{ color: '#FFF', fontSize: 20, fontWeight: "800" }} title="New Wallet" />
                 <Card.Content style={styles.inputs}>
-                    <TextInput style={styles.input} autoFocus={true} value={walletName} onChange={setWalletName} label={"What is the name of your wallet?"} />
-                    <TextInput style={styles.input} value={walletDesc} onChange={setWalletDesc} label={"And the password?"} />
-                    <TextInput style={styles.input} value={walletPassword} onChange={setWalletPassword} label={"Wanna add a description?"} />
+                    <TextInput style={styles.input}
+                        autoFocus={true}
+                        value={walletName}
+                        onChangeText={setWalletName}
+                        label={"What is the name of your wallet?"}
+                        returnKeyType="next"
+                        onSubmitEditing={() => refPassword.current.focus()}
+                    />
+                    <TextInput style={styles.input}
+                        value={walletDesc}
+                        onChangeText={setWalletDesc}
+                        label={"And the password?"}
+                        ref={refPassword}
+                        returnKeyType="next"
+                        onSubmitEditing={()=> refDescription.current.focus()}
+                    />
+                    <TextInput style={styles.input}
+                        value={walletPassword}
+                        onChangeText={setWalletPassword}
+                        label={"Wanna add a description?"}
+                        ref={refDescription}
+                        returnKeyType="send"
+                    />
                 </Card.Content>
                 <Button style={styles.buttonCreate} onPress={() => createWallet()}>
                     <Text style={styles.createText}>

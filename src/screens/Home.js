@@ -102,9 +102,10 @@ export default props => {
                             <Card.Content style={styles.content}>
                                 {
                                     solo ?
-                                        <CreateWallet />
+                                        <CreateWallet pressProps={() => setShowModal(false)} />
                                         :
-                                        <JoinWallet />
+                                        <JoinWallet pressProps={() => setShowModal(false)}/>
+
                                 }
                             </Card.Content>
                         </Card>
