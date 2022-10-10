@@ -1,8 +1,10 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { MaterialIcons } from "@expo/vector-icons";
+
 
 import Splash from "./Splash"
 import Home from "./screens/Home";
@@ -25,6 +27,15 @@ const Stack = createNativeStackNavigator()
 export default props => {
 
     const { name, logout } = useUser()
+
+    const LogoutButton = () => {
+        return (
+            <TouchableOpacity style={styles.logoutButton}>
+                <MaterialIcons size={25} name="logout" color="red" />
+                <Text style={styles.logoutButtonText}>Logout</Text>
+            </TouchableOpacity>
+        )
+    }
 
     const Auth = () => {
         return (
@@ -76,7 +87,6 @@ export default props => {
                     return (
                         <DrawerContentScrollView {...props}>
                             <View style={styles.userInfo}>
-
                                 <View style={styles.texts}>
                                     <Text style={{ color: '#FFF', fontSize: 18 }}>{"Welcome,"}</Text>
                                     <Text style={{ color: '#FFF', fontSize: 27 }}>{name}</Text>
@@ -84,7 +94,9 @@ export default props => {
                             </View>
                             <DrawerItemList {...props} />
                             <DrawerItem
-                                label="Logout"
+                                icon={() => <LogoutButton />}
+                                label=''
+
                                 onPress={() => {
                                     logout()
                                     props.navigation.closeDrawer()
@@ -92,13 +104,14 @@ export default props => {
                             />
                         </DrawerContentScrollView>
                     )
-                }
-                }
+                }}
                 screenOptions={menuConfig}>
                 <Drawer.Screen
                     name="Home" {...props}
                     component={HomeStack} />
-                <Drawer.Screen name="My Debts" component={Debts} />
+                <Drawer.Screen
+                    name="My Debts"
+                    component={Debts} />
             </Drawer.Navigator>
         </NavigationContainer>
     )
@@ -121,4 +134,17 @@ const styles = StyleSheet.create({
         margin: 2,
         padding: 0
     },
+    logoutButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        flex: 1,
+        backgroundColor: '#234'
+    },
+    logoutButtonText: {
+        color: '#FFF',
+        fontWeight: 'bold',
+        marginLeft: 5,
+        fontSize: 20
+    },
+
 })

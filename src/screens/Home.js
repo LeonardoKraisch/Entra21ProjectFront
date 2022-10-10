@@ -60,19 +60,10 @@ export default props => {
                     width='97%'
                     data={wallets}
                     renderItem={(wallet) =>
-                        <View><MiniWallet
+                        <MiniWallet
                             wallet={wallet}
                             navigation={props.navigation}
                         />
-
-                            <TouchableOpacity onPress={() => props.navigation.navigate("ShareWallet", { wallet })}
-                                style={styles.shareButton}
-                            >
-                                <FontAwesome5 name="plus" size={25} color="#FFF" />
-                                <Text style={styles.newButtonText}>Share Wallet</Text>
-                            </TouchableOpacity>
-
-                        </View>
                     }
                 />
                 <View style={styles.buttonContainer}>
@@ -114,7 +105,6 @@ export default props => {
                                         <CreateWallet />
                                         :
                                         <JoinWallet />
-
                                 }
                             </Card.Content>
                         </Card>
