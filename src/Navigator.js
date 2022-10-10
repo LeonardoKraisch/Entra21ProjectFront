@@ -30,7 +30,10 @@ export default props => {
 
     const LogoutButton = () => {
         return (
-            <TouchableOpacity style={styles.logoutButton}>
+            <TouchableOpacity onPress={() => {
+                logout()
+                props.navigation.closeDrawer()
+            }} style={styles.logoutButton}>
                 <MaterialIcons size={25} name="logout" color="red" />
                 <Text style={styles.logoutButtonText}>Logout</Text>
             </TouchableOpacity>
@@ -96,11 +99,6 @@ export default props => {
                             <DrawerItem
                                 icon={() => <LogoutButton />}
                                 label=''
-
-                                onPress={() => {
-                                    logout()
-                                    props.navigation.closeDrawer()
-                                }}
                             />
                         </DrawerContentScrollView>
                     )
