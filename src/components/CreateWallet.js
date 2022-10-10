@@ -17,6 +17,7 @@ export default props => {
             walletName,
             walletPassword
         }), "Create Wallet")
+        props.pressProps()
     }
 
     return (

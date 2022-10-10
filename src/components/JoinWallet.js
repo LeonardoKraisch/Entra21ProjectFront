@@ -10,10 +10,10 @@ export default props => {
 
     const joinWallet = async () => {
         await showToast(await addWallets({
-            walletDesc,
-            walletName,
+            walletCode,
             walletPassword
         }), "Create Wallet")
+        props.pressProps()
     }
 
     return (
