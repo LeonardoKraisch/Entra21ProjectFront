@@ -10,9 +10,9 @@ import { MoneyProvider } from './src/data/contexts/MoneyContext';
 import Navigator from './src/Navigator';
 
 import { useEffect } from 'react';
-
 import * as Linking from 'expo-linking';
 
+axios.defaults.baseURL = API_URL
 
 export default function App() {
 
@@ -26,13 +26,16 @@ export default function App() {
 				},
 			}
 		}
+
 	}
+
+
 
 	const linking = {
 		prefixes: [prefix],
 		config: config
-	}
 
+	}
 	return (
 		<UserProvider>
 			<AnimationProvider>
@@ -42,6 +45,6 @@ export default function App() {
 				</MoneyProvider>
 			</AnimationProvider>
 		</UserProvider>
-	)
+	);
 }
 
