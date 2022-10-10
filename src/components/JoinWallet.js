@@ -8,11 +8,11 @@ export default props => {
     const [walletCode, setWalletCode] = useState("")
     const [walletPassword, setWalletPassword] = useState("")
 
-    const joinWallet = async () => {
-        await showToast(await addWallets({
+    const join = async () => {
+        await showToast(await joinWallet({
             walletCode,
             walletPassword
-        }), "Create Wallet")
+        }), "Join Wallet")
         props.pressProps()
     }
 
@@ -24,7 +24,7 @@ export default props => {
                     <TextInput style={styles.input} autoFocus={true} value={walletCode} onChange={setWalletCode} label={"What is the code of the wallet?"} />
                     <TextInput style={styles.input} value={walletPassword} onChange={setWalletPassword} label={"And the password?"} />
                 </Card.Content>
-                <Button style={styles.buttonCreate} onPress={() => joinWallet()}>
+                <Button style={styles.buttonCreate} onPress={() => join()}>
                     <Text style={styles.createText}>
                         Join
                     </Text>
