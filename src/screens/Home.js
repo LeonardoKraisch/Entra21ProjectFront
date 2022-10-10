@@ -21,6 +21,7 @@ export default props => {
     const [showHelp, setShowHelp] = useState(false)
 
     const [solo, setSolo] = useState(true)
+    const [myState, refresh] = useState(true)
 
     useEffect(() => {
         async function loadWallets() {
@@ -31,7 +32,7 @@ export default props => {
         BackHandler.addEventListener("hardwareBackPress", backAction);
         return () =>
             BackHandler.removeEventListener("hardwareBackPress", backAction);
-    }, [])
+    }, [myState])
 
     const backAction = () => {
         Alert.alert("Do you want to leave the app?", "", [
@@ -102,9 +103,9 @@ export default props => {
                             <Card.Content style={styles.content}>
                                 {
                                     solo ?
-                                        <CreateWallet pressProps={() => setShowModal(false)} />
+                                        <CreateWallet refresh={() => refresh(!myState)} pressProps={() => setShowModal(false)} />
                                         :
-                                        <JoinWallet pressProps={() => setShowModal(false)}/>
+                                        <JoinWallet refresh={() => refresh(!myState)} pressProps={() => setShowModal(false)}/>
 
                                 }
                             </Card.Content>

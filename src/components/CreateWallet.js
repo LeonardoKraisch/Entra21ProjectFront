@@ -17,9 +17,10 @@ export default props => {
         await showToast(await addWallets({
             walletDesc,
             walletName,
-            walletPassword
+            walletPasswd:walletPassword
         }), "Create Wallet")
         props.pressProps()
+        props.refresh()
     }
 
     return (

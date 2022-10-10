@@ -8,13 +8,13 @@ export default props => {
     const [walletCode, setWalletCode] = useState("")
     const [walletPassword, setWalletPassword] = useState("")
     const refPassword = useRef()
-
     const join = async () => {
         await showToast(await joinWallet({
             walletCode: parseInt(walletCode),
-            walletPassword
+            walletPasswd: walletPassword
         }), "Join Wallet")
         props.pressProps()
+        props.refresh()
     }
 
     return (
@@ -36,10 +36,10 @@ export default props => {
                         label={"And the password?"}
                         returnKeyType="send"
                         ref={refPassword}
-                        onSubmitEditing={join}
+                        onSubmitEditing={() => join()}
                     />
                 </Card.Content>
-                <Button style={styles.buttonCreate} onPress={join}>
+                <Button style={styles.buttonCreate} onPress={() => join()}>
                     <Text style={styles.createText}>
                         Join
                     </Text>
