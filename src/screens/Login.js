@@ -41,7 +41,7 @@ export default props => {
                 <View style={styles.buttonRow}>
                     <TouchableOpacity
                         style={styles.forgottenPass}
-                        onPress={() => recover({ email })}>
+                        onPress={() =>props.navigation.navigate("Recover",{ email })}>
                         <Text style={styles.textRec}>Forgot Password</Text>
                     </TouchableOpacity>
                     <TouchableOpacity

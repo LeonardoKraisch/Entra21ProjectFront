@@ -132,6 +132,19 @@ export const UserProvider = ({ children }) => {
             setPhone('')
             setUserCode('')
             await AsyncStorage.removeItem('token')
+        },
+        sendRecoverEmail : async (userEmail) => {
+            try{
+            const recoverConn = await axios.post("/user/recoverPasswd", {
+                user:{
+                    userEmail: userEmail
+                }
+            })
+            recoverConn.data.results
+            return recoverConn.data.results
+        }catch(e){
+            console.log(e.message)
+        }
         }
     }
 
