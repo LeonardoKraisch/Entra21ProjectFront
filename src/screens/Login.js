@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
 import useUser from "../data/hooks/useUser";
 
@@ -7,6 +7,8 @@ export default props => {
     const [password, setPassword] = useState('')
 
     const { signIn } = useUser()
+
+  const refPassword = useRef();
 
     return (
         <View style={styles.containter}>
@@ -18,16 +20,22 @@ export default props => {
                 <TextInput
                     style={styles.input}
                     placeholder="Email"
+                    autoFocus={true}
+                    returnKeyType="next"
                     onChangeText={setEmail}
                     value={email}
                     keyboardType="email-address"
+                    onSubmitEditing={() => refPassword.current.focus()}
                 />
                 <TextInput
                     style={styles.input}
                     placeholder="Password"
+                    returnKeyType="send"
                     onChangeText={setPassword}
                     value={password}
                     secureTextEntry={true}
+                    ref={refPassword}
+                    onSubmitEditing={() => signIn(email, password)}
                 />
 
 
