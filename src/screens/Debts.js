@@ -323,6 +323,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#23a2e2',
         justifyContent: 'center',
         alignItems: 'center',
+        borderRadius: 5,
         shadowColor: "#000",
         shadowOffset: {
             width: 7,
@@ -333,6 +334,7 @@ const styles = StyleSheet.create({
         elevation: 3
     },
     buttonBackText: {
-        color: '#FFF'
+        color: '#FFF',
+
     }
 });
