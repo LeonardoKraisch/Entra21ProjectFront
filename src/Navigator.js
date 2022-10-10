@@ -13,6 +13,7 @@ import Register from "./screens/Register"
 import Debts from "./screens/Debts";
 import ShareWallet from "./screens/ShareWallet";
 import WalletInvites from "./screens/WalletInvites";
+import Recover from "./screens/Recover";
 
 import useUser from "./data/hooks/useUser";
 
@@ -45,6 +46,8 @@ export default props => {
                 <Stack.Screen name="MyDebts" component={Debts} />
                 <Stack.Screen name="ShareWallet" component={ShareWallet} />
                 <Stack.Screen name="WalletInvites" component={WalletInvites} />
+                <Stack.Screen name="Register" component={Register} />
+                <Stack.Screen name="Recover" component={Recover} />
             </Stack.Navigator>
         )
     }
