@@ -13,7 +13,7 @@ export default props => {
                 <Entypo name="circle-with-plus" size={30} style={!pressedPlus ? styles.iconUp : styles.iconPressed} />
                 <Text style={[!pressedPlus ? styles.iconUp : styles.iconPressed,{ fontSize: 25 }]}>$</Text>
             </TouchableOpacity>
-            <View style={{ backgroundColor: '#333', width: 4 }}></View>
+            <View style={{ backgroundColor: '#353935', width: 5 }}></View>
             <TouchableOpacity onPress={() => pressMinus()}
                 style={!pressedMinus ? styles.buttonMinus : styles.pressedMinus}>
                 <Entypo name="circle-with-minus" size={30} style={!pressedMinus ? styles.iconDown : styles.iconPressed} />
@@ -25,22 +25,6 @@ export default props => {
 
 
 const styles = StyleSheet.create({
-    container: {
-        maxHeight: '100%',
-        backgroundColor: '#353935',
-        justifyContent: "space-between",
-        position: 'absolute',
-        bottom: 0,
-        right: 0,
-        paddingTop: 5,
-        paddingLeft: 5,
-        borderTopStartRadius: 36,
-        borderTopWidth: 3,
-        borderLeftWidth: 3,
-        paddingBottom: 1,
-        borderColor: '#32779E',
-
-    },
     containerButton: {
         flexDirection: 'row',
         width: 180,
@@ -52,7 +36,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#71E9a1',
         justifyContent: 'center',
         alignItems: 'center',
-        borderTopStartRadius: 28,
+        borderTopStartRadius: 12,
         flex: 1,
         borderWidth: 3,
         borderColor: '#32c622',
@@ -62,7 +46,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#32c62280',
         justifyContent: 'center',
         alignItems: 'center',
-        borderTopStartRadius: 28,
+        borderTopStartRadius: 12,
         flex: 1,
         borderWidth: 3,
         borderColor: '#32c62265',

@@ -26,7 +26,7 @@ export default props => {
             Animated.timing(
                 rollSideAnim,
                 {
-                    toValue: 190,
+                    toValue: 187,
                     duration: 150,
                     useNativeDriver: false
                 }
@@ -65,7 +65,7 @@ export default props => {
 
 
     return (
-        <Animated.View style={{ ...props.style, width: rollSideAnim || 190, height: rollUpAnim || 46 }}>
+        <Animated.View style={{ ...props.style, width: rollSideAnim || 187, height: rollUpAnim || 46 }}>
             {props.children}
         </Animated.View>
     )

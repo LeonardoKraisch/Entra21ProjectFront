@@ -36,11 +36,8 @@ const styles = StyleSheet.create({
         right: 0,
         paddingTop: 5,
         paddingLeft: 5,
-        borderTopStartRadius: 36,
-        borderTopWidth: 3,
-        borderLeftWidth: 3,
+        borderTopStartRadius: 15,
         paddingBottom: 1,
-        borderColor: '#CCC',
         shadowColor: "#000",
         shadowOffset: {
             width: 0,

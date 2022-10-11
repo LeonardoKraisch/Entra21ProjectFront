@@ -20,14 +20,14 @@ export default props => {
             name: 'Total Left',
             values: data,
             color: '#243e9c',
-            legendFontColor: '#FFF',
+            legendFontColor: '#FFF9',
             legendFontSize: 15,
         },
         {
             name: 'Expenses',
             values: totalExp,
             color: '#c63222',
-            legendFontColor: '#FFF',
+            legendFontColor: '#FFF9',
             legendFontSize: 15,
 
         }
@@ -36,14 +36,14 @@ export default props => {
             name: 'Monthly incomes',
             values: totalInc,
             color: '#243e9c',
-            legendFontColor: '#FFF',
+            legendFontColor: '#FFF9',
             legendFontSize: 15,
         },
         {
             name: 'Over the budget',
             values: totalExp - totalInc,
             color: '#c63222',
-            legendFontColor: '#FFF',
+            legendFontColor: '#FFF9',
             legendFontSize: 15,
 
         }
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
         height: '95%',
         width: '92%',
         backgroundColor: '#353935',
-        borderRadius: 3,
+        borderRadius: 5,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,

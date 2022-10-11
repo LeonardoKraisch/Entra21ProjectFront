@@ -157,23 +157,20 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     buttonContainer: {
-        justifyContent: 'flex-start',
-        maxHeight: '16%',
-        width: '93%',
-        borderTopColor: '#FFF',
-        borderTopWidth: 1,
-        paddingTop: 10
+        justifyContent: 'flex-end',
+        height: 55,
+        width: '100%',
 
     },
     newButton: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         flexWrap: 'wrap',
-        width: '40%',
-        height: '73%',
+        width: 187,
+        height: 46,
         padding: 10,
-        borderRadius: 5,
+        borderTopEndRadius: 15,
         flexWrap: 'wrap',
         backgroundColor: '#353935',
         shadowColor: "#000",
@@ -187,9 +184,10 @@ const styles = StyleSheet.create({
     },
     newButtonText: {
         color: '#FFF',
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: 'bold',
-        paddingLeft: 4,
+        marginLeft: 15,
+        letterSpacing: 1.5
     },
     modalView: {
         padding: 10,
