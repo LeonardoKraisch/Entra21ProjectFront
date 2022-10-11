@@ -464,20 +464,19 @@ export const MoneyProvider = ({ children }) => {
         },
 
         getWallets: async () => {
-            try {
-                const connWallets = await axios.post("/wallet/get", { userCode })
-                let wallets = connWallets.data.registers
-                wallets.forEach((wallet, code) => {
-                    if (wallet.favorite) {
-                        wallets.splice(code, 1)
-                        wallets.unshift(wallet)
-                    }
-                })
-                return connWallets.data.registers
-            } catch (e) {
-                console.log(e.message)
-            }
-        },
+            try{
+            const connWallets = await axios.post("/wallet/get", { userCode })
+            let wallets = connWallets.data.registers
+            wallets.forEach((wallet, code)=> {
+                if (wallet.favorite){
+                    wallets.splice(code,1)
+                    wallets.unshift(wallet)
+                }
+            })
+            return connWallets.data.registers
+        }catch(e){
+            console.log(e.message, "error in wallet")
+        }},
 
         getAllRegistersToWallet: async (walletCode) => {
             try {
