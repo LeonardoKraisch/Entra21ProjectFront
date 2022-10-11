@@ -35,7 +35,6 @@ export default props => {
         async function fetch() {
             await props.wallets.forEach((w) => {
                 wallets.push(w.walletName)
-                console.log(w);
             })
         }
         fetch()
@@ -49,6 +48,19 @@ export default props => {
                         Add Profit to
                     </Text>
                     <SelectDropdown
+                        buttonTextStyle={{
+                            color: '#FFF',
+                            fontSize: 20,
+                            fontWeight: 'bold'
+                        }}
+                        rowTextStyle={{
+                            color: '#FFF',
+                            fontSize: 20,
+                            fontWeight: 'bold'
+                        }}
+                        defaultValue={wallets[0]}
+                        buttonStyle={{ backgroundColor: '#353935', borderBottomColor: '#FFF', borderBottomWidth: 1, height: 28, paddingHorizontal: 5 }}
+                        dropdownStyle={{ backgroundColor: '#353935' }}
                         data={wallets}
                         onSelect={(selected, i) => {
                             setWallet(i)
@@ -61,7 +73,24 @@ export default props => {
                     <Text style={styles.textTitle}>
                         Add Expenses to
                     </Text>
-                    <SelectDropdown />
+                    <SelectDropdown
+                        buttonTextStyle={{
+                            color: '#FFF',
+                            fontSize: 20,
+                            fontWeight: 'bold'
+                        }}
+                        rowTextStyle={{
+                            color: '#FFF',
+                            fontSize: 20,
+                            fontWeight: 'bold'
+                        }}
+                        defaultValue={wallets[0]}
+                        buttonStyle={{ backgroundColor: '#353935', borderBottomColor: '#FFF', borderBottomWidth: 1, height: 28, paddingHorizontal: 5 }}
+                        dropdownStyle={{ backgroundColor: '#353935' }}
+                        data={wallets}
+                        onSelect={(selected, i) => {
+                            setWallet(i)
+                        }} />
                 </View>
             )
         }
@@ -173,7 +202,7 @@ export default props => {
                     <Text style={styles.textTitle2}>Category:</Text>
                     <BalancePicker />
                 </View>
-                <TextInput style={styles.input} placeholder="Do you want to add a description?" value={description} onChangeText={setDescription} />
+                <TextInput style={styles.input} placeholder="Add description" value={description} onChangeText={setDescription} />
                 <View style={styles.buttons}>
                     <TouchableOpacity style={styles.buttonInput} onPress={() => setPending(false)}>
                         <Text style={[!pending ? styles.selected : styles.unselect]}>Paid</Text>
@@ -197,7 +226,7 @@ export default props => {
                             description
                         })}
                     style={styles.send}>
-                    <Text style={styles.sendText}>OK</Text>
+                    <Text style={styles.sendText}>Send</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -209,7 +238,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         justifyContent: "space-between",
         alignItems: 'center',
-        height: '80%',
+        height: '90%',
         width: '100%',
         margin: 10
     },
@@ -227,14 +256,18 @@ const styles = StyleSheet.create({
     inputContainer: {
         width: '50%',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
     input2: {
-        width: '50%',
-        backgroundColor: '#444',
+        width: '48%',
+        marginRight: 10,
+        height: 20,
+        backgroundColor: '#FFF',
         textAlign: "right",
-        color: '#FFF',
-        fontSize: 20
+        color: '#000',
+        borderRadius: 5,
+        fontSize: 18
     },
     buttons: {
         flexDirection: 'row',
@@ -242,7 +275,7 @@ const styles = StyleSheet.create({
         width: '92%',
         backgroundColor: '#3155d6',
         borderRadius: 3,
-        marginTop: 5
+        marginTop: 10
     },
     buttonInput: {
         width: '50%',
@@ -260,13 +293,16 @@ const styles = StyleSheet.create({
         width: '50%',
         color: '#FFF',
         fontSize: 20,
-        height: 25
+        height: 25,
+        borderBottomColor: '#FFF',
+        borderBottomWidth: 1,
+        marginBottom: 5
     },
     title: {
-        flexDirection: 'row',
         width: '95%',
         padding: 10,
-        justifyContent: 'space-between'
+        alignItems: 'center',
+        marginBottom: 20
     },
     textTitle: {
         color: '#FFF',
@@ -280,20 +316,25 @@ const styles = StyleSheet.create({
     input: {
         backgroundColor: '#FFF',
         width: '90%',
+        height: '10%',
         borderRadius: 5,
         margin: 10,
-        height: 35,
+        marginTop: 15
     },
     pickerContainer: {
         alignSelf: 'flex-end',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        width: '95%'
+        width: '95%',
+        borderBottomColor: '#FFF',
+        borderBottomWidth: 1,
+        marginBottom: 5,
     },
     picker: {
         color: '#FFF',
-        width: '60%'
+        width: '60%',
+
     },
     pickerItem: {
         backgroundColor: '#353935',
@@ -319,7 +360,7 @@ const styles = StyleSheet.create({
         width: '100%',
         alignSelf: 'center',
         marginTop: 38,
-        height: 40,
+        height: 50,
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center'
