@@ -97,6 +97,7 @@ export const UserProvider = ({ children }) => {
 
                 try {
                     const decoded = JWT.decode(await userConnect.data.token, "segredo", { timeSkew: 300 })
+                    if (decoded.logged){
                     setName(decoded.user.userName)
                     setPhone(decoded.user.userPhone)
                     setUserCode(decoded.user.userCode)
@@ -107,14 +108,19 @@ export const UserProvider = ({ children }) => {
                         type: 'success',
                         text1: 'Login success',
                         text2: 'Welcome!'
-                    })
-                } catch (e) {
-                    if (userConnect.data.token.logged == false) {
+                    })}else{
                         Toast.show({
                             type: 'error',
-                            text1: userConnect.data.token.error
+                            text1: decoded.error
                         })
+
                     }
+                } catch (e) {
+                        Toast.show({
+                            type: 'error',
+                            text1: "Conta não cadastrada"
+                        })
+                    
 
                 }
 
