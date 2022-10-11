@@ -117,7 +117,7 @@ export default props => {
                 secureTextEntry={true}
                 returnKeyType="send"
                 ref={refConfPassword}
-                onSubmitEditing={validation}
+                onSubmitEditing={() => validation()}
             />
             <TouchableOpacity
                 style={styles.button}
