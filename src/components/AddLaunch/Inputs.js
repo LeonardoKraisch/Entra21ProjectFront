@@ -28,14 +28,17 @@ export default props => {
 
     const dateString = moment(date).format('YYYY[-]MM[-]D')
 
-    var wallets = ["My Wallet"]
+    const [wallets, setWallets] = useState(["My Wallet",])
+    var customWallets = []
 
     useEffect(() => {
         console.log(props.wallets);
         async function fetch() {
             await props.wallets.forEach((w) => {
-                wallets.push(w.walletName)
+                console.log(w.wallet.walletName);
+                customWallets.push(w.wallet.walletName)
             })
+            setWallets([...wallets, ...customWallets])
         }
         fetch()
     }, [])
@@ -64,6 +67,8 @@ export default props => {
                         data={wallets}
                         onSelect={(selected, i) => {
                             setWallet(i)
+                            console.log(i),
+                                console.log(selected);
                         }} />
                 </View>
             )
