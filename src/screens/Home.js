@@ -129,7 +129,7 @@ export default props => {
                         </View>
                     </Modal>
                 </Modal>
-                <AddView />
+                <AddView wallets={wallets} />
             </View>
             <StatusBar backgroundColor={'#192b6a'} />
         </LinearGradient>
