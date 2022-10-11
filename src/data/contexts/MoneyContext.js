@@ -108,6 +108,7 @@ export const MoneyProvider = ({ children }) => {
                 launch[`${table}Date`] = data.dateString,
                 launch[`${table}Description`] = data.description,
                 launch['user'] = await userCode
+                launch['wallet'] = await data.walletCode
             try {
                 const newLaunch = await axios.post(`/${pressedPlus ? "income" : "expense"}/new`, { launch })
                 console.log(newLaunch.data);
