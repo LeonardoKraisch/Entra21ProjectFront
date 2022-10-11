@@ -136,7 +136,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         flex: 1,
-        backgroundColor: '#234'
     },
     logoutButtonText: {
         color: '#FFF',

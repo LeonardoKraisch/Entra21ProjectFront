@@ -105,7 +105,7 @@ export default props => {
                                     solo ?
                                         <CreateWallet refresh={() => refresh(!myState)} pressProps={() => setShowModal(false)} />
                                         :
-                                        <JoinWallet refresh={() => refresh(!myState)} pressProps={() => setShowModal(false)}/>
+                                        <JoinWallet refresh={() => refresh(!myState)} pressProps={() => setShowModal(false)} />
 
                                 }
                             </Card.Content>
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 10
+        elevation: 5
     },
     newButtonText: {
         color: '#FFF',
@@ -191,33 +191,13 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         paddingLeft: 4,
     },
-    shareButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '92%',
-        height: '50%',
-        padding: 10,
-        left: 10,
-        borderRadius: 5,
-        flexWrap: 'wrap',
-        backgroundColor: '#32779E',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 4
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 10
-    },
     modalView: {
-        flex: 1,
         padding: 10,
+        minHeight: '100%'
     },
     modalCard: {
         flex: 1,
-
+        width: '100%',
     },
     buttonHelpContainer: {
         flexDirection: 'row',
@@ -278,7 +258,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end'
     },
     content: {
-        flex: 1,
+        height: '100%',
         paddingTop: 20,
     }
 })

@@ -15,11 +15,11 @@ export default props => {
         fetch()
     }, [totalInc, totalExp])
 
-    const pieData = balance >= 0 ? [
+    const pieData = data >= 0 ? [
         {
             name: 'Total Left',
             values: data,
-            color: '#ffffff',
+            color: '#243e9c',
             legendFontColor: '#FFF',
             legendFontSize: 15,
         },
@@ -35,7 +35,7 @@ export default props => {
         {
             name: 'Monthly incomes',
             values: totalInc,
-            color: '#ffffff',
+            color: '#243e9c',
             legendFontColor: '#FFF',
             legendFontSize: 15,
         },
@@ -89,7 +89,7 @@ export default props => {
 const styles = StyleSheet.create({
     container: {
         height: '95%',
-        width: '95%',
+        width: '92%',
         backgroundColor: '#353935',
         borderRadius: 3,
         shadowColor: "#000",

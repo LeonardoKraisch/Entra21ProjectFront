@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { View, StyleSheet, TextInput, Text, TouchableOpacity, Platform } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, Platform } from "react-native";
+import { TextInput } from "react-native-paper";
 import { TextInputMask } from "react-native-masked-text";
 import { AntDesign } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
