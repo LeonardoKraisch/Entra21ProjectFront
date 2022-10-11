@@ -8,6 +8,7 @@ export default props => {
     const [walletName, setWalletName] = useState("")
     const [walletDesc, setWalletDesc] = useState("")
     const [walletPassword, setWalletPassword] = useState("")
+    const [favorite, setFavorite] = useState(false)
     const refPassword = useRef()
     const refDescription = useRef()
 
@@ -15,6 +16,7 @@ export default props => {
         await showToast(await addWallets({
             walletDesc,
             walletName,
+            favorite,
             walletPasswd: walletPassword
         }), "Create Wallet")
         props.pressProps()
@@ -47,6 +49,7 @@ export default props => {
                     label={"Wanna add a description?"}
                     ref={refDescription}
                     returnKeyType="send"
+                    onSubmitEditing={() => createWallet()}
                 />
             </Card.Content>
             <Button style={styles.buttonCreate} onPress={() => createWallet()}>

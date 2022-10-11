@@ -472,6 +472,7 @@ export const MoneyProvider = ({ children }) => {
             })
             return connWallets.data.registers
         }catch(e){
+            console.log(e.message)
         }},
 
         getAllRegistersToWallet: async (walletCode) => {

@@ -60,6 +60,7 @@ export default props => {
         } else {
             signUp({ name, phone, email, password })
         }
+        return <View/>
     }
 
     return (
@@ -115,7 +116,7 @@ export default props => {
                 secureTextEntry={true}
                 returnKeyType="send"
                 ref={refConfPassword}
-                onSubmitEditing={() => props.navigation.goBack()}
+                onSubmitEditing={validation}
             />
             <TouchableOpacity
                 style={styles.button}
