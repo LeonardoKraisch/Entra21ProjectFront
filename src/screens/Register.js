@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { TextInput } from "react-native-paper";
 import Toast from 'react-native-toast-message'
 import { TextInputMask } from 'react-native-masked-text'
