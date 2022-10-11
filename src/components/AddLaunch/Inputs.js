@@ -27,14 +27,14 @@ export default props => {
     const [wallet, setWallet] = useState(0)
 
     const dateString = moment(date).format('YYYY[-]MM[-]D')
-    
+
     var wallets = ["My Wallet"]
 
     useEffect(() => {
         console.log(props.wallets);
         async function fetch() {
             await props.wallets.forEach((w) => {
-                wallets.push(w.name)
+                wallets.push(w.walletName)
                 console.log(w);
             })
         }
