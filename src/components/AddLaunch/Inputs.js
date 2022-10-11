@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         justifyContent: "space-between",
         alignItems: 'center',
-        height: '90%',
+        minHeight: '85%',
         width: '100%',
         margin: 10
     },
@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#3155d6',
         width: '100%',
         alignSelf: 'center',
-        marginTop: 38,
+        marginTop: 25,
         height: 50,
         borderRadius: 5,
         justifyContent: 'center',

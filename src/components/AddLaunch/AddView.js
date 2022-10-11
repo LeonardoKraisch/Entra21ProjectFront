@@ -13,7 +13,7 @@ export default props => {
         <RollInView style={styles.container}>
             <AddButtons />
             {show ?
-                <View style={{ flexDirection: 'column-reverse', justifyContent: "space-between" }}>
+                <View style={{ flexDirection: 'column-reverse', flex: 1 }}>
                     <TouchableOpacity onPress={() => close()} style={styles.buttonClose}>
                         <Entypo name="circle-with-cross" size={30} color='#c63222' />
                     </TouchableOpacity>
@@ -99,7 +99,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 3,
         borderColor: '#c63222',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        height: 36
     }
 
 })
