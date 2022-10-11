@@ -33,7 +33,7 @@ export const MoneyProvider = ({ children }) => {
     const [expPendings, setExpPendings] = useState([])
     const [allPendings, setAllPendings] = useState({})
 
-    const [walltes, setWallets] = useState([])
+    const [wallets, setWallets] = useState([])
 
     const [coin, setCoin] = useState('R$')
 
@@ -110,8 +110,8 @@ export const MoneyProvider = ({ children }) => {
                 launch['userCode'] = await userCode
             try {
                 const newLaunch = await axios.post(`/${pressedPlus ? "income" : "expense"}/new`, { launch })
+                console.log(newLaunch.data);
                 if (await newLaunch.data.registered) {
-
                     if (pressedPlus) {
                         if (launch["incPending"]) {
                             setIncPendings([...incPendings, launch])
@@ -161,9 +161,10 @@ export const MoneyProvider = ({ children }) => {
             return total
         },
         getRegisters: async data => {
-            data["userCode"] = userCode
+            data["user"] = userCode
             const newQuery = await axios.post(`/${data.type == "+" ? "income" : "expense"}/query`,
                 data)
+            console.log(newQuery.data);
             return newQuery.data.registers
         },
 
@@ -461,19 +462,20 @@ export const MoneyProvider = ({ children }) => {
         },
 
         getWallets: async () => {
-            try{
-            const connWallets = await axios.post("/wallet/get", { userCode })
-            let wallets = connWallets.data.registers
-            wallets.forEach((wallet, code)=> {
-                if (wallet.favorite){
-                    wallets.splice(code,1)
-                    wallets.unshift(wallet)
-                }
-            })
-            return connWallets.data.registers
-        }catch(e){
-            console.log(e.message)
-        }},
+            try {
+                const connWallets = await axios.post("/wallet/get", { userCode })
+                let wallets = connWallets.data.registers
+                wallets.forEach((wallet, code) => {
+                    if (wallet.favorite) {
+                        wallets.splice(code, 1)
+                        wallets.unshift(wallet)
+                    }
+                })
+                return connWallets.data.registers
+            } catch (e) {
+                console.log(e.message)
+            }
+        },
 
         getAllRegistersToWallet: async (walletCode) => {
             try {
@@ -497,21 +499,21 @@ export const MoneyProvider = ({ children }) => {
         },
         joinWallet: async (wallet) => {
             wallet["userCode"] = userCode
-            console.log({wallet});
+            console.log({ wallet });
             const newCoWallet = await axios.post("/wallet/join", { wallet })
             return newCoWallet.data.result
         },
-        showToast: async (results, action) =>{
+        showToast: async (results, action) => {
             results.successful ?
-            Toast.show({
-                type: 'success',
-                text1: `${action} successfull!`,
-            })
-            :
-            Toast.show({
-                type: 'success',
-                text1: `error: ${results.error}`,
-            })
+                Toast.show({
+                    type: 'success',
+                    text1: `${action} successfull!`,
+                })
+                :
+                Toast.show({
+                    type: 'success',
+                    text1: `error: ${results.error}`,
+                })
             console.log(results.error);
         }
     }
