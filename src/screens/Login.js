@@ -20,7 +20,7 @@ export default props => {
                 <Text style={styles.title}>Sign In</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder="Email"
+                    label="Email"
                     returnKeyType="next"
                     onChangeText={setEmail}
                     value={email}
@@ -29,7 +29,7 @@ export default props => {
                 />
                 <TextInput
                     style={styles.input}
-                    placeholder="Password"
+                    label="Password"
                     returnKeyType="send"
                     onChangeText={setPassword}
                     value={password}
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     },
     login: {
         flex: 3,
-        backgroundColor: '#3C3C3C',
+        backgroundColor: '#353935',
         width: '100%',
         padding: 20,
     },
@@ -89,7 +89,6 @@ const styles = StyleSheet.create({
     },
     input: {
         marginTop: 30,
-        padding: 7,
         borderRadius: 5,
         width: '90%',
         height: 50,
@@ -97,7 +96,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     button: {
-        backgroundColor: '#32779E',
+        backgroundColor: '#3155d6',
         width: '90%',
         alignSelf: 'center',
         marginTop: 38,

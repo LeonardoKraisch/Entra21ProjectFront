@@ -68,7 +68,7 @@ export default props => {
             <Text style={styles.title}>Sign Up</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Name"
+                label="Name"
                 onChangeText={setName}
                 value={name}
                 returnKeyType="next"
@@ -78,6 +78,7 @@ export default props => {
                 style={styles.input}
                 type={'cel-phone'}
                 placeholder="Phone Number"
+                placeholderTextColor={'#000'}
                 onChangeText={setPhone}
                 value={phone}
                 keyboardType="phone-pad"
@@ -88,7 +89,7 @@ export default props => {
             />
             <TextInput
                 style={styles.input}
-                placeholder="Email"
+                label="Email"
                 onChangeText={setEmail}
                 value={email}
                 keyboardType="email-address"
@@ -99,7 +100,7 @@ export default props => {
             />
             <TextInput
                 style={styles.input}
-                placeholder="Password"
+                label="Password"
                 onChangeText={setPassword}
                 value={password}
                 secureTextEntry={true}
@@ -110,7 +111,7 @@ export default props => {
             />
             <TextInput
                 style={styles.input}
-                placeholder="Confirm Password"
+                label="Confirm Password"
                 onChangeText={setConfPassword}
                 value={confPassword}
                 secureTextEntry={true}
@@ -125,7 +126,6 @@ export default props => {
             </TouchableOpacity>
             <View style={styles.buttonRow}>
                 <TouchableOpacity
-                    style={styles.button2}
                     onPress={() => props.navigation.goBack()}>
                     <Text style={styles.textUp}>Already have an account</Text>
                 </TouchableOpacity>
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: '100%',
         flex: 1,
-        backgroundColor: '#3C3C3C',
+        backgroundColor: '#353935',
         padding: 20,
     },
     title: {
@@ -150,15 +150,15 @@ const styles = StyleSheet.create({
     },
     input: {
         marginTop: 30,
-        padding: 7,
-        borderRadius: 5,
+        paddingHorizontal: 10,
+        borderRadius: 4,
         width: '90%',
         height: 50,
         backgroundColor: '#FFF',
         alignSelf: 'center'
     },
     button: {
-        backgroundColor: '#32779E',
+        backgroundColor: '#3155d6',
         width: '90%',
         alignSelf: 'center',
         marginTop: 38,
