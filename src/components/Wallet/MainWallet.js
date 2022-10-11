@@ -1,32 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 
 import useMoney from "../../data/hooks/useMoney";
 
 export default props => {
-    const { balance, totalExp, totalInc } = useMoney()
+    const { balance, totalExp, totalInc, recalBalance } = useMoney()
+    const [data, setData] = useState(balance)
 
-    const pieData = balance > 0 ? [
-            {
-                name: 'Total Left',
-                values: balance,
-                color: '#ffffff',
-                legendFontColor: '#FFF',
-                legendFontSize: 15,
-            },
-            {
-                name: 'Expenses',
-                values: totalExp,
-                color: '#c63222',
-                legendFontColor: '#FFF',
-                legendFontSize: 15,
-    
-            }
-    ] : [
+    useEffect(() => {
+        async function fetch() {
+            setData(await recalBalance())
+        }
+        fetch()
+    }, [totalInc, totalExp])
+
+    const pieData = balance >= 0 ? [
         {
             name: 'Total Left',
-            values: totalInc,
+            values: data,
             color: '#ffffff',
             legendFontColor: '#FFF',
             legendFontSize: 15,
@@ -39,7 +31,23 @@ export default props => {
             legendFontSize: 15,
 
         }
-]
+    ] : [
+        {
+            name: 'Monthly incomes',
+            values: totalInc,
+            color: '#ffffff',
+            legendFontColor: '#FFF',
+            legendFontSize: 15,
+        },
+        {
+            name: 'Over the budget',
+            values: totalExp - totalInc,
+            color: '#c63222',
+            legendFontColor: '#FFF',
+            legendFontSize: 15,
+
+        }
+    ]
 
 
     const MyPieChart = () => {
@@ -48,23 +56,18 @@ export default props => {
                 data={pieData}
                 width={320}
                 height={120}
-                // center={[-10, 0]}
-
+                center={[25, 0]}
                 chartConfig={{
-                    backgroundColor: '#213154',
-                    backgroundGradientFrom: '#432411',
-                    backgroundGradientTo: '#efefef',
                     decimalPlaces: 2,
                     color: (opacity = 1) => `rgba(230, 103, 0, ${opacity})`,
                     style: {
                         borderRadius: 16,
                     },
                 }}
-                paddingLeft="15"
                 absolute
                 accessor="values"
                 avoidFalseZero={true}
-
+                paddingLeft={-50}
             />
         );
     };

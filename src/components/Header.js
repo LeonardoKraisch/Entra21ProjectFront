@@ -14,7 +14,7 @@ import useMoney from '../data/hooks/useMoney'
 export default props => {
     const { totalInc, totalExp, coin, recalBalance } = useMoney()
     const [data, setData] = useState()
-    const [showBalance, setShowBalance] = useState(false)
+    const [showBalance, setShowBalance] = useState(true)
 
     useEffect(() => {
         async function fetch() {
