@@ -462,6 +462,13 @@ export const MoneyProvider = ({ children }) => {
 
         getWallets: async () => {
             const connWallets = await axios.post("/wallet/get", { userCode })
+            let wallets = connWallets.data.registers
+            wallets.forEach((wallet, code)=> {
+                if (wallet.favorite){
+                    wallets.splice(code,1)
+                    wallets.unshift(wallet)
+                }
+            })
             return connWallets.data.registers
         },
 
@@ -486,7 +493,8 @@ export const MoneyProvider = ({ children }) => {
             }
         },
         joinWallet: async (wallet) => {
-            wallet[userCode] = userCode
+            wallet["userCode"] = userCode
+            console.log({wallet});
             const newCoWallet = await axios.post("/wallet/join", { wallet })
             return newCoWallet.data.result
         },
@@ -501,6 +509,7 @@ export const MoneyProvider = ({ children }) => {
                 type: 'success',
                 text1: `error: ${results.error}`,
             })
+            console.log(results.error);
         }
     }
 

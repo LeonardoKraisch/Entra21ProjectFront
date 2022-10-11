@@ -28,7 +28,7 @@ export default props => {
 
     const { name, logout } = useUser()
 
-    const LogoutButton = () => {
+    const LogoutButton = props => {
         return (
             <TouchableOpacity onPress={() => {
                 logout()
@@ -97,7 +97,7 @@ export default props => {
                             </View>
                             <DrawerItemList {...props} />
                             <DrawerItem
-                                icon={() => <LogoutButton />}
+                                icon={() => <LogoutButton {...props}/>}
                                 label=''
                             />
                         </DrawerContentScrollView>
