@@ -107,7 +107,7 @@ export const MoneyProvider = ({ children }) => {
                 launch[`${table}Pending`] = data.pending,
                 launch[`${table}Date`] = data.dateString,
                 launch[`${table}Description`] = data.description,
-                launch['userCode'] = await userCode
+                launch['user'] = await userCode
             try {
                 const newLaunch = await axios.post(`/${pressedPlus ? "income" : "expense"}/new`, { launch })
                 console.log(newLaunch.data);
@@ -164,7 +164,7 @@ export const MoneyProvider = ({ children }) => {
             data["user"] = userCode
             const newQuery = await axios.post(`/${data.type == "+" ? "income" : "expense"}/query`,
                 data)
-            console.log(newQuery.data);
+            console.log(data);
             return newQuery.data.registers
         },
 

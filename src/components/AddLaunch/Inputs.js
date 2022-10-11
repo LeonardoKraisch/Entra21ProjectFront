@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Platform, TextInput } from "react-native";
 import { TextInputMask } from "react-native-masked-text";
-import { AntDesign } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
+import SelectDropdown from 'react-native-select-dropdown'
 
 import moment from 'moment'
 import DateTimePicker from '@react-native-community/datetimepicker'
@@ -24,26 +24,44 @@ export default props => {
     const [date, setDate] = useState(new Date())
     const [description, setDescription] = useState('')
     const [showDatePicker, setShowDatePicker] = useState(false)
+    const [wallet, setWallet] = useState(0)
 
     const dateString = moment(date).format('YYYY[-]MM[-]D')
+    
+    var wallets = ["My Wallet"]
+
+    useEffect(() => {
+        console.log(props.wallets);
+        async function fetch() {
+            await props.wallets.forEach((w) => {
+                wallets.push(w.name)
+                console.log(w);
+            })
+        }
+        fetch()
+    }, [])
 
     const Message = () => {
         if (pressedPlus) {
             return (
                 <View style={styles.title}>
                     <Text style={styles.textTitle}>
-                        Add Profit to my Balance
+                        Add Profit to
                     </Text>
-                    <AntDesign name="caretup" size={30} color="#FFF" />
+                    <SelectDropdown
+                        data={wallets}
+                        onSelect={(selected, i) => {
+                            setWallet(i)
+                        }} />
                 </View>
             )
         } else {
             return (
                 <View style={styles.title}>
                     <Text style={styles.textTitle}>
-                        Add Expenses to my Balance
+                        Add Expenses to
                     </Text>
-                    <AntDesign name="caretdown" size={30} color="#FFF" />
+                    <SelectDropdown />
                 </View>
             )
         }
@@ -170,12 +188,12 @@ export default props => {
                     onPress={() =>
                         send({
                             money,
-                            category, 
-                            payments, 
-                            totalValue, 
-                            times, 
-                            pending, 
-                            dateString, 
+                            category,
+                            payments,
+                            totalValue,
+                            times,
+                            pending,
+                            dateString,
                             description
                         })}
                     style={styles.send}>

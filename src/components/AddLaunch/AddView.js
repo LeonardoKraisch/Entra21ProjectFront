@@ -17,7 +17,7 @@ export default props => {
                     <TouchableOpacity onPress={() => close()} style={styles.buttonClose}>
                         <Entypo name="circle-with-cross" size={30} color='#c63222' />
                     </TouchableOpacity>
-                    <Inputs />
+                    <Inputs {...props} />
                 </View>
                 :
                 false
