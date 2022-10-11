@@ -16,7 +16,7 @@ export const MoneyProvider = ({ children }) => {
     const [date, setDate] = useState(new Date())
     const [balance, setBalance] = useState(0)
 
-    const [incomes, setIncomes] = useState([])
+    const [incomes, setIncomes] = useState([null])
     const [expenses, setExpenses] = useState([])
     const [totalInc, setTotalInc] = useState(0)
     const [totalExp, setTotalExp] = useState(0)
@@ -148,7 +148,7 @@ export const MoneyProvider = ({ children }) => {
                 }
 
             } catch (e) {
-                console.warn(e)
+                console.log(e.message, "error in send")
                 Toast.show({
                     type: 'info',
                     text1: 'Your launch has failed!',
@@ -162,8 +162,10 @@ export const MoneyProvider = ({ children }) => {
         },
         getRegisters: async data => {
             data["userCode"] = userCode
+            console.log(data, "dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             const newQuery = await axios.post(`/${data.type == "+" ? "income" : "expense"}/query`,
                 data)
+                console.log(newQuery.data.registers, "registersssssssssssssssssssssssssssssssss");
             return newQuery.data.registers
         },
 
@@ -243,6 +245,7 @@ export const MoneyProvider = ({ children }) => {
 
         fetchAllLaunches: async function () {
             try {
+                console.log(console.log(incomes, "---------------------------2"));
                 if (incomes == '' || expenses == '') {
                     const incomeArray = await moneyInternalContext.getRegisters({
                         type: "+",
@@ -360,6 +363,7 @@ export const MoneyProvider = ({ children }) => {
 
         getRegistersFiltered: async (filters) => {
             const obj = {
+                user:userCode,
                 type: filters.type,
                 filterType: "...",
                 filter: [
@@ -472,7 +476,7 @@ export const MoneyProvider = ({ children }) => {
             })
             return connWallets.data.registers
         }catch(e){
-            console.log(e.message)
+            console.log(e.message, "error in wallet")
         }},
 
         getAllRegistersToWallet: async (walletCode) => {
@@ -481,13 +485,13 @@ export const MoneyProvider = ({ children }) => {
                     type: "+",
                     filterType: "=",
                     filter: userCode,//walletCode
-                    column: "userCode"//walletCode
+                    column: "user"//walletCode
                 })
                 const toWalletExp = await moneyInternalContext.getRegisters({
                     type: "-",
                     filterType: "=",
                     filter: userCode,//walletCode
-                    column: "userCode"//walletCode
+                    column: "user"//walletCode
                 })
                 return ([...toWalletInc, ...toWalletExp])
             } catch (e) {

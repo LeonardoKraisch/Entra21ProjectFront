@@ -16,7 +16,7 @@ import JoinWallet from "../components/JoinWallet";
 
 export default props => {
     const { getWallets, getPendings } = useMoney()
-    const [wallets, setWallets] = useState()
+    const [wallets, setWallets] = useState([])
     const [showModal, setShowModal] = useState(false)
     const [showHelp, setShowHelp] = useState(false)
 
