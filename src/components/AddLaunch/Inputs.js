@@ -35,7 +35,6 @@ export default props => {
         console.log(props.wallets);
         async function fetch() {
             await props.wallets.forEach((w) => {
-                console.log(w.wallet.walletName);
                 customWallets.push(w.wallet.walletName)
             })
             setWallets([...wallets, ...customWallets])
@@ -61,15 +60,19 @@ export default props => {
                             fontSize: 20,
                             fontWeight: 'bold'
                         }}
-                        defaultValue={wallets[0]}
+                        defaultValueByIndex={0}
+
                         buttonStyle={{ backgroundColor: '#353935', borderBottomColor: '#FFF', borderBottomWidth: 1, height: 28, paddingHorizontal: 5 }}
                         dropdownStyle={{ backgroundColor: '#353935' }}
                         data={wallets}
                         onSelect={(selected, i) => {
                             setWallet(i)
-                            console.log(i),
-                                console.log(selected);
-                        }} />
+                            return selected
+                        }}
+                        buttonTextAfterSelection={(selected) => {
+                            return selected
+                        }}
+                    />
                 </View>
             )
         } else {
@@ -95,7 +98,12 @@ export default props => {
                         data={wallets}
                         onSelect={(selected, i) => {
                             setWallet(i)
-                        }} />
+                            return selected
+                        }}
+                        buttonTextAfterSelection={(selected) => {
+                            return selected
+                        }}
+                    />
                 </View>
             )
         }
@@ -221,6 +229,7 @@ export default props => {
                     disabled={money == 0 || '' ? true : false}
                     onPress={() =>
                         send({
+                            wallet,
                             money,
                             category,
                             payments,
