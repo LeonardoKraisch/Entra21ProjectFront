@@ -102,8 +102,8 @@ const styles = StyleSheet.create({
         elevation: 10
     },
     label: {
-        borderBottomColor: '#CCC',
-        borderBottomWidth: 2,
+        borderBottomColor: '#FFF',
+        borderBottomWidth: 1,
         padding: 5,
         flexDirection: 'row',
         justifyContent: 'space-between',

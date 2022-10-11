@@ -4,8 +4,8 @@ import { Ionicons } from '@expo/vector-icons';
 export default props => {
 
     return (
-        <TouchableOpacity style={{ marginHorizontal: 10, height: 41, width: 40, alignSelf: 'flex-start' }} onPress={() => props.navigation.openDrawer()}>
-            <Ionicons name='menu' size={41} color='#FFF' />
+        <TouchableOpacity style={{paddingTop: 2, height: 35, width: 35}} onPress={() => props.navigation.openDrawer()}>
+            <Ionicons name='menu' size={35} color='#FFF' />
         </TouchableOpacity>
     )
 }

@@ -29,7 +29,7 @@ export default props => {
                 <MenuButton {...props} />
                 <View style={styles.balance}>
                     <View style={styles.textIcon}>
-                        <Text style={{ color: '#FFF', fontSize: 18, fontWeight: 'bold' }}>Balance:</Text>
+                        <Text style={{ color: '#FFF', fontSize: 22, fontWeight: 'bold' }}>Balance</Text>
                         <TouchableOpacity style={styles.eye} onPress={() => setShowBalance(!showBalance)}>
                             <Ionicons name={showBalance ? 'eye' : 'eye-off-outline'}
                                 size={25} color='#FFF' />
@@ -70,15 +70,17 @@ const styles = StyleSheet.create({
         paddingBottom: 10
     },
     balance: {
-        borderBottomColor: '#CCC',
-        borderBottomWidth: 2,
+        borderBottomColor: '#FFF',
+        borderBottomWidth: 1,
+        paddingTop: 5,
         width: '75%',
         justifyContent: 'flex-end',
         paddingHorizontal: 7
     },
     textIcon: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        paddingBottom: 5
     },
     value: {
         flexDirection: "row",
