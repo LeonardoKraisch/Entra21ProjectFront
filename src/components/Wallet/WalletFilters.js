@@ -272,6 +272,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     pickerItem: {
+        backgroundColor: '#192b6a',
         color: '#FFF',
         fontSize: 15,
     },

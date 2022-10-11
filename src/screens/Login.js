@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { TextInput } from "react-native-paper";
 import useUser from "../data/hooks/useUser";
 
 export default props => {
