@@ -461,6 +461,7 @@ export const MoneyProvider = ({ children }) => {
         },
 
         getWallets: async () => {
+            try{
             const connWallets = await axios.post("/wallet/get", { userCode })
             let wallets = connWallets.data.registers
             wallets.forEach((wallet, code)=> {
@@ -470,7 +471,8 @@ export const MoneyProvider = ({ children }) => {
                 }
             })
             return connWallets.data.registers
-        },
+        }catch(e){
+        }},
 
         getAllRegistersToWallet: async (walletCode) => {
             try {

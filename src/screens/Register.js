@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { TextInput } from "react-native-paper";
 import Toast from 'react-native-toast-message'
@@ -13,6 +13,11 @@ export default props => {
     const [password, setPassword] = useState('')
     const [confPassword, setConfPassword] = useState('')
 
+    const refPhone = useRef()
+    const refemail = useRef()
+    const refPassword = useRef()
+    const refConfPassword = useRef()
+    
     const { signUp } = useUser()
 
     const validation = () => {
@@ -65,6 +70,8 @@ export default props => {
                 placeholder="Name"
                 onChangeText={setName}
                 value={name}
+                returnKeyType="next"
+                onSubmitEditing={() => refPhone.current.getElement().focus()}
             />
             <TextInputMask
                 style={styles.input}
@@ -73,6 +80,10 @@ export default props => {
                 onChangeText={setPhone}
                 value={phone}
                 keyboardType="phone-pad"
+                returnKeyType="next"
+                ref={refPhone}
+                onSubmitEditing={() => refemail.current.focus()}
+
             />
             <TextInput
                 style={styles.input}
@@ -80,6 +91,10 @@ export default props => {
                 onChangeText={setEmail}
                 value={email}
                 keyboardType="email-address"
+                returnKeyType="next"
+                ref={refemail}
+                onSubmitEditing={() => refPassword.current.focus()}
+
             />
             <TextInput
                 style={styles.input}
@@ -87,6 +102,10 @@ export default props => {
                 onChangeText={setPassword}
                 value={password}
                 secureTextEntry={true}
+                returnKeyType="next"
+                ref={refPassword}
+                onSubmitEditing={() => refConfPassword.current.focus()}
+
             />
             <TextInput
                 style={styles.input}
@@ -94,6 +113,9 @@ export default props => {
                 onChangeText={setConfPassword}
                 value={confPassword}
                 secureTextEntry={true}
+                returnKeyType="send"
+                ref={refConfPassword}
+                onSubmitEditing={() => props.navigation.goBack()}
             />
             <TouchableOpacity
                 style={styles.button}

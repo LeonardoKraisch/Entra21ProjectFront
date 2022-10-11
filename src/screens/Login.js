@@ -21,7 +21,6 @@ export default props => {
                 <TextInput
                     style={styles.input}
                     placeholder="Email"
-                    autoFocus={true}
                     returnKeyType="next"
                     onChangeText={setEmail}
                     value={email}
