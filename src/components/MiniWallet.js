@@ -2,14 +2,11 @@ import { Text, StyleSheet, TouchableOpacity } from "react-native";
 
 export default props => {
     return (
-        <View style={styles.container}>
-            <TouchableOpacity
-            onPress={() => props.navigation.navigate("CustomWallet", {wallet: props.wallet.item})}
-            >
-                <Text>{props.wallet.item.wallet.walletName}</Text>
-                <Text>{props.wallet.item.wallet.walletDesc}</Text>
-            </TouchableOpacity>
-        </View>
+        <TouchableOpacity style={styles.container}
+            onPress={() => props.navigation.navigate("CustomWallet", { wallet: props.wallet.item })}>
+            <Text>{props.wallet.item.wallet.walletName}</Text>
+            <Text>{props.wallet.item.wallet.walletDesc}</Text>
+        </TouchableOpacity>
     )
 }
 
