@@ -161,18 +161,10 @@ export const MoneyProvider = ({ children }) => {
             return total
         },
         getRegisters: async data => {
-<<<<<<< HEAD
-            data["userCode"] = userCode
-            console.log(data, "dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-            const newQuery = await axios.post(`/${data.type == "+" ? "income" : "expense"}/query`,
-                data)
-                console.log(newQuery.data.registers, "registersssssssssssssssssssssssssssssssss");
-=======
             data["user"] = userCode
             const newQuery = await axios.post(`/${data.type == "+" ? "income" : "expense"}/query`,
                 data)
             console.log(newQuery.data);
->>>>>>> 95dba22adae3be9f03c0e209699aaf1f6a28d249
             return newQuery.data.registers
         },
 
@@ -472,21 +464,6 @@ export const MoneyProvider = ({ children }) => {
         },
 
         getWallets: async () => {
-<<<<<<< HEAD
-            try{
-            const connWallets = await axios.post("/wallet/get", { userCode })
-            let wallets = connWallets.data.registers
-            wallets.forEach((wallet, code)=> {
-                if (wallet.favorite){
-                    wallets.splice(code,1)
-                    wallets.unshift(wallet)
-                }
-            })
-            return connWallets.data.registers
-        }catch(e){
-            console.log(e.message, "error in wallet")
-        }},
-=======
             try {
                 const connWallets = await axios.post("/wallet/get", { userCode })
                 let wallets = connWallets.data.registers
@@ -501,7 +478,6 @@ export const MoneyProvider = ({ children }) => {
                 console.log(e.message)
             }
         },
->>>>>>> 95dba22adae3be9f03c0e209699aaf1f6a28d249
 
         getAllRegistersToWallet: async (walletCode) => {
             try {
