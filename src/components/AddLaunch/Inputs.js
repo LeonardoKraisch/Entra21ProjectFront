@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Platform, TextInput } from "react-native";
 import { TextInputMask } from "react-native-masked-text";
 import { Picker } from "@react-native-picker/picker";
-import SelectDropdown from 'react-native-select-dropdown'
+
 
 import moment from 'moment'
 import DateTimePicker from '@react-native-community/datetimepicker'
+import Message from "./Message";
 
 import useAnimation from '../../data/hooks/useAnimation'
 import useMoney from '../../data/hooks/useMoney'
@@ -28,86 +29,6 @@ export default props => {
 
     const dateString = moment(date).format('YYYY[-]MM[-]D')
 
-    const [wallets, setWallets] = useState(["My Wallet",])
-    var customWallets = []
-
-    useEffect(() => {
-        console.log(props.wallets);
-        async function fetch() {
-            await props.wallets.forEach((w) => {
-                customWallets.push(w.wallet.walletName)
-            })
-            setWallets([...wallets, ...customWallets])
-        }
-        fetch()
-    }, [])
-
-    const Message = () => {
-        if (pressedPlus) {
-            return (
-                <View style={styles.title}>
-                    <Text style={styles.textTitle}>
-                        Add Profit to
-                    </Text>
-                    <SelectDropdown
-                        buttonTextStyle={{
-                            color: '#FFF',
-                            fontSize: 20,
-                            fontWeight: 'bold'
-                        }}
-                        rowTextStyle={{
-                            color: '#FFF',
-                            fontSize: 20,
-                            fontWeight: 'bold'
-                        }}
-                        defaultValueByIndex={0}
-
-                        buttonStyle={{ backgroundColor: '#353935', borderBottomColor: '#FFF', borderBottomWidth: 1, height: 28, paddingHorizontal: 5 }}
-                        dropdownStyle={{ backgroundColor: '#353935' }}
-                        data={wallets}
-                        onSelect={(selected, i) => {
-                            setWallet(i)
-                            return selected
-                        }}
-                        buttonTextAfterSelection={(selected) => {
-                            return selected
-                        }}
-                    />
-                </View>
-            )
-        } else {
-            return (
-                <View style={styles.title}>
-                    <Text style={styles.textTitle}>
-                        Add Expenses to
-                    </Text>
-                    <SelectDropdown
-                        buttonTextStyle={{
-                            color: '#FFF',
-                            fontSize: 20,
-                            fontWeight: 'bold'
-                        }}
-                        rowTextStyle={{
-                            color: '#FFF',
-                            fontSize: 20,
-                            fontWeight: 'bold'
-                        }}
-                        defaultValue={wallets[0]}
-                        buttonStyle={{ backgroundColor: '#353935', borderBottomColor: '#FFF', borderBottomWidth: 1, height: 28, paddingHorizontal: 5 }}
-                        dropdownStyle={{ backgroundColor: '#353935' }}
-                        data={wallets}
-                        onSelect={(selected, i) => {
-                            setWallet(i)
-                            return selected
-                        }}
-                        buttonTextAfterSelection={(selected) => {
-                            return selected
-                        }}
-                    />
-                </View>
-            )
-        }
-    }
     const DatePicker = () => {
         let datePicker = <DateTimePicker value={date} onChange={(_, date) => {
             setDate(date)
@@ -137,9 +58,22 @@ export default props => {
         if (payments == '2') {
             return (
                 <View style={styles.inputContainer}>
-                    <Text style={styles.textTitle2}>Quantity:</Text>
-                    <TextInput style={styles.input2} keyboardType='number-pad' value={times} onChangeText={setTimes} />
+                    <Text style={styles.textTitle}>Quantity:</Text>
+                    <TextInput style={styles.inputTimes} keyboardType='number-pad' value={times} onChangeText={setTimes} />
+                    <TextInputMask autoFocus={true} style={styles.inputMoney}
+                        type={'money'}
+                        onChangeText={setMoney}
+                        value={money}
+                        keyboardType="numeric" />
                 </View>
+            )
+        } else {
+            return (
+                <TextInputMask autoFocus={true} style={styles.inputMoney}
+                    type={'money'}
+                    onChangeText={setMoney}
+                    value={money}
+                    keyboardType="numeric" />
             )
         }
     }
@@ -193,18 +127,13 @@ export default props => {
     return (
         <View style={styles.addInfo}>
             <View style={styles.infos}>
-                <Message />
+                <Message {...props} getWallet={(value) => setWallet(value) } />
                 <View style={styles.inputsLine}>
                     <ValueInput />
-                    <TextInputMask autoFocus={true} style={styles.inputMoney}
-                        type={'money'}
-                        onChangeText={setMoney}
-                        value={money}
-                        keyboardType="numeric" />
                 </View>
                 <ButtonInput />
                 <View style={styles.pickerContainer}>
-                    <Text style={styles.textTitle2}>Payments:</Text>
+                    <Text style={styles.textTitle}>Payments:</Text>
                     <Picker dropdownIconColor='#FFF' selectedValue={payments} onValueChange={setPayments} style={styles.picker}>
                         <Picker.Item style={styles.pickerItem} label="Cash 1x" value="1" />
                         <Picker.Item style={styles.pickerItem} label="Installments" value="2" />
@@ -212,7 +141,7 @@ export default props => {
                     </Picker>
                 </View>
                 <View style={styles.pickerContainer}>
-                    <Text style={styles.textTitle2}>Category:</Text>
+                    <Text style={styles.textTitle}>Category:</Text>
                     <BalancePicker />
                 </View>
                 <TextInput style={styles.input} placeholder="Add description" value={description} onChangeText={setDescription} />
@@ -273,7 +202,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center'
     },
-    input2: {
+    inputTimes: {
         width: '48%',
         marginRight: 10,
         height: 20,
@@ -312,18 +241,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         marginBottom: 5
     },
-    title: {
-        width: '95%',
-        padding: 10,
-        alignItems: 'center',
-        marginBottom: 20
-    },
     textTitle: {
-        color: '#FFF',
-        fontSize: 20,
-        fontWeight: 'bold'
-    },
-    textTitle2: {
         color: '#FFF',
         fontSize: 15
     },

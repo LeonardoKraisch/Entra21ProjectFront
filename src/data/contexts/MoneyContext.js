@@ -108,10 +108,10 @@ export const MoneyProvider = ({ children }) => {
                 launch[`${table}Date`] = data.dateString,
                 launch[`${table}Description`] = data.description,
                 launch['user'] = await userCode
-                launch['wallet'] = await data.wallet
+            launch['wallet'] = await data.wallet
             try {
                 const newLaunch = await axios.post(`/${pressedPlus ? "income" : "expense"}/new`, { launch })
-                console.log(newLaunch.data);
+                console.log(launch);
                 if (await newLaunch.data.registered) {
                     if (pressedPlus) {
                         if (launch["incPending"]) {
@@ -363,7 +363,7 @@ export const MoneyProvider = ({ children }) => {
 
         getRegistersFiltered: async (filters) => {
             const obj = {
-                user:userCode,
+                user: userCode,
                 type: filters.type,
                 filterType: "...",
                 filter: [
@@ -465,19 +465,20 @@ export const MoneyProvider = ({ children }) => {
         },
 
         getWallets: async () => {
-            try{
-            const connWallets = await axios.post("/wallet/get", { userCode })
-            let wallets = connWallets.data.registers
-            wallets.forEach((wallet, code)=> {
-                if (wallet.favorite){
-                    wallets.splice(code,1)
-                    wallets.unshift(wallet)
-                }
-            })
-            return connWallets.data.registers
-        }catch(e){
-            console.log(e.message, "error in wallet")
-        }},
+            try {
+                const connWallets = await axios.post("/wallet/get", { userCode })
+                let wallets = connWallets.data.registers
+                wallets.forEach((wallet, code) => {
+                    if (wallet.favorite) {
+                        wallets.splice(code, 1)
+                        wallets.unshift(wallet)
+                    }
+                })
+                return connWallets.data.registers
+            } catch (e) {
+                console.log(e.message, "error in wallet")
+            }
+        },
 
         getAllRegistersToWallet: async (walletCode) => {
             try {
