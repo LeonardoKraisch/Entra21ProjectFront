@@ -161,8 +161,9 @@ export const MoneyProvider = ({ children }) => {
             const total = totalInc - totalExp
             return total
         },
+
         getRegisters: async data => {
-            data["user"] = userCode
+            data["user"] = { code: userCode }
             const newQuery = await axios.post(`/${data.type == "+" ? "income" : "expense"}/query`,
                 data)
             console.log(data);
@@ -249,17 +250,26 @@ export const MoneyProvider = ({ children }) => {
                 if (incomes == '' || expenses == '') {
                     const incomeArray = await moneyInternalContext.getRegisters({
                         type: "+",
-                        filterType: "[]",
-                        filter: [`${dateString(date)}-1`, `${dateString(date)}-${lastDay(date)}`],
-                        column: "incDate"
+                        filter: {
+                            date:
+                            {
+                                type: "[]",
+                                initDate: `${dateString(date)}-1`,
+                                endDate: `${dateString(date)}-${lastDay(date)}`
+                            }
+                        }
                     })
                     const expensesArray = await moneyInternalContext.getRegisters({
-                        type: "-",
-                        filterType: "[]",
-                        filter: [`${dateString(date)}-1`, `${dateString(date)}-${lastDay(date)}`],
-                        column: "expDate"
+                        type: "+",
+                        filter: {
+                            date:
+                            {
+                                type: "[]",
+                                initDate: `${dateString(date)}-1`,
+                                endDate: `${dateString(date)}-${lastDay(date)}`
+                            }
+                        }
                     })
-
                     await moneyInternalContext.balanceSetter(incomeArray, expensesArray)
                     await moneyInternalContext.getPendings()
 
@@ -312,16 +322,24 @@ export const MoneyProvider = ({ children }) => {
                 if (dateSearch != date) {
                     const incomesSearch = await moneyInternalContext.getRegisters({
                         type: "+",
-                        filterType: "[]",
-                        filter: [`${dateString(dateSearch)}-1`, `${dateString(dateSearch)}-${lastDay(dateSearch)}`],
-                        column: "incDate"
+                        filter: {
+                            date: {
+                                type: "[]",
+                                initDate: `${dateString(dateSearch)}-1`,
+                                endDate: `${dateString(dateSearch)}-${lastDay(dateSearch)}`,
+                            }
+                        }
                     })
 
                     const expensesSearch = await moneyInternalContext.getRegisters({
                         type: "-",
-                        filterType: "[]",
-                        filter: [`${dateString(dateSearch)}-1`, `${dateString(dateSearch)}-${lastDay(dateSearch)}`],
-                        column: "expDate"
+                        filter: {
+                            date: {
+                                type: "[]",
+                                initDate: `${dateString(dateSearch)}-1`,
+                                endDate: `${dateString(dateSearch)}-${lastDay(dateSearch)}`,
+                            }
+                        }
                     })
 
                     const merged = await moneyInternalContext.mergeArrays(incomesSearch, "incMoney", expensesSearch, 'expMoney')
@@ -361,25 +379,9 @@ export const MoneyProvider = ({ children }) => {
             }
         },
 
-        getRegistersFiltered: async (filters) => {
-            const obj = {
-                user: userCode,
-                type: filters.type,
-                filterType: "...",
-                filter: [
-                    [filters.initDate, filters.endDate],
-                    [filters.moneyFilter, filters.money, filters.moneyRange],
-                    [filters.categoryFilter],
-                    [filters.descriptionFilter]
-                ]
-            }
-            console.log(filters, obj);
-            return await moneyInternalContext.getRegisters(obj)
-        },
-
         filterPlus: async (filter1, filter2) => {
-            const filteredIncomes = await moneyInternalContext.getRegistersFiltered(filter1)
-            const filteredExpenses = await moneyInternalContext.getRegistersFiltered(filter2)
+            const filteredIncomes = await moneyInternalContext.getRegisters(filter1)
+            const filteredExpenses = await moneyInternalContext.getRegisters(filter2)
             const filteredAllRegisters = await moneyInternalContext.mergeArrays(filteredIncomes, "incMoney", filteredExpenses, 'expMoney')
 
             await moneyInternalContext.searchSetter(await filteredIncomes, await filteredExpenses, filteredAllRegisters)
@@ -484,15 +486,15 @@ export const MoneyProvider = ({ children }) => {
             try {
                 const toWalletInc = await moneyInternalContext.getRegisters({
                     type: "+",
-                    filterType: "=",
-                    filter: { walletCode: walletCode },
-                    column: "wallet"
+                    filter: {
+                        wallet: { code: walletCode }
+                    }
                 })
                 const toWalletExp = await moneyInternalContext.getRegisters({
                     type: "-",
-                    filterType: "=",
-                    filter: { walletCode: walletCode },
-                    column: "wallet"
+                    filter: {
+                        wallet: { code: walletCode }
+                    }
                 })
                 return ([...toWalletInc, ...toWalletExp])
             } catch (e) {
@@ -522,29 +524,35 @@ export const MoneyProvider = ({ children }) => {
         getMonthlyBalance: async () => {
             const MonthlyIncomes = await moneyInternalContext.getRegisters({
                 type: "+",
-                filterType: "==",
-                filter: "MonthyBalance",
-                column: "incCategory"
+                filter: {
+                    category: {
+                        type: "==",
+                        value: "MonthyBalance"
+                    }
+                }
             })
             const MonthlyExpenses = await moneyInternalContext.getRegisters({
                 type: "-",
-                filterType: "==",
-                filter: "MonthyBalance",
-                column: "incCategory"
+                filter: {
+                    category: {
+                        type: "==",
+                        value: "MonthyBalance"
+                    }
+                }
             })
             const MonthyBalances = [...MonthlyIncomes, ...MonthlyExpenses]
             for (const launche in MonthlyExpenses) {
                 try {
-                if (parseInt(MonthyBalances[launche].split("-")[0])
-                    >
-                    parseInt(MonthyBalances[launche + 1].split("-")[0])) {
+                    if (parseInt(MonthyBalances[launche].split("-")[0])
+                        >
+                        parseInt(MonthyBalances[launche + 1].split("-")[0])) {
                         const year = MonthyBalances[launche]
-                        MonthyBalances[launche] = MonthyBalances[launche+1]
-                        MonthyBalances[launche+1] = MonthyBalances[launche]
+                        MonthyBalances[launche] = MonthyBalances[launche + 1]
+                        MonthyBalances[launche + 1] = MonthyBalances[launche]
+                    }
+                } catch {
+
                 }
-            }catch{
-                
-            }
             }
         }
     }
