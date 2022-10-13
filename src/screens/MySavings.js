@@ -1,31 +1,32 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from "react-native";
-import { VictoryChart, VictoryLine, VictoryClipContainer, VictoryZoomContainer } from "victory-native";
+import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
+import { VictoryChart, VictoryLine, VictoryZoomContainer } from "victory-native";
 
 export default props => {
 
     const savings = [
-        { month: "janeiro", value: 200 },
-        { month: "fevereiro", value: 350 },
-        { month: "março", value: 152 },
-        { month: "abril", value: 410 },
-        { month: "maio", value: 326 },
-        { month: "junho", value: 200 },
-        { month: "julho", value: 350 },
-        { month: "agosto", value: 152 },
-        { month: "setembro", value: 410 },
-        { month: "outubro", value: 326 }
+        { month: "jan", value: 200 },
+        { month: "feb", value: 350 },
+        { month: "mar", value: 152 },
+        { month: "apr", value: 410 },
+        { month: "may", value: -326 },
+        { month: "jun", value: 200 },
+        { month: "jul", value: 350 },
+        { month: "aug", value: 152 },
+        { month: "sep", value: 410 },
+        { month: "oct", value: 326 }
     ]
 
     const MyPieChart = () => {
         return (
             <VictoryChart
-                width={600}
+                width={Dimensions.get('window').width}
                 height={270}
-                domain={{ x: [0,2], y: [0, 6] }}
-                containerComponent={<VictoryZoomContainer 
-                    preserveAspectRatio=''
-                 zoomDomain={{ x: [0, 5], y: [-1000, 1000] }} />}
+                domain={{ x: [0, 11], y: [-1000, 1000] }}
+                containerComponent={<VictoryZoomContainer
+                    allowZoom={false}
+                    zoomDomain={{ x: [0, 5], y: [-1000, 1000] }} />
+                }
             >
                 <VictoryLine
                     style={{
