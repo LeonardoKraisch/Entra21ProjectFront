@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     mainContainer: {
         margin: 10,
         width: '100%',
-        height: '30%',
+        height: '35%',
         alignItems: 'center',
         justifyContent: 'center',
     },
