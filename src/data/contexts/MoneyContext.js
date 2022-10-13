@@ -164,7 +164,6 @@ export const MoneyProvider = ({ children }) => {
 
         getRegisters: async data => {
             data["user"] = { code: userCode }
-            console.log(data.type, "data typeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
             const newQuery = await axios.post(`/${data.type == "+" ? "income" : "expense"}/query`,
                 data)
             return newQuery.data.registers
@@ -357,13 +356,10 @@ export const MoneyProvider = ({ children }) => {
 
         calcTotal: async (array, camp) => {
             var total = 0
-            console.log(array,"array -------------------------------------------------------------------------", camp);
             try {
                 array.forEach((element) => {
                     total += element[camp]
-                    console.log(element[camp])
                 })
-                console.log(total,"total")
                 return total
             } catch (e) {
                 return total
