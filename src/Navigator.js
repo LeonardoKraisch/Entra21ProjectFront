@@ -5,7 +5,6 @@ import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemL
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { MaterialIcons } from "@expo/vector-icons";
 
-
 import Splash from "./Splash"
 import Home from "./screens/Home";
 import Wallet from './screens/Wallet'
@@ -18,8 +17,6 @@ import WalletInvites from "./screens/WalletInvites";
 import Recover from "./screens/Recover";
 
 import useUser from "./data/hooks/useUser";
-
-
 
 const Drawer = createDrawerNavigator()
 const Stack = createNativeStackNavigator()

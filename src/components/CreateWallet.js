@@ -37,7 +37,7 @@ export default props => {
                 />
                 <TextInput style={styles.input}
                     value={walletDesc}
-                    onChangeText={setWalletDesc}
+                    onChangeText={setWalletPassword}
                     label={"And the password?"}
                     ref={refPassword}
                     returnKeyType="next"
@@ -45,7 +45,7 @@ export default props => {
                 />
                 <TextInput style={styles.input}
                     value={walletPassword}
-                    onChangeText={setWalletPassword}
+                    onChangeText={setWalletDesc}
                     label={"Wanna add a description?"}
                     ref={refDescription}
                     returnKeyType="send"
