@@ -132,7 +132,6 @@ export default props => {
                     disabled={money == 0 || '' ? true : false}
                     onPress={() =>
                         send({
-                            wallet,
                             money,
                             category,
                             payments,

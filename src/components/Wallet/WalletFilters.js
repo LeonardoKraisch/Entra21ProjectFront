@@ -33,22 +33,42 @@ export default props => {
     const applyFilters = async () => {
         await filterPlus({
             type: "+",
-            initDate: dateString1,
-            endDate: dateString2,
-            moneyFilter: pickerValue,
-            money: value1,
-            moneyRange: value2,
-            categoryFilter: category,
-            descriptionFilter: description
+            filter: {
+                date: {
+                    type: "[]",
+                    initDate: dateString1,
+                    endDate: dateString2
+                },
+                money: {
+                    type: pickerValue,
+                    minValue: value1,
+                    maxValue: value2
+                },
+                category: {
+                    type: "==",
+                    value: category
+                },
+                description: { value: description }
+            }
         }, {
             type: "-",
-            initDate: dateString1,
-            endDate: dateString2,
-            moneyFilter: pickerValue,
-            money: value1,
-            moneyRange: value2,
-            categoryFilter: category,
-            descriptionFilter: description
+            filter: {
+                date: {
+                    type: "[]",
+                    initDate: dateString1,
+                    endDate: dateString2
+                },
+                money: {
+                    type: pickerValue,
+                    minValue: value1,
+                    maxValue: value2
+                },
+                category: {
+                    type: "==",
+                    value: category
+                },
+                description: { value: description }
+            }
         })
     }
 

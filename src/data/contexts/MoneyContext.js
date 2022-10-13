@@ -108,10 +108,9 @@ export const MoneyProvider = ({ children }) => {
                 launch[`${table}Date`] = data.dateString,
                 launch[`${table}Description`] = data.description,
                 launch['user'] = await userCode
-            launch['wallet'] = await data.wallet
+                launch['wallet'] = await data.wallet
             try {
                 const newLaunch = await axios.post(`/${pressedPlus ? "income" : "expense"}/new`, { launch })
-                console.log(launch);
                 if (await newLaunch.data.registered) {
                     if (pressedPlus) {
                         if (launch["incPending"]) {
@@ -166,8 +165,6 @@ export const MoneyProvider = ({ children }) => {
             data["user"] = { code: userCode }
             const newQuery = await axios.post(`/${data.type == "+" ? "income" : "expense"}/query`,
                 data)
-            console.log(data);
-            console.log(newQuery.data.registers, "registers---------------------------");
             return newQuery.data.registers
         },
 
@@ -247,7 +244,6 @@ export const MoneyProvider = ({ children }) => {
 
         fetchAllLaunches: async function () {
             try {
-                console.log(console.log(incomes, "---------------------------2"));
                 if (incomes == '' || expenses == '') {
                     const incomeArray = await moneyInternalContext.getRegisters({
                         type: "+",
@@ -505,7 +501,6 @@ export const MoneyProvider = ({ children }) => {
         },
         joinWallet: async (wallet) => {
             wallet["userCode"] = userCode
-            console.log({ wallet });
             const newCoWallet = await axios.post("/wallet/join", { wallet })
             return newCoWallet.data.result
         },
@@ -528,7 +523,7 @@ export const MoneyProvider = ({ children }) => {
                 filter: {
                     category: {
                         type: "==",
-                        value: "MonthyBalance"
+                        value: "MonthlyBalance"
                     }
                 }
             })
@@ -537,19 +532,19 @@ export const MoneyProvider = ({ children }) => {
                 filter: {
                     category: {
                         type: "==",
-                        value: "MonthyBalance"
+                        value: "MonthlyBalance"
                     }
                 }
             })
-            const MonthyBalances = [...MonthlyIncomes, ...MonthlyExpenses]
+            const MonthlyBalances = [...MonthlyIncomes, ...MonthlyExpenses]
             for (const launche in MonthlyExpenses) {
                 try {
-                    if (parseInt(MonthyBalances[launche].split("-")[0])
+                    if (parseInt(MonthlyBalances[launche].split("-")[0])
                         >
-                        parseInt(MonthyBalances[launche + 1].split("-")[0])) {
-                        const year = MonthyBalances[launche]
-                        MonthyBalances[launche] = MonthyBalances[launche + 1]
-                        MonthyBalances[launche + 1] = MonthyBalances[launche]
+                        parseInt(MonthlyBalances[launche + 1].split("-")[0])) {
+                        const year = MonthlyBalances[launche]
+                        MonthlyBalances[launche] = MonthlyBalances[launche + 1]
+                        MonthlyBalances[launche + 1] = MonthlyBalances[launche]
                     }
                 } catch {
 
