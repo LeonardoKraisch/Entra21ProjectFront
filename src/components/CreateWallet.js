@@ -36,7 +36,7 @@ export default props => {
                     onSubmitEditing={() => refPassword.current.focus()}
                 />
                 <TextInput style={styles.input}
-                    value={walletDesc}
+                    value={walletPassword}
                     onChangeText={setWalletPassword}
                     label={"And the password?"}
                     ref={refPassword}
@@ -44,7 +44,7 @@ export default props => {
                     onSubmitEditing={() => refDescription.current.focus()}
                 />
                 <TextInput style={styles.input}
-                    value={walletPassword}
+                    value={walletDesc}
                     onChangeText={setWalletDesc}
                     label={"Wanna add a description?"}
                     ref={refDescription}

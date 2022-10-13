@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, StyleSheet, Text, TouchableOpacity, Platform, TextInput } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import SelectDropdown from 'react-native-select-dropdown'
 import useAnimation from '../../data/hooks/useAnimation'
 
