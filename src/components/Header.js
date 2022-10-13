@@ -19,6 +19,7 @@ export default props => {
     useEffect(() => {
         async function fetch() {
             setData(await recalBalance())
+            console.log(totalInc,"|", totalExp,"|" ,recalBalance());
         }
         fetch()
     }, [totalInc, totalExp])
