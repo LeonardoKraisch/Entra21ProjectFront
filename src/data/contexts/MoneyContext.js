@@ -167,6 +167,7 @@ export const MoneyProvider = ({ children }) => {
             const newQuery = await axios.post(`/${data.type == "+" ? "income" : "expense"}/query`,
                 data)
             console.log(data);
+            console.log(newQuery.data.registers, "registers---------------------------");
             return newQuery.data.registers
         },
 
