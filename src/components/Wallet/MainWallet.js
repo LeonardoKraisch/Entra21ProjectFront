@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { PieChart } from "react-native-chart-kit";
+import { VictoryPie } from "victory-native";
 
 import useMoney from "../../data/hooks/useMoney";
 
 export default props => {
     const { balance, totalExp, totalInc, recalBalance } = useMoney()
     const [data, setData] = useState(balance)
+    const [percentage, setPercentage] = useState(0)
 
     useEffect(() => {
         async function fetch() {
@@ -15,59 +16,39 @@ export default props => {
         fetch()
     }, [totalInc, totalExp])
 
-    const pieData = data >= 0 ? [
+    const pieData = [
         {
+            id: "1",
             name: 'Total Left',
-            values: data,
+            value: data,
             color: '#243e9c',
-            legendFontColor: '#FFF9',
-            legendFontSize: 15,
         },
         {
+            id: "2",
             name: 'Expenses',
-            values: totalExp,
+            value: totalExp,
             color: '#c63222',
-            legendFontColor: '#FFF9',
-            legendFontSize: 15,
-
-        }
-    ] : [
-        {
-            name: 'Monthly incomes',
-            values: totalInc,
-            color: '#243e9c',
-            legendFontColor: '#FFF9',
-            legendFontSize: 15,
-        },
-        {
-            name: 'Over the budget',
-            values: totalExp - totalInc,
-            color: '#c63222',
-            legendFontColor: '#FFF9',
-            legendFontSize: 15,
-
         }
     ]
 
 
     const MyPieChart = () => {
         return (
-            <PieChart
+            <VictoryPie
                 data={pieData}
-                width={320}
-                height={120}
-                center={[25, 0]}
-                chartConfig={{
-                    decimalPlaces: 2,
-                    color: (opacity = 1) => `rgba(230, 103, 0, ${opacity})`,
-                    style: {
-                        borderRadius: 16,
+                x="name"
+                y="value"
+                colorScale={pieData.map(data => data.color)}
+                width={210}
+                innerRadius={30}
+                style={{
+                    data: {
+                        fillOpacity: 0.9, stroke: '#3155d6', strokeWidth: 2
                     },
+                    labels: {
+                        fontSize: 16, fill: '#FFF', padding: 8
+                    }
                 }}
-                absolute
-                accessor="values"
-                avoidFalseZero={true}
-                paddingLeft={-50}
             />
         );
     };
@@ -88,7 +69,7 @@ export default props => {
 
 const styles = StyleSheet.create({
     container: {
-        height: '95%',
+        height: '100%',
         width: '92%',
         backgroundColor: '#353935',
         borderRadius: 5,
@@ -115,12 +96,9 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     chartContainer: {
+        flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
+        maxWidth: '50%',
+        alignItems: 'center'
     },
-    chart: {
-        paddingVertical: 10,
-        justifyContent: 'center',
-        flex: 1
-    }
 })

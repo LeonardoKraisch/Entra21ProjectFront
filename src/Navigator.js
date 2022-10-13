@@ -15,6 +15,7 @@ import Debts from "./screens/Debts";
 import ShareWallet from "./screens/ShareWallet";
 import WalletInvites from "./screens/WalletInvites";
 import Recover from "./screens/Recover";
+import MySavings from "./screens/MySavings";
 
 import useUser from "./data/hooks/useUser";
 
@@ -94,7 +95,7 @@ export default props => {
                             </View>
                             <DrawerItemList {...props} />
                             <DrawerItem
-                                icon={() => <LogoutButton {...props}/>}
+                                icon={() => <LogoutButton {...props} />}
                                 label=''
                             />
                         </DrawerContentScrollView>
@@ -107,6 +108,9 @@ export default props => {
                 <Drawer.Screen
                     name="My Debts"
                     component={Debts} />
+                <Drawer.Screen
+                    name="My Savings"
+                    component={MySavings} />
             </Drawer.Navigator>
         </NavigationContainer>
     )
