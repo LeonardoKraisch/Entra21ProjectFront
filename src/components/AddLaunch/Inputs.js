@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Platform, TextInput } from "react-native";
-import { TextInputMask } from "react-native-masked-text";
 import { Picker } from "@react-native-picker/picker";
-
 
 import moment from 'moment'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import Message from "./Message";
+import ValueInput from "./ValueInput";
 
 import useAnimation from '../../data/hooks/useAnimation'
 import useMoney from '../../data/hooks/useMoney'
@@ -51,31 +50,6 @@ export default props => {
         }
 
         return datePicker
-
-    }
-
-    const ValueInput = () => {
-        if (payments == '2') {
-            return (
-                <View style={styles.inputContainer}>
-                    <Text style={styles.textTitle}>Quantity:</Text>
-                    <TextInput style={styles.inputTimes} keyboardType='number-pad' value={times} onChangeText={setTimes} />
-                    <TextInputMask autoFocus={true} style={styles.inputMoney}
-                        type={'money'}
-                        onChangeText={setMoney}
-                        value={money}
-                        keyboardType="numeric" />
-                </View>
-            )
-        } else {
-            return (
-                <TextInputMask autoFocus={true} style={styles.inputMoney}
-                    type={'money'}
-                    onChangeText={setMoney}
-                    value={money}
-                    keyboardType="numeric" />
-            )
-        }
     }
 
     const ButtonInput = () => {
@@ -127,9 +101,9 @@ export default props => {
     return (
         <View style={styles.addInfo}>
             <View style={styles.infos}>
-                <Message {...props} getWallet={(value) => setWallet(value) } />
+                <Message {...props} getWallet={(value) => setWallet(value)} />
                 <View style={styles.inputsLine}>
-                    <ValueInput />
+                    <ValueInput payments={payments} money={(value) => setMoney(value)} times={(value) => setTimes(value)} />
                 </View>
                 <ButtonInput />
                 <View style={styles.pickerContainer}>
@@ -196,22 +170,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center'
     },
-    inputContainer: {
-        width: '50%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-    },
-    inputTimes: {
-        width: '48%',
-        marginRight: 10,
-        height: 20,
-        backgroundColor: '#FFF',
-        textAlign: "right",
-        color: '#000',
-        borderRadius: 5,
-        fontSize: 18
-    },
+
     buttons: {
         flexDirection: 'row',
         justifyContent: 'space-around',
@@ -230,16 +189,6 @@ const styles = StyleSheet.create({
     },
     unselect: {
         color: '#CCC'
-    },
-    inputMoney: {
-        textAlign: "right",
-        width: '50%',
-        color: '#FFF',
-        fontSize: 20,
-        height: 25,
-        borderBottomColor: '#FFF',
-        borderBottomWidth: 1,
-        marginBottom: 5
     },
     textTitle: {
         color: '#FFF',
