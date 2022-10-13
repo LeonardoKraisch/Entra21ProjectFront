@@ -32,7 +32,7 @@ export default props => {
     ]
 
 
-    const MyPieChart = () => {
+    const MyDonutChart = () => {
         return (
             <VictoryPie
                 data={pieData}
@@ -61,7 +61,7 @@ export default props => {
                 </Text>
             </View>
             <View style={styles.chartContainer}>
-                <MyPieChart />
+                <MyDonutChart />
             </View>
         </TouchableOpacity>
     )

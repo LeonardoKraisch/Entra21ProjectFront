@@ -258,7 +258,7 @@ export const MoneyProvider = ({ children }) => {
                         }
                     })
                     const expensesArray = await moneyInternalContext.getRegisters({
-                        type: "+",
+                        type: "-",
                         filter: {
                             date:
                             {

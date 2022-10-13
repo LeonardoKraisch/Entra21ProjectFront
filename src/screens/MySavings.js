@@ -19,18 +19,20 @@ export default props => {
 
     const MyPieChart = () => {
         return (
+            <VictoryChart
+                width={600}
+                height={470}
 
-            <VictoryChart domainPadding={{ y: 10 }}
-                containerComponent={<VictoryZoomContainer allowZoom={false} />}>
+            >
                 <VictoryLine
-                    groupComponent={<VictoryClipContainer clipPadding={{ top: 5, right: 10 }} />}
-                    style={{ data: { stroke: "#c43a31", strokeWidth: 2, strokeLinecap: "round" } }}
+                    style={{
+                        data: { stroke: "tomato" }
+                    }}
                     data={savings}
-                    x={"month"}
-                    y={"value"}
+                    x="month"
+                    y="value"
                 />
             </VictoryChart>
-
         );
     };
 
