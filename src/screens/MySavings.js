@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { VictoryChart, VictoryLine, VictoryClipContainer } from "victory-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { VictoryChart, VictoryLine, VictoryClipContainer, VictoryZoomContainer } from "victory-native";
 
 export default props => {
 
@@ -9,20 +9,28 @@ export default props => {
         { month: "fevereiro", value: 350 },
         { month: "março", value: 152 },
         { month: "abril", value: 410 },
-        { month: "maio", value: 326 }
+        { month: "maio", value: 326 },
+        { month: "junho", value: 200 },
+        { month: "julho", value: 350 },
+        { month: "agosto", value: 152 },
+        { month: "setembro", value: 410 },
+        { month: "outubro", value: 326 }
     ]
 
     const MyPieChart = () => {
         return (
-            <VictoryChart>
+
+            <VictoryChart domainPadding={{ y: 10 }}
+                containerComponent={<VictoryZoomContainer allowZoom={false} />}>
                 <VictoryLine
                     groupComponent={<VictoryClipContainer clipPadding={{ top: 5, right: 10 }} />}
-                    style={{ data: { stroke: "#c43a31", strokeWidth: 15, strokeLinecap: "round" } }}
+                    style={{ data: { stroke: "#c43a31", strokeWidth: 2, strokeLinecap: "round" } }}
                     data={savings}
                     x={"month"}
                     y={"value"}
                 />
             </VictoryChart>
+
         );
     };
 
@@ -33,9 +41,9 @@ export default props => {
                     Main Wallet
                 </Text>
             </View>
-            <View style={styles.chartContainer}>
+            <ScrollView style={styles.chartContainer}>
                 <MyPieChart />
-            </View>
+            </ScrollView>
         </View>
     )
 }
@@ -60,8 +68,6 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     chartContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+
     },
 })
