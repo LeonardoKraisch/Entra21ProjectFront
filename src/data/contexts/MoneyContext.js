@@ -99,7 +99,7 @@ export const MoneyProvider = ({ children }) => {
             var money = data.money.replace("R$", "").replace(".", "").replace(",", ".")
             var table = pressedPlus ? "inc" : "exp"
             var launch = {}
-            if (data.wallet = 0) data.wallet = null
+            if (data.wallet == 0) data.wallet = null
             launch[`${table}Money`] = parseFloat(money),
                 launch[`${table}Category`] = data.category,
                 launch[`${table}PaymentMethod`] = parseInt(data.payments),
