@@ -15,7 +15,7 @@ export default props => {
     const { getAllRegistersToWallet } = useMoney()
     const [launches, setLaunches] = useState()
     const [wallet, setWallet] = useState()
-    const [wallets, setWallets] = useState(["My Wallet",])
+    const [wallets, setWallets] = useState([])
     var customWallets = []
 
     useEffect(() => {
