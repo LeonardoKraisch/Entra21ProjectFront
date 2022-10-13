@@ -485,14 +485,14 @@ export const MoneyProvider = ({ children }) => {
                 const toWalletInc = await moneyInternalContext.getRegisters({
                     type: "+",
                     filterType: "=",
-                    filter: userCode,//walletCode
-                    column: "user"//walletCode
+                    filter: { walletCode: walletCode },
+                    column: "wallet"
                 })
                 const toWalletExp = await moneyInternalContext.getRegisters({
                     type: "-",
                     filterType: "=",
-                    filter: userCode,//walletCode
-                    column: "user"//walletCode
+                    filter: { walletCode: walletCode },
+                    column: "wallet"
                 })
                 return ([...toWalletInc, ...toWalletExp])
             } catch (e) {
@@ -518,9 +518,36 @@ export const MoneyProvider = ({ children }) => {
                     text1: `error: ${results.error}`,
                 })
             console.log(results.error);
+        },
+        getMonthlyBalance: async () => {
+            const MonthlyIncomes = await moneyInternalContext.getRegisters({
+                type: "+",
+                filterType: "==",
+                filter: "MonthyBalance",
+                column: "incCategory"
+            })
+            const MonthlyExpenses = await moneyInternalContext.getRegisters({
+                type: "-",
+                filterType: "==",
+                filter: "MonthyBalance",
+                column: "incCategory"
+            })
+            const MonthyBalances = [...MonthlyIncomes, ...MonthlyExpenses]
+            for (const launche in MonthlyExpenses) {
+                try {
+                if (parseInt(MonthyBalances[launche].split("-")[0])
+                    >
+                    parseInt(MonthyBalances[launche + 1].split("-")[0])) {
+                        const year = MonthyBalances[launche]
+                        MonthyBalances[launche] = MonthyBalances[launche+1]
+                        MonthyBalances[launche+1] = MonthyBalances[launche]
+                }
+            }catch{
+                
+            }
+            }
         }
     }
-
 
     return (
         <MoneyContext.Provider value={moneyInternalContext} >
