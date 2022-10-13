@@ -21,8 +21,11 @@ export default props => {
         return (
             <VictoryChart
                 width={600}
-                height={470}
-
+                height={270}
+                domain={{ x: [0,2], y: [0, 6] }}
+                containerComponent={<VictoryZoomContainer 
+                    preserveAspectRatio=''
+                 zoomDomain={{ x: [0, 5], y: [-1000, 1000] }} />}
             >
                 <VictoryLine
                     style={{
