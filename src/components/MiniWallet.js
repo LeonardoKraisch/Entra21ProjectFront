@@ -3,7 +3,7 @@ import { Text, StyleSheet, TouchableOpacity, View } from "react-native";
 export default props => {
     return (
         <TouchableOpacity style={styles.container}
-            onPress={() => props.navigation.navigate("CustomWallet", { wallet: props.wallet.item })}>
+            onPress={() => props.navigation.navigate("CustomWallet", { wallet: props.wallet.item, wallets: props.wallets })}>
             <View style={styles.label}>
                 <Text style={styles.labelText}>
                     {props.wallet.item.wallet.walletName}

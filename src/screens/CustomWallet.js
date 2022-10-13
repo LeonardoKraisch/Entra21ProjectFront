@@ -15,15 +15,17 @@ export default props => {
     const { getAllRegistersToWallet } = useMoney()
     const [launches, setLaunches] = useState()
     const [wallet, setWallet] = useState()
-    const [wallets, setWallets] = useState([])
+    const [wallets, setWallets] = useState([props.route.params.wallet.wallet.walletName])
     var customWallets = []
 
     useEffect(() => {
         async function loadRegisters() {
             try {
                 setLaunches(await getAllRegistersToWallet(props.route.params.wallet.wuCode))
-                await props.wallets.forEach((w) => {
-                    customWallets.push(w.wallet.walletName)
+                await props.route.params.wallets.forEach((w) => {
+                    if(w.wallet.walletName != props.route.params.wallet.wallet.walletName) {
+                        customWallets.push(w.wallet.walletName)
+                    }
                 })
                 setWallets([...wallets, ...customWallets])
                 setWallet(wallets[0])
@@ -67,34 +69,32 @@ export default props => {
         )
     }
 
-
-    const Filters = () => {
-        if (showFilters) {
-            return (
-                <View style={styles.secondaryContainer}>
-                    <View style={styles.buttonContainer}>
-                        <TouchableOpacity onPress={() => setShowFilters(false)}>
-                            <Text style={styles.buttonText}>- Filters</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <WalletFilters show={show} />
-                </View>
-            )
-        } else {
-            return (
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity onPress={() => setShowFilters(true)}>
-                        <Text style={styles.buttonText}>+ Filters</Text>
-                    </TouchableOpacity>
-                </View>
-            )
-        }
-    }
+    // const Filters = () => {
+    //     if (showFilters) {
+    //         return (
+    //             <View style={styles.secondaryContainer}>
+    //                 <View style={styles.buttonContainer}>
+    //                     <TouchableOpacity onPress={() => setShowFilters(false)}>
+    //                         <Text style={styles.buttonText}>- Filters</Text>
+    //                     </TouchableOpacity>
+    //                 </View>
+    //                 <WalletFilters show={show} />
+    //             </View>
+    //         )
+    //     } else {
+    //         return (
+    //             <View style={styles.buttonContainer}>
+    //                 <TouchableOpacity onPress={() => setShowFilters(true)}>
+    //                     <Text style={styles.buttonText}>+ Filters</Text>
+    //                 </TouchableOpacity>
+    //             </View>
+    //         )
+    //     }
+    // }
 
     return (
         <LinearGradient colors={['#192b6a', '#243e9c', '#3155d6']} style={styles.container}>
-            <View style={styles.filters}>
-                <View style={styles.mainFilters}>
+            <View style={styles.filters}>  
                     <SelectDropdown
                         buttonTextStyle={{
                             color: '#FFF',
@@ -106,18 +106,17 @@ export default props => {
                             fontSize: 20,
                             fontWeight: 'bold'
                         }}
-                        defaultValue={wallet}
-                        buttonStyle={{ backgroundColor: '#353935', borderBottomColor: '#FFF', borderBottomWidth: 1, height: 28, paddingHorizontal: 5 }}
-                        dropdownStyle={{ backgroundColor: '#353935' }}
+                        defaultButtonText={props.route.params.wallet.wallet.walletName}
+                        buttonStyle={{ backgroundColor: '#192b6a', borderBottomColor: '#FFF', borderBottomWidth: 1, height: 28, paddingHorizontal: 5 }}
+                        dropdownStyle={{ backgroundColor: '#192b6a' }}
                         data={wallets}
                         onSelect={(selected, i) => {
-                            setWallet(i)
+                            setWallet(selected)
                         }}
-                    />
-                </View>
+                    /> 
                 <DatePicker />
             </View>
-            <Filters />
+            {/* <Filters /> */}
             <View style={{ flex: 1, padding: 10 }}>
                 <ShowReport />
             </View>
@@ -142,16 +141,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderBottomColor: '#CCC',
         borderBottomWidth: 2,
-    },
-    mainFilters: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        width: '95%',
-        padding: 5,
-        marginBottom: 5,
-        borderBottomColor: '#CCC',
-        borderBottomWidth: 1,
     },
     selected: {
         color: '#FFF',
