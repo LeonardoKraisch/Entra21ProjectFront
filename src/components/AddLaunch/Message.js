@@ -47,8 +47,8 @@ export default props => {
                     dropdownStyle={{ backgroundColor: '#353935' }}
                     data={wallets}
                     onSelect={(selected, i) => {
-                        setWallet(i)
-                        props.getWallet(i)
+                        setWallet(props.wallets[i-1].wuCode)
+                        props.getWallet(props.wallets[i-1].wuCode)
                     }}
                 />
             </View>
