@@ -1,6 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { LinearGradient } from 'expo-linear-gradient';
 import { VictoryChart, VictoryLine, VictoryZoomContainer } from "victory-native";
+import { Button } from "react-native-paper";
 
 export default props => {
 
@@ -17,11 +19,11 @@ export default props => {
         { month: "oct", value: 326 }
     ]
 
-    const MyPieChart = () => {
+    const MyChart = () => {
         return (
             <VictoryChart
-                width={Dimensions.get('window').width}
-                height={270}
+                width={Dimensions.get('window').width - 10}
+                height={Dimensions.get('window').height / 4}
                 domain={{ x: [0, 11], y: [-1000, 1000] }}
                 containerComponent={<VictoryZoomContainer
                     allowZoom={false}
@@ -30,7 +32,7 @@ export default props => {
             >
                 <VictoryLine
                     style={{
-                        data: { stroke: "tomato" }
+                        data: { stroke: "green" }
                     }}
                     data={savings}
                     x="month"
@@ -41,39 +43,66 @@ export default props => {
     };
 
     return (
-        <View style={styles.container}>
+        <LinearGradient colors={['#192b6a', '#243e9c', '#3155d6']} style={styles.container}>
             <View style={styles.label}>
-                <Text style={styles.labelText}>
-                    Main Wallet
-                </Text>
+                <Text style={styles.labelText}>My Savings</Text>
             </View>
-            <ScrollView style={styles.chartContainer}>
-                <MyPieChart />
-            </ScrollView>
-        </View>
+            <View style={styles.chartContainer}>
+                <MyChart />
+            </View>
+            <Button onPress={() => props.navigation.goBack()} style={styles.buttonBack}>
+                <Text style={styles.buttonBackText}>
+                    Back
+                </Text>
+            </Button>
+        </LinearGradient>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFF',
-        padding: 20
+        alignItems: 'center',
+        padding: 10
     },
     label: {
-        borderBottomColor: '#FFF',
-        borderBottomWidth: 1,
         padding: 5,
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginHorizontal: 5
+        alignSelf: 'flex-start',
+        marginVertical: 25
     },
     labelText: {
         color: '#FFF',
         fontWeight: 'bold',
-        fontSize: 16
+        fontSize: 25
     },
     chartContainer: {
-
+        height: '25%',
+        width: '95%',
+        backgroundColor: '#FFF',
+        justifyContent: 'center',
+        padding: 10,
+        borderRadius: 10
     },
+    buttonBack: {
+        flex: 1,
+        right: 10,
+        bottom: 10,
+        position: 'absolute',
+        backgroundColor: '#353935',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 7,
+            height: 7
+        },
+        shadowOpacity: 0.30,
+        shadowRadius: 4,
+        elevation: 3
+    },
+    buttonBackText: {
+        color: '#FFF'
+    }
 })

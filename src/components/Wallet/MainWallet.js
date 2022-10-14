@@ -43,7 +43,7 @@ export default props => {
                 innerRadius={30}
                 style={{
                     data: {
-                        fillOpacity: 0.9, stroke: '#3155d6', strokeWidth: 2
+                        fillOpacity: 0.9, stroke: '#353935', strokeWidth: 4
                     },
                     labels: {
                         fontSize: 16, fill: '#FFF', padding: 8
