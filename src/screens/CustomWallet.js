@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { LinearGradient } from "expo-linear-gradient";
-import { Button } from "react-native-paper";
 
 import moment from 'moment'
 import DateTimePicker from '@react-native-community/datetimepicker'
@@ -69,28 +68,28 @@ export default props => {
         )
     }
 
-    // const Filters = () => {
-    //     if (showFilters) {
-    //         return (
-    //             <View style={styles.secondaryContainer}>
-    //                 <View style={styles.buttonContainer}>
-    //                     <TouchableOpacity onPress={() => setShowFilters(false)}>
-    //                         <Text style={styles.buttonText}>- Filters</Text>
-    //                     </TouchableOpacity>
-    //                 </View>
-    //                 <WalletFilters show={show} />
-    //             </View>
-    //         )
-    //     } else {
-    //         return (
-    //             <View style={styles.buttonContainer}>
-    //                 <TouchableOpacity onPress={() => setShowFilters(true)}>
-    //                     <Text style={styles.buttonText}>+ Filters</Text>
-    //                 </TouchableOpacity>
-    //             </View>
-    //         )
-    //     }
-    // }
+    const Filters = () => {
+        if (showFilters) {
+            return (
+                <View style={styles.secondaryContainer}>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity onPress={() => setShowFilters(false)}>
+                            <Text style={styles.buttonText}>- Filters</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <WalletFilters show={show} />
+                </View>
+            )
+        } else {
+            return (
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity onPress={() => setShowFilters(true)}>
+                        <Text style={styles.buttonText}>+ Filters</Text>
+                    </TouchableOpacity>
+                </View>
+            )
+        }
+    }
 
     return (
         <LinearGradient colors={['#192b6a', '#243e9c', '#3155d6']} style={styles.container}>
@@ -116,7 +115,7 @@ export default props => {
                     /> 
                 <DatePicker />
             </View>
-            {/* <Filters /> */}
+            <Filters />
             <View style={{ flex: 1, padding: 10 }}>
                 <ShowReport />
             </View>
