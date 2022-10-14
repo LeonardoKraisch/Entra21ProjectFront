@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BackHandler, Modal, Alert, View, StyleSheet, FlatList, StatusBar, TouchableOpacity, Text } from 'react-native'
 import { Card, SegmentedButtons } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useFocusEffect } from "@react-navigation/native";
 
 import Header from "../components/Header";
 import MiniWallet from "../components/MiniWallet";
@@ -23,15 +24,18 @@ export default props => {
     const [solo, setSolo] = useState(true)
     const [myState, refresh] = useState(true)
 
+    useFocusEffect(() => {
+        BackHandler.addEventListener("hardwareBackPress", backAction);
+        return () =>
+            BackHandler.removeEventListener("hardwareBackPress", backAction);
+    })
+
     useEffect(() => {
         async function loadWallets() {
             setWallets(await getWallets())
             getPendings()
         }
         loadWallets()
-        BackHandler.addEventListener("hardwareBackPress", backAction);
-        return () =>
-            BackHandler.removeEventListener("hardwareBackPress", backAction);
     }, [myState])
 
     const backAction = () => {

@@ -167,11 +167,6 @@ export default props => {
                 renderEmptyData={() => <View style={styles.negation}><Text style={styles.negationText}>There are no launches for this day.</Text></View>}
             />
             <ModalView />
-            <Button onPress={() => props.navigation.goBack()} style={styles.buttonBack}>
-                <Text style={styles.buttonBackText}>
-                    Back
-                </Text>
-            </Button>
         </View>
     );
 
@@ -315,26 +310,4 @@ const styles = StyleSheet.create({
     buttonTrashView: {
         justifyContent: 'flex-start'
     },
-    buttonBack: {
-        flex: 1,
-        right: 10,
-        bottom: 10,
-        position: 'absolute',
-        backgroundColor: '#23a2e2',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 5,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 7,
-            height: 7
-        },
-        shadowOpacity: 0.30,
-        shadowRadius: 4,
-        elevation: 3
-    },
-    buttonBackText: {
-        color: '#FFF',
-
-    }
 });

@@ -120,11 +120,6 @@ export default props => {
             <View style={{ flex: 1, padding: 10 }}>
                 <ShowReport />
             </View>
-            <Button onPress={() => props.navigation.goBack()} style={styles.buttonBack}>
-                <Text style={styles.buttonBackText}>
-                    Back
-                </Text>
-            </Button>
         </LinearGradient>
     )
 }
@@ -179,26 +174,5 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold'
     },
-    buttonBack: {
-        flex: 1,
-        right: 10,
-        bottom: 10,
-        position: 'absolute',
-        backgroundColor: '#353935',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 5,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 7,
-            height: 7
-        },
-        shadowOpacity: 0.30,
-        shadowRadius: 4,
-        elevation: 3
-    },
-    buttonBackText: {
-        color: '#FFF'
-    }
 })
 
