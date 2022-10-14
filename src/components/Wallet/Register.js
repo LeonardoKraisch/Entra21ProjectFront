@@ -10,12 +10,29 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import { TextMask } from "react-native-masked-text";
 import { MaterialIcons } from '@expo/vector-icons'
 
+import useMoney from '../../data/hooks/useMoney';
+
 export default props => {
+    const { delRegister, editRegister, showToast } = useMoney()
     const [show, setShow] = useState(false)
+
+    const deleteEntry = async (code) => {
+        await showToast(await delRegister(code), "Delete")
+        setRefresh(null)
+        setModalVisible(false)
+    }
 
     const getRightContent = () => {
         return (
-            <TouchableOpacity style={styles.right}>
+            <TouchableOpacity onPress={() => deleteEntry(props.incCode ?
+                {
+                    type: "+",
+                    code: props.incCode
+                } : {
+                    type: "-",
+                    code: props.expCode
+                }
+                )} style={styles.right}>
                 <Icon name="trash" size={30} color='#FFF' />
             </TouchableOpacity>
         )

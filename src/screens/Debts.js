@@ -13,6 +13,7 @@ export default props => {
     const [modalVisible, setModalVisible] = useState(false)
     const [item, setItem] = useState()
     const [refresh, setRefresh] = useState(null)
+    
     useEffect(() => {
         async function fetch() {
             try {
@@ -63,7 +64,6 @@ export default props => {
         );
     }
 
-
     
     const deleteEntry = async (code) => {
         await showToast(await delRegister(code), "Delete")
@@ -72,7 +72,7 @@ export default props => {
     }
 
     const editEntry = async (register) => {
-        await showToast(await editRegister(register,), "Edit")
+        await showToast(await editRegister(register), "Edit")
         setRefresh(null)
         setModalVisible(false)
     }
