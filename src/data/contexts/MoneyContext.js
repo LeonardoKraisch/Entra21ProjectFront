@@ -109,7 +109,7 @@ export const MoneyProvider = ({ children }) => {
                 launch[`${table}Date`] = data.dateString,
                 launch[`${table}Description`] = data.description,
                 launch['user'] = await userCode
-                launch['wallet'] = await data.wallet
+            launch['wallet'] = await data.wallet
             try {
                 const newLaunch = await axios.post(`/${pressedPlus ? "income" : "expense"}/new`, { launch })
                 if (await newLaunch.data.registered) {
@@ -551,6 +551,31 @@ export const MoneyProvider = ({ children }) => {
 
                 }
             }
+            const savings = []
+            MonthlyBalances.forEach(async register => {
+
+
+
+                const mounthlys = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
+                var value = 0
+                var date = ""
+                try {
+                    value = register.incMoney
+                    date = register.incDate
+                } catch {
+
+                    value = register.expMoney
+                    date = register.expDate
+                }
+                var datesCamps = date.split("-")
+                savings.push({
+                    month: `${datesCamps[0]}-${mounthlys[datesCamps[1] - 1]}`,
+                    value
+                })
+                return { savings, MonthlyBalances }
+            })
+
+
         }
     }
 
