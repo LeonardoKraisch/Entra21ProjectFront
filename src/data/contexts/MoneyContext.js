@@ -242,7 +242,7 @@ export const MoneyProvider = ({ children }) => {
                     setExpPendings(newPendings)
 
                 }
-                ediConn.data.result.successful ?
+                ediConn.data.result.results.successful ?
                     Toast.show({
                         type: 'success',
                         text1: 'Edit successfull!',

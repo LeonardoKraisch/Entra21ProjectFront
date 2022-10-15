@@ -9,23 +9,29 @@ import { FontAwesome } from "@expo/vector-icons";
 import useMoney from "../data/hooks/useMoney"
 
 export default props => {
-    const { allPendings, delRegister, editRegister, generalPendings, showToast } = useMoney()
+    const { allPendings, delRegister, editRegister, getPendings, showToast } = useMoney()
     const [modalVisible, setModalVisible] = useState(false)
     const [item, setItem] = useState()
-    const [refresh, setRefresh] = useState(null)
-    
+
     useEffect(() => {
         async function fetch() {
-            try {
-                await generalPendings()
-                return allPendings[Object.keys(allPendings)[0]][0]
-            } catch (e) {
-                console.log(e, "myDebts effect");
-                return []
+            if (item === null) {
+                try {
+                    reloadAgenda()
+                    setItem(allPendings[Object.keys(allPendings)[0]][0])
+                } catch (e) {
+                    console.log(e, "myDebts effect");
+                    setItem([])
+                }
             }
         }
-        setItem(fetch())
-    }, [refresh])
+        fetch()
+    }, [item])
+
+    const reloadAgenda = () => {
+        setItem(null)
+        getPendings()
+    }
 
     const renderItem = (item) => {
         const table = item.incMoney ? "inc" : "exp"
@@ -64,16 +70,16 @@ export default props => {
         );
     }
 
-    
+
     const deleteEntry = async (code) => {
         await showToast(await delRegister(code), "Delete")
-        setRefresh(null)
+        reloadAgenda()
         setModalVisible(false)
     }
 
     const editEntry = async (register) => {
         await showToast(await editRegister(register), "Edit")
-        setRefresh(null)
+        reloadAgenda()
         setModalVisible(false)
     }
 
@@ -121,11 +127,11 @@ export default props => {
                                             {
                                                 type: "+",
                                                 code: item.incCode,
-                                                pending
+                                                pending: true
                                             } : {
                                                 type: "-",
                                                 code: item.expCode,
-                                                pending
+                                                pending: true
                                             }
                                         )} style={styles.buttonTrash}>
                                             <FontAwesome size={27} name="trash-o" color="#FFF" />
@@ -162,7 +168,7 @@ export default props => {
                 items={allPendings}
                 refreshControl={null}
                 showClosingKnob={true}
-                refreshing={true}
+                refreshing={false}
                 futureScrollRange={12}
                 pastScrollRange={6}
                 renderItem={renderItem}

@@ -64,7 +64,7 @@ export default props => {
 const styles = StyleSheet.create({
     card: {
         width: '100%',
-        backgroundColor: '#35393570',
+        backgroundColor: '#353935',
         shadowColor: "#000",
         shadowOffset: {
             width: 5,
