@@ -18,8 +18,6 @@ export default props => {
 
     const deleteEntry = async (code) => {
         await showToast(await delRegister(code), "Delete")
-        setRefresh(null)
-        setModalVisible(false)
     }
 
     const getRightContent = () => {
@@ -30,7 +28,7 @@ export default props => {
                     code: props.incCode
                 } : {
                     type: "-",
-                    code: props.expCode
+                    code: props.expCode,
                 }
                 )} style={styles.right}>
                 <Icon name="trash" size={30} color='#FFF' />

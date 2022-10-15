@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Modal } from "react-native";
 import { Agenda } from 'react-native-calendars'
-import { Card, Button } from "react-native-paper";
+import { Card } from "react-native-paper";
 import { TextMask } from "react-native-masked-text";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
@@ -20,7 +20,7 @@ export default props => {
                 await generalPendings()
                 return allPendings[Object.keys(allPendings)[0]][0]
             } catch (e) {
-                console.log(e);
+                console.log(e, "myDebts effect");
                 return []
             }
         }
@@ -120,10 +120,12 @@ export default props => {
                                         <TouchableOpacity onPress={() => deleteEntry(item.incCode ?
                                             {
                                                 type: "+",
-                                                code: item.incCode
+                                                code: item.incCode,
+                                                pending
                                             } : {
                                                 type: "-",
-                                                code: item.expCode
+                                                code: item.expCode,
+                                                pending
                                             }
                                         )} style={styles.buttonTrash}>
                                             <FontAwesome size={27} name="trash-o" color="#FFF" />

@@ -8,9 +8,12 @@ export default props => {
                 <Text style={styles.labelText}>
                     {props.wallet.item.wallet.walletName}
                 </Text>
+                <Text style={styles.labelText}>
+                    {props.wallet.item.wallet.walletCode}
+                </Text>
             </View>
             <View style={styles.desc}>
-                <Text style={styles.descText}>{props.wallet.item.wallet.walletDesc}</Text>
+                <Text style={styles.descText}>{props.wallet.item.wallet.walletPasswd}</Text>
             </View>
         </TouchableOpacity>
     )
