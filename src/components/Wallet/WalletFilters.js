@@ -12,15 +12,16 @@ import useMoney from '../../data/hooks/useMoney'
 export default props => {
 
     const { filterPlus } = useMoney()
+    
     const [date2, setDate2] = useState(new Date())
     const [showDatePicker2, setShowDatePicker2] = useState(false)
     const lastMonth = new Date()
     lastMonth.setMonth(date2.getMonth() - 1)
-    const dateString2 = moment(date2).format('YYYY[-]M[-]D')
+    const dateString2 = moment(date2).format('YYYY[-]MM[-]DD')
 
     const [date1, setDate1] = useState(lastMonth)
     const [showDatePicker1, setShowDatePicker1] = useState(false)
-    const dateString1 = moment(date1).format('YYYY[-]M[-]D')
+    const dateString1 = moment(date1).format('YYYY[-]MM[-]DD')
 
     const [category, setCategory] = useState("all")
     const [description, setDescription] = useState('')

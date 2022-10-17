@@ -14,7 +14,7 @@ export const MoneyProvider = ({ children }) => {
     const { userCode, balance, setBalance, totalInc, setTotalInc, totalExp, setTotalExp } = useUser()
 
     const [date, setDate] = useState(new Date())
-    
+
 
     const [incomes, setIncomes] = useState([null])
     const [expenses, setExpenses] = useState([])
@@ -159,16 +159,58 @@ export const MoneyProvider = ({ children }) => {
                 return null
             }
         },
+
+        fetchAllLaunches: async function () {
+            try {
+                if (incomes == '' || expenses == '') {
+                    const incomeArray = await moneyInternalContext.getRegisters({
+                        type: "+",
+                        filter: {
+                            date:
+                            {
+                                type: "[]",
+                                initDate: `${dateString(date)}-1`,
+                                endDate: `${dateString(date)}-${lastDay(date)}`
+                            }
+                        }
+                    })
+                    const expensesArray = await moneyInternalContext.getRegisters({
+                        type: "-",
+                        filter: {
+                            date:
+                            {
+                                type: "[]",
+                                initDate: `${dateString(date)}-1`,
+                                endDate: `${dateString(date)}-${lastDay(date)}`
+                            }
+                        }
+                    })
+                    await moneyInternalContext.balanceSetter(incomeArray, expensesArray)
+                    moneyInternalContext.refreshUserMoney()
+
+                } else {
+                    await moneyInternalContext.balanceSetter(incomes, expenses)
+                    moneyInternalContext.refreshUserMoney()
+
+                }
+
+            } catch (e) {
+                console.log(e.message, " - error in fetch all launches")
+            }
+        },
+
         recalBalance: async () => {
             const total = totalInc - totalExp
             return total
         },
 
         getRegisters: async data => {
+            console.log(data, "get registers");
             if (data.wallet == undefined)
                 data["user"] = { code: userCode }
             const newQuery = await axios.post(`/${data.type == "+" ? "income" : "expense"}/query`,
                 data)
+            console.log(newQuery.data, "resposta registers")
             return newQuery.data.registers
         },
 
@@ -265,54 +307,16 @@ export const MoneyProvider = ({ children }) => {
             }
         },
 
-        fetchAllLaunches: async function () {
-            try {
-                if (incomes == '' || expenses == '') {
-                    const incomeArray = await moneyInternalContext.getRegisters({
-                        type: "+",
-                        filter: {
-                            date:
-                            {
-                                type: "[]",
-                                initDate: `${dateString(date)}-1`,
-                                endDate: `${dateString(date)}-${lastDay(date)}`
-                            }
-                        }
-                    })
-                    const expensesArray = await moneyInternalContext.getRegisters({
-                        type: "-",
-                        filter: {
-                            date:
-                            {
-                                type: "[]",
-                                initDate: `${dateString(date)}-1`,
-                                endDate: `${dateString(date)}-${lastDay(date)}`
-                            }
-                        }
-                    })
-                    await moneyInternalContext.balanceSetter(incomeArray, expensesArray)
-                    moneyInternalContext.refreshUserMoney()
-
-                } else {
-                    await moneyInternalContext.balanceSetter(incomes, expenses)
-                    moneyInternalContext.refreshUserMoney()
-
-                }
-
-            } catch (e) {
-                console.log(e.message, " - error in fetch all launches")
-            }
-        },
-
         balanceSetter: async (arr1, arr2) => {
 
             const merged = await moneyInternalContext.mergeArrays(arr1, "incMoney", arr2, 'expMoney')
             setAllLaunches(merged)
             setBalance(await moneyInternalContext.getUserMoney())
-            moneyInternalContext.searchSetter(arr1, arr2, merged)
+            await moneyInternalContext.searchSetter(arr1, arr2, merged)
         },
 
         searchSetter: async (arr1, arr2, arr3) => {
+
             const totalIncome = await moneyInternalContext.calcTotal(arr1, 'incMoney')
             const totalExpense = await moneyInternalContext.calcTotal(arr2, 'expMoney')
 
@@ -332,25 +336,18 @@ export const MoneyProvider = ({ children }) => {
                 if (dateSearch != date) {
                     const incomesSearch = await moneyInternalContext.getRegisters({
                         type: "+",
-                        filter: {
-                            date: {
-                                type: "[]",
-                                initDate: `${dateString(dateSearch)}-1`,
-                                endDate: `${dateString(dateSearch)}-${lastDay(dateSearch)}`,
-                            }
-                        }
+                        filter: dateSearch
                     })
+
+                    console.log("incomesSearch", incomesSearch);
+
 
                     const expensesSearch = await moneyInternalContext.getRegisters({
                         type: "-",
-                        filter: {
-                            date: {
-                                type: "[]",
-                                initDate: `${dateString(dateSearch)}-1`,
-                                endDate: `${dateString(dateSearch)}-${lastDay(dateSearch)}`,
-                            }
-                        }
+                        filter: dateSearch
                     })
+                    console.log("expensesSearch", expensesSearch);
+
 
                     const merged = await moneyInternalContext.mergeArrays(incomesSearch, "incMoney", expensesSearch, 'expMoney')
 
@@ -389,12 +386,13 @@ export const MoneyProvider = ({ children }) => {
             }
         },
 
-        filterPlus: async (filter1, filter2) => {
-            const filteredIncomes = await moneyInternalContext.getRegisters(filter1)
-            const filteredExpenses = await moneyInternalContext.getRegisters(filter2)
+        filterPlus: async (filterIncomes, filterExpenses) => {
+            console.log("aaaaaaaaaaaaaaaaaaaaaaa", filterIncomes, filterExpenses);
+            const filteredIncomes = await moneyInternalContext.searchLaunches(filterIncomes)
+            const filteredExpenses = await moneyInternalContext.searchLaunches(filterExpenses)
             const filteredAllRegisters = await moneyInternalContext.mergeArrays(filteredIncomes, "incMoney", filteredExpenses, 'expMoney')
 
-            await moneyInternalContext.searchSetter(await filteredIncomes, await filteredExpenses, filteredAllRegisters)
+            await moneyInternalContext.searchSetter(filteredIncomes, filteredExpenses, filteredAllRegisters)
         },
 
         getPendings: async () => {
@@ -600,7 +598,7 @@ export const MoneyProvider = ({ children }) => {
             try {
                 const userConn = await axios.post(`/user/queryMoney`,
                     { userCode })
-                    console.log("getUserMoneyyyyyyyyyyyyyyyyyyyyyyyyyy", {userCode});
+                console.log("getUserMoneyyyyyyyyyyyyyyyyyyyyyyyyyy", { userCode });
                 return userConn.data.userMoney
             } catch (e) {
                 console.log("error in getUserMoney", e.message)
