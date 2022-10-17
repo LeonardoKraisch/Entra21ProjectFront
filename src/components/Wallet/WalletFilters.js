@@ -172,7 +172,7 @@ export default props => {
 
     const ValuePicker = () => {
         return (
-            <Picker dropdownIconColor='#FFF' selectedValue={pickerValue} onValueChange={setPickerValue} style={styles.picker}>
+            <Picker dropdownIconColor='#FFF' itemStyle={styles.pickerItem} selectedValue={pickerValue} onValueChange={setPickerValue} style={styles.picker}>
                 <Picker.Item style={styles.pickerItem} label="higher than:" value=">" />
                 <Picker.Item style={styles.pickerItem} label="lower than:" value="<" />
                 <Picker.Item style={styles.pickerItem} label="between:" value="[]" />
@@ -220,7 +220,7 @@ export default props => {
 
     return (
         <View style={styles.secondaryFilters}>
-            <View style={styles.setDate}>
+            <View style={styles.genericContainer}>
                 <View style={{ flexDirection: 'row' }}>
                     <Text style={styles.dateTitle}>Date between:</Text>
                     <DatePicker1 />
@@ -230,21 +230,21 @@ export default props => {
                     <DatePicker2 />
                 </View>
             </View>
-            <View style={{ borderRadius: 40, paddingHorizontal: 5, marginBottom: 5 }}>
-                <View style={styles.container}>
+            <View style={styles.mainValuesCont}>
+                <View style={styles.valuesContainer}>
                     <Text style={styles.titles}>Values</Text>
                     <ValuePicker />
                 </View>
                 <ValueInput />
             </View>
 
-            <View style={styles.container}>
+            <View style={styles.genericContainer}>
                 <Text style={styles.titles}>Categories: </Text>
                 <BalancePicker />
             </View>
 
-            <View style={styles.inputContainer}>
-                <TextInput style={styles.inputMoney} placeholder="Search for description" value={description} onChangeText={setDescription} />
+            <View style={styles.genericContainer}>
+                <TextInput style={styles.inputMoney} placeholder="Search for description" placeholderTextColor={'#FFF9'} value={description} onChangeText={setDescription} />
             </View>
 
             <View style={styles.buttonContainer}>
@@ -265,15 +265,24 @@ const styles = StyleSheet.create({
         borderBottomColor: '#CCC',
         borderBottomWidth: 2,
     },
-    setDate: {
+    genericContainer: {
         width: '85%',
         justifyContent: "space-between",
         alignItems: 'center',
         flexDirection: 'row',
-        margin: 5,
-        borderRadius: 20,
         paddingHorizontal: 10,
-        marginBottom: 5
+        borderBottomColor: '#FFF',
+        borderBottomWidth: 1,
+        margin: 10,
+    },
+    mainValuesCont: {
+        width: '85%',
+        justifyContent: "space-between",
+        alignItems: 'center',
+        paddingHorizontal: 10,
+        borderBottomColor: '#FFF',
+        borderBottomWidth: 1,
+        margin: 10,
     },
     datePicker: {
         paddingHorizontal: 5,
@@ -292,7 +301,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     pickerItem: {
-        backgroundColor: '#192b6a',
+        backgroundColor: '#243e9c',
         color: '#FFF',
         fontSize: 15,
     },
@@ -300,12 +309,11 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#FFF',
     },
-    container: {
+    valuesContainer: {
+        minHeight: '20%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        width: '85%',
-        borderRadius: 40,
         paddingHorizontal: 10,
         marginBottom: 5
     },
@@ -314,20 +322,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         width: '90%',
-        marginBottom: 2,
-        borderRadius: 40,
         paddingHorizontal: 10,
         marginBottom: 5
     },
     inputMoney: {
-        borderBottomColor: '#CCC',
-        borderBottomWidth: 1,
         paddingHorizontal: 5,
         marginHorizontal: 10,
-        textAlign: 'right',
+        textAlign: 'center',
         color: '#FFF',
         flex: 1,
-        fontSize: 16
+        fontSize: 18
     },
     buttonContainer: {
         alignItems: 'center',

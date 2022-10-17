@@ -194,12 +194,12 @@ const styles = StyleSheet.create({
         letterSpacing: 1.5
     },
     modalView: {
+        flex: 1,
         padding: 10,
-        minHeight: '100%'
     },
     modalCard: {
-        flex: 1,
-        width: '100%',
+        height: 490,
+        borderRadius: 10
     },
     buttonHelpContainer: {
         flexDirection: 'row',
@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end'
     },
     content: {
-        height: '100%',
+        flex: 1,
         paddingTop: 20,
     }
 })

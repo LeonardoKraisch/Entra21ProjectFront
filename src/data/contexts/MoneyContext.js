@@ -173,24 +173,43 @@ export const MoneyProvider = ({ children }) => {
         },
 
         delRegister: async (data) => {
+
             try {
                 const delConn = await axios.post(`/${data.type == "+" ? "income" : "expense"}/delete`,
                     { code: data.code })
 
                 if (data.type == "+" && delConn.data.result.successful) {
-                    var newPendings = incPendings.filter((pending) => {
-                        return pending.incCode != data.code
-                    })
-                    setIncPendings(newPendings)
+                    if (data.pending) {
+                        var newPendings = incPendings.filter((pending) => {
+                            return pending.incCode != data.code
+                        })
+                        setIncPendings(newPendings)
+                        await moneyInternalContext.generalPendings()
+                    } else {
+                        var newLaunches = incomes.filter((launch) => {
+                            return launch.incCode != data.code
+                        })
+                        setIncomes(newLaunches)
+                        await moneyInternalContext.balanceSetter(newLaunches, expenses)
+                    }
 
                 } else if (data.type == "-" && delConn.data.result.successful) {
-                    var newPendings = expPendings.filter((pending) => {
-                        return pending.expCode != data.code
-                    })
-                    setExpPendings(newPendings)
+                    if (data.pending) {
+                        var newPendings = expPendings.filter((pending) => {
+                            return pending.expCode != data.code
+                        })
+                        setExpPendings(newPendings)
+                        await moneyInternalContext.generalPendings()
+                    } else {
+                        var newLaunches = expenses.filter((launch) => {
+                            return launch.expCode != data.code
+                        })
+                        setIncomes(newLaunches)
+                        await moneyInternalContext.balanceSetter(incomes, newLaunches)
+                    }
 
                 }
-                await moneyInternalContext.generalPendings()
+
                 return delConn.data.result
             } catch (e) {
                 console.log(e.message, " - error in delRegister")
@@ -226,7 +245,7 @@ export const MoneyProvider = ({ children }) => {
                     setExpPendings(newPendings)
 
                 }
-                ediConn.data.result.successful ?
+                ediConn.data.result.results.successful ?
                     Toast.show({
                         type: 'success',
                         text1: 'Edit successfull!',

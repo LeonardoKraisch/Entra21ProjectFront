@@ -8,6 +8,9 @@ export default props => {
                 <Text style={styles.labelText}>
                     {props.wallet.item.wallet.walletName}
                 </Text>
+                <Text style={styles.labelText}>
+                    {props.wallet.item.wallet.walletCode}
+                </Text>
             </View>
             <View style={styles.desc}>
                 <Text style={styles.descText}>{props.wallet.item.wallet.walletTotalIncomes - props.wallet.item.wallet.walletTotalExpenses}</Text>

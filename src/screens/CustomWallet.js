@@ -12,6 +12,7 @@ import SelectDropdown from 'react-native-select-dropdown'
 
 export default props => {
     const { getAllRegistersToWallet } = useMoney()
+    const [show, setShow] = useState("expenses")
     const [launches, setLaunches] = useState()
     const [wallet, setWallet] = useState()
     const [wallets, setWallets] = useState([props.route.params.wallet.wallet.walletName])
@@ -22,7 +23,7 @@ export default props => {
             try {
                 setLaunches(await getAllRegistersToWallet(props.route.params.wallet.wuCode))
                 await props.route.params.wallets.forEach((w) => {
-                    if(w.wallet.walletName != props.route.params.wallet.wallet.walletName) {
+                    if (w.wallet.walletName != props.route.params.wallet.wallet.walletName) {
                         customWallets.push(w.wallet.walletName)
                     }
                 })
@@ -34,6 +35,22 @@ export default props => {
         }
         loadRegisters()
     }, [])
+
+    const ShowReport = () => {
+        if (show == "expenses") {
+            return (
+                <CustomReport launches={launches} />
+            )
+        } else if (show == "incomes") {
+            return (
+                <CustomReport launches={launches} />
+            )
+        } else {
+            return (
+                <CustomReport launches={launches} />
+            )
+        }
+    }
 
     const [showFilters, setShowFilters] = useState(false)
     const [showDatePicker, setShowDatePicker] = useState(false)
@@ -62,12 +79,6 @@ export default props => {
         return datePicker
     }
 
-    const ShowReport = () => {
-        return (
-            <CustomReport launches={launches} />
-        )
-    }
-
     const Filters = () => {
         if (showFilters) {
             return (
@@ -93,26 +104,43 @@ export default props => {
 
     return (
         <LinearGradient colors={['#192b6a', '#243e9c', '#3155d6']} style={styles.container}>
-            <View style={styles.filters}>  
-                    <SelectDropdown
-                        buttonTextStyle={{
-                            color: '#FFF',
-                            fontSize: 20,
-                            fontWeight: 'bold'
-                        }}
-                        rowTextStyle={{
-                            color: '#FFF',
-                            fontSize: 20,
-                            fontWeight: 'bold'
-                        }}
-                        defaultButtonText={props.route.params.wallet.wallet.walletName}
-                        buttonStyle={{ backgroundColor: '#192b6a', borderBottomColor: '#FFF', borderBottomWidth: 1, height: 28, paddingHorizontal: 5 }}
-                        dropdownStyle={{ backgroundColor: '#192b6a' }}
-                        data={wallets}
-                        onSelect={(selected, i) => {
-                            setWallet(selected)
-                        }}
-                    /> 
+            <View style={styles.filters}>
+                <SelectDropdown
+                    buttonTextStyle={{
+                        color: '#FFF',
+                        fontSize: 20,
+                        fontWeight: 'bold'
+                    }}
+                    rowTextStyle={{
+                        color: '#FFF',
+                        fontSize: 20,
+                        fontWeight: 'bold'
+                    }}
+                    defaultButtonText={props.route.params.wallet.wallet.walletName}
+                    buttonStyle={{ backgroundColor: '#192b6a10', borderBottomColor: '#FFF', borderBottomWidth: 1, height: 28, paddingHorizontal: 5, marginBottom: 5 }}
+                    dropdownStyle={{ backgroundColor: '#192b6a' }}
+                    data={wallets}
+                    onSelect={(selected, i) => {
+                        setWallet(selected)
+                    }}
+                />
+                <View style={styles.mainFilters}>
+                    <TouchableOpacity onPress={() => setShow("expenses")}>
+                        <Text style={[show == "expenses" ? styles.selected : styles.unselect]}>
+                            Expenses
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => setShow("incomes")}>
+                        <Text style={[show == "incomes" ? styles.selected : styles.unselect]}>
+                            Incomes
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => setShow("all")}>
+                        <Text style={[show == "all" ? styles.selected : styles.unselect]}>
+                            All launches
+                        </Text>
+                    </TouchableOpacity>
+                </View>
                 <DatePicker />
             </View>
             <Filters />
@@ -135,6 +163,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderBottomColor: '#CCC',
         borderBottomWidth: 2,
+    },
+    mainFilters: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        width: '95%',
+        padding: 5,
+        marginBottom: 5,
+        borderBottomColor: '#CCC',
+        borderBottomWidth: 1,
     },
     selected: {
         color: '#FFF',

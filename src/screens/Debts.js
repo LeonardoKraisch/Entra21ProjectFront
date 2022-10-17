@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Modal } from "react-native";
 import { Agenda } from 'react-native-calendars'
-import { Card, Button } from "react-native-paper";
+import { Card } from "react-native-paper";
 import { TextMask } from "react-native-masked-text";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
@@ -12,10 +12,11 @@ export default props => {
     const { allPendings, delRegister, editRegister, getPendings, showToast, debtsState, refreshDebts } = useMoney()
     const [modalVisible, setModalVisible] = useState(false)
     const [item, setItem] = useState()
-    
+
     useEffect(() => {
         async function fetch() {
             try {
+                reloadAgenda()
                 return await getPendings()
             } catch (e) {
                 console.log(e);
@@ -24,7 +25,7 @@ export default props => {
         }
         setItem(fetch())
         
-    }, [debtsState])
+    }, [debtsState, item])
 
     const renderItem = (item) => {
         const table = item.incMoney ? "inc" : "exp"
@@ -63,16 +64,16 @@ export default props => {
         );
     }
 
-    
+
     const deleteEntry = async (code) => {
         await showToast(await delRegister(code), "Delete")
-        refreshDebts(!myState)
+        setRefresh(null)
         setModalVisible(false)
     }
 
     const editEntry = async (register) => {
         await showToast(await editRegister(register), "Edit")
-        refreshDebts(!myState)
+        setRefresh(null)
         setModalVisible(false)
     }
 
@@ -119,10 +120,12 @@ export default props => {
                                         <TouchableOpacity onPress={() => deleteEntry(item.incCode ?
                                             {
                                                 type: "+",
-                                                code: item.incCode
+                                                code: item.incCode,
+                                                pending: true
                                             } : {
                                                 type: "-",
-                                                code: item.expCode
+                                                code: item.expCode,
+                                                pending: true
                                             }
                                         )} style={styles.buttonTrash}>
                                             <FontAwesome size={27} name="trash-o" color="#FFF" />
@@ -159,7 +162,7 @@ export default props => {
                 items={allPendings}
                 refreshControl={null}
                 showClosingKnob={true}
-                refreshing={debtsState}
+                refreshing={true}
                 futureScrollRange={12}
                 pastScrollRange={6}
                 renderItem={renderItem}

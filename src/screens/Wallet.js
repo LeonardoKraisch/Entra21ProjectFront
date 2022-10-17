@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { LinearGradient } from "expo-linear-gradient";
-import { Button } from "react-native-paper";
 
 import moment from 'moment'
 import DateTimePicker from '@react-native-community/datetimepicker'

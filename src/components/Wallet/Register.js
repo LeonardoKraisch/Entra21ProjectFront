@@ -28,7 +28,7 @@ export default props => {
                     code: props.incCode
                 } : {
                     type: "-",
-                    code: props.expCode
+                    code: props.expCode,
                 }
                 )} style={styles.right}>
                 <Icon name="trash" size={30} color='#FFF' />

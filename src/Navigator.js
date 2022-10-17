@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { MaterialIcons } from "@expo/vector-icons";
+import { Avatar } from "react-native-paper";
 
 import Splash from "./Splash"
 import Home from "./screens/Home";
@@ -67,14 +68,18 @@ export default props => {
     const menuConfig = {
         headerShown: false,
         drawerStyle: {
-            backgroundColor: '#192b6a'
+            backgroundColor: '#192b6a',
         },
         drawerItemStyle: {
-            height: 46,
+            height: 60,
+            marginBottom: 10,
             backgroundColor: '#243e9c',
+            justifyContent: 'center'
         },
         drawerLabelStyle: {
-            color: '#FFF'
+            color: '#FFF',
+            fontSize: 20,
+            fontWeight: 'bold'
         }
 
     }
@@ -88,13 +93,15 @@ export default props => {
                     return (
                         <DrawerContentScrollView {...props}>
                             <View style={styles.userInfo}>
+                                <Avatar.Image size={80} source={require('../assets/abelha.jpg')} />
                                 <View style={styles.texts}>
                                     <Text style={{ color: '#FFF', fontSize: 18 }}>{"Welcome,"}</Text>
-                                    <Text style={{ color: '#FFF', fontSize: 27 }}>{name}</Text>
+                                    <Text style={{ color: '#FFF', fontSize: 37 }}>{name}</Text>
                                 </View>
                             </View>
                             <DrawerItemList {...props} />
                             <DrawerItem
+                                style={{ marginTop: 285 }}
                                 icon={() => <LogoutButton {...props} />}
                                 label=''
                             />
@@ -120,18 +127,20 @@ export default props => {
 const styles = StyleSheet.create({
     userInfo: {
         flexDirection: 'row',
-        marginVertical: 20
+        backgroundColor: '#243e9c',
+        marginBottom: 25,
+        alignItems: 'center',
+        paddingTop: 20,
+        paddingLeft: 10
     },
     avatar: {
-        margin: 5,
         height: 60,
         width: 60,
         borderRadius: 30
     },
     texts: {
         justifyContent: 'flex-end',
-        margin: 2,
-        padding: 0
+        padding: 20
     },
     logoutButton: {
         flexDirection: 'row',
@@ -141,8 +150,8 @@ const styles = StyleSheet.create({
     logoutButtonText: {
         color: '#FFF',
         fontWeight: 'bold',
-        marginLeft: 5,
-        fontSize: 20
+        fontSize: 20,
+        marginLeft: 5
     },
 
 })
