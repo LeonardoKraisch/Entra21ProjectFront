@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { TextInput } from "react-native-paper";
+import Lottie from 'lottie-react-native';
+
 import useUser from "../data/hooks/useUser";
 
 export default props => {
@@ -9,12 +11,12 @@ export default props => {
 
     const { signIn } = useUser()
 
-  const refPassword = useRef()
+    const refPassword = useRef()
 
     return (
         <View style={styles.containter}>
             <View style={styles.animation}>
-            
+                <Lottie style={{ width: '95%' }} source={require('../../assets/119589-multitasking.json')} autoPlay loop />
             </View>
             <View style={styles.login}>
                 <Text style={styles.title}>Sign In</Text>
@@ -49,7 +51,7 @@ export default props => {
                 <View style={styles.buttonRow}>
                     <TouchableOpacity
                         style={styles.forgottenPass}
-                        onPress={() =>props.navigation.navigate("Recover",{ email })}>
+                        onPress={() => props.navigation.navigate("Recover", { email })}>
                         <Text style={styles.textRec}>Forgot Password</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -72,8 +74,10 @@ const styles = StyleSheet.create({
     },
     animation: {
         flex: 2,
-        backgroundColor: '#32779E',
-        width: '100%'
+        backgroundColor: '#243e9c',
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     login: {
         flex: 3,

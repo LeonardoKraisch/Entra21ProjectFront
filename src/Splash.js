@@ -25,7 +25,7 @@ export default props => {
 
     return (
         <View style={styles.container}>
-            <Image source={require("../assets/abelha.jpg")}
+            <Image source={require("../assets/FIGMAbelha.png")}
                 style={styles.image} />
             <Text style={styles.text}>Your Beezness</Text>
         </View>
@@ -41,9 +41,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     image: {
-        height: 300,
-        width: 300,
-        resizeMode: "contain"
+        height: 500,
+        width: 500,
     },
     text: {
         fontSize: 50,
