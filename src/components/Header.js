@@ -13,12 +13,12 @@ import useMoney from '../data/hooks/useMoney'
 
 export default props => {
     const { totalInc, totalExp, coin, getUserMoney } = useMoney()
-    const [data, setData] = useState(0)
+    const [localBalance, setLocalBalance] = useState(0)
     const [showBalance, setShowBalance] = useState(true)
 
     useEffect(() => {
         async function fetch() {
-            setData(await getUserMoney())
+            setLocalBalance(await getUserMoney())
         }
         fetch()
     }, [totalInc, totalExp])
@@ -39,11 +39,11 @@ export default props => {
                         <Text style={{ color: '#FFF', fontSize: 27 }}>{coin}</Text>
                         <View>{showBalance ?
                             <TextMask type={'money'}
-                                value={data}
+                                value={localBalance}
                                 options={{
                                     precision: 2,
                                     separator: ',',
-                                    unit: data >= 0 ? '' : '-',
+                                    unit: localBalance >= 0 ? '' : '-',
                                     delimiter: '.',
                                     suffixUnit: ''
                                 }} style={{ color: '#FFF', fontSize: 27 }} /> :
