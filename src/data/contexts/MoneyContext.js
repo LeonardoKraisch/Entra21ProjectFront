@@ -332,20 +332,15 @@ export const MoneyProvider = ({ children }) => {
         },
 
         searchLaunches: async (dateSearch) => {
+            console.log("search launches", dateSearch);
             try {
                 if (dateSearch != date) {
-                    const incomesSearch = await moneyInternalContext.getRegisters({
-                        type: "+",
-                        filter: dateSearch
-                    })
+                    const incomesSearch = await moneyInternalContext.getRegisters(dateSearch)
 
                     console.log("incomesSearch", incomesSearch);
 
 
-                    const expensesSearch = await moneyInternalContext.getRegisters({
-                        type: "-",
-                        filter: dateSearch
-                    })
+                    const expensesSearch = await moneyInternalContext.getRegisters(dateSearch)
                     console.log("expensesSearch", expensesSearch);
 
 

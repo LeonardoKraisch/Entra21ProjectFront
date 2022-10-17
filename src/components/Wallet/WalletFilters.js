@@ -12,7 +12,7 @@ import useMoney from '../../data/hooks/useMoney'
 export default props => {
 
     const { filterPlus } = useMoney()
-    
+
     const [date2, setDate2] = useState(new Date())
     const [showDatePicker2, setShowDatePicker2] = useState(false)
     const lastMonth = new Date()
@@ -27,8 +27,8 @@ export default props => {
     const [description, setDescription] = useState('')
 
     const [pickerValue, setPickerValue] = useState(">")
-    const [value1, setValue1] = useState(0)
-    const [value2, setValue2] = useState(0)
+    const [value1, setValue1] = useState("0")
+    const [value2, setValue2] = useState("0")
 
 
     const applyFilters = async () => {
@@ -42,8 +42,8 @@ export default props => {
                 },
                 money: {
                     type: pickerValue,
-                    minValue: value1,
-                    maxValue: value2
+                    minValue: parseFloat(value1.replace('R$', '')),
+                    maxValue: parseFloat(value2.replace('R$', ''))
                 },
                 category: {
                     type: "==",
@@ -61,8 +61,8 @@ export default props => {
                 },
                 money: {
                     type: pickerValue,
-                    minValue: value1,
-                    maxValue: value2
+                    minValue: parseFloat(value1.replace('R$', '')),
+                    maxValue: parseFloat(value2.replace('R$', ''))
                 },
                 category: {
                     type: "==",
