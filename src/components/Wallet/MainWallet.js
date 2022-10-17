@@ -7,27 +7,28 @@ import moment from 'moment';
 import useMoney from "../../data/hooks/useMoney";
 
 export default props => {
-    const { balance, totalExp, totalInc, recalBalance } = useMoney()
-    const [data, setData] = useState(balance)
+    const { balance, totalExp, totalInc, getUserMoney, refreshUserMoney } = useMoney()
+    const [data, setData] = useState(0)
 
     useEffect(() => {
         async function fetch() {
-            setData(await recalBalance())
+            setData(await getUserMoney())
+            await refreshUserMoney()
         }
         fetch()
-    }, [totalInc, totalExp])
+    }, [])
 
     const CalcPercentage = () => {
         return (
             <View style={{ position: 'absolute' }}>
                 <Text style={{ color: '#FFF', fontWeight: 'bold', fontSize: 16 }}>
-                    {parseFloat((100 * totalExp) / totalInc).toFixed(2)}%
+                    {totalInc > 0 ? parseFloat((100 * totalExp) / totalInc).toFixed(2): parseFloat((100 * totalExp) / 1).toFixed(2)}%
                 </Text>
             </View>
         )
     }
 
-    const pieData = data > 0 ? [
+    const pieData = data >= 0 ? [
         {
             id: "1",
             name: 'Total Left',
@@ -92,7 +93,7 @@ export default props => {
                                 options={{
                                     precision: 2,
                                     separator: ',',
-                                    unit: data >= 0 ? 'R$ ' : '-R$ ',
+                                    unit:'R$ ',
                                     delimiter: '.',
                                     suffixUnit: ''
                                 }} style={{ color: '#FFF', fontSize: 22, fontWeight: 'bold' }} />

@@ -16,7 +16,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import JoinWallet from "../components/JoinWallet";
 
 export default props => {
-    const { getWallets, getPendings } = useMoney()
+    const { getWallets, miniWalletState } = useMoney()
     const [wallets, setWallets] = useState([])
     const [showModal, setShowModal] = useState(false)
     const [showHelp, setShowHelp] = useState(false)
@@ -33,7 +33,6 @@ export default props => {
     useEffect(() => {
         async function loadWallets() {
             setWallets(await getWallets())
-            getPendings()
         }
         loadWallets()
     }, [myState])
@@ -134,7 +133,7 @@ export default props => {
                         </View>
                     </Modal>
                 </Modal>
-                <AddView wallets={wallets} />
+                <AddView refresh={(myState) => refresh(!myState)} wallets={wallets} />
             </View>
             <StatusBar backgroundColor={'#192b6a'} />
         </LinearGradient>

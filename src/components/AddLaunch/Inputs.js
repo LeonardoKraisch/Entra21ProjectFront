@@ -13,7 +13,7 @@ import useMoney from '../../data/hooks/useMoney'
 export default props => {
 
     const { pressedPlus } = useAnimation()
-    const { send } = useMoney()
+    const { send, coin } = useMoney()
 
     const [money, setMoney] = useState("0")
     const [category, setCategory] = useState("other")
@@ -27,6 +27,19 @@ export default props => {
     const [wallet, setWallet] = useState(0)
 
     const dateString = moment(date).format('YYYY[-]MM[-]D')
+
+    const miniWalletUpdate = (wallet) => {
+        console.log(wallet)
+        if (wallet > 0)
+            if (pressedPlus) {
+                console.log(props.wallets[wallet-1].wallet.walletTotalIncomes = parseFloat(props.wallets[wallet -1].wallet.walletTotalIncomes) + parseFloat(money.replace(coin, "")))
+            } else {
+                console.log(false)
+                console.log(props.wallets[wallet-1].wallet.walletTotalExpenses = parseFloat(props.wallets[wallet -1].wallet.walletTotalExpenses) + parseFloat(money.replace(coin, "")))
+            } else {
+            console.log("no refresh")
+        }
+    }
 
     const DatePicker = () => {
         let datePicker = <DateTimePicker value={date} onChange={(_, date) => {
@@ -130,8 +143,8 @@ export default props => {
                 <DatePicker />
                 <TouchableOpacity
                     disabled={money == 0 || '' ? true : false}
-                    onPress={() =>
-                        send({
+                    onPress={async () => {
+                        await send({
                             wallet,
                             money,
                             category,
@@ -141,7 +154,8 @@ export default props => {
                             pending,
                             dateString,
                             description
-                        })}
+                        }), miniWalletUpdate(wallet)
+                    }}
                     style={styles.send}>
                     <Text style={styles.sendText}>Send</Text>
                 </TouchableOpacity>

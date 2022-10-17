@@ -10,7 +10,7 @@ export default props => {
                 </Text>
             </View>
             <View style={styles.desc}>
-                <Text style={styles.descText}>{props.wallet.item.wallet.walletDesc}</Text>
+                <Text style={styles.descText}>{props.wallet.item.wallet.walletTotalIncomes - props.wallet.item.wallet.walletTotalExpenses}</Text>
             </View>
         </TouchableOpacity>
     )

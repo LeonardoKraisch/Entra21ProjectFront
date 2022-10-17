@@ -18,8 +18,6 @@ export default props => {
 
     const deleteEntry = async (code) => {
         await showToast(await delRegister(code), "Delete")
-        setRefresh(null)
-        setModalVisible(false)
     }
 
     const getRightContent = () => {

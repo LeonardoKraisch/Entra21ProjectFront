@@ -9,23 +9,22 @@ import { FontAwesome } from "@expo/vector-icons";
 import useMoney from "../data/hooks/useMoney"
 
 export default props => {
-    const { allPendings, delRegister, editRegister, generalPendings, showToast } = useMoney()
+    const { allPendings, delRegister, editRegister, getPendings, showToast, debtsState, refreshDebts } = useMoney()
     const [modalVisible, setModalVisible] = useState(false)
     const [item, setItem] = useState()
-    const [refresh, setRefresh] = useState(null)
     
     useEffect(() => {
         async function fetch() {
             try {
-                await generalPendings()
-                return allPendings[Object.keys(allPendings)[0]][0]
+                return await getPendings()
             } catch (e) {
                 console.log(e);
                 return []
             }
         }
         setItem(fetch())
-    }, [refresh])
+        
+    }, [debtsState])
 
     const renderItem = (item) => {
         const table = item.incMoney ? "inc" : "exp"
@@ -67,13 +66,13 @@ export default props => {
     
     const deleteEntry = async (code) => {
         await showToast(await delRegister(code), "Delete")
-        setRefresh(null)
+        refreshDebts(!myState)
         setModalVisible(false)
     }
 
     const editEntry = async (register) => {
         await showToast(await editRegister(register), "Edit")
-        setRefresh(null)
+        refreshDebts(!myState)
         setModalVisible(false)
     }
 
@@ -160,7 +159,7 @@ export default props => {
                 items={allPendings}
                 refreshControl={null}
                 showClosingKnob={true}
-                refreshing={true}
+                refreshing={debtsState}
                 futureScrollRange={12}
                 pastScrollRange={6}
                 renderItem={renderItem}

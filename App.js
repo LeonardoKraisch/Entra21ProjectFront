@@ -11,6 +11,7 @@ import Navigator from './src/Navigator';
 import * as Linking from 'expo-linking';
 
 axios.defaults.baseURL = API_URL
+console.log(API_URL)
 
 export default function App() {
 

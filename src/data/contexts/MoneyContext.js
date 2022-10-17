@@ -11,15 +11,13 @@ const MoneyContext = createContext({})
 
 export const MoneyProvider = ({ children }) => {
     const { pressedPlus } = useAnimation()
-    const { userCode } = useUser()
+    const { userCode, balance, setBalance, totalInc, setTotalInc, totalExp, setTotalExp } = useUser()
 
     const [date, setDate] = useState(new Date())
-    const [balance, setBalance] = useState(0)
+    
 
     const [incomes, setIncomes] = useState([null])
     const [expenses, setExpenses] = useState([])
-    const [totalInc, setTotalInc] = useState(0)
-    const [totalExp, setTotalExp] = useState(0)
     const [allLaunches, setAllLaunches] = useState([])
 
     const [searchAllLaunches, setSearchAllLaunches] = useState([])
@@ -32,6 +30,9 @@ export const MoneyProvider = ({ children }) => {
     const [incPendings, setIncPendings] = useState([])
     const [expPendings, setExpPendings] = useState([])
     const [allPendings, setAllPendings] = useState({})
+
+    const [debtsState, refreshDebts] = useState(true)
+    const [miniWalletState, refreshMiniWallet] = useState(true)
 
     const [wallets, setWallets] = useState([])
 
@@ -132,7 +133,7 @@ export const MoneyProvider = ({ children }) => {
                     setAllLaunches([...allLaunches, launch])
 
                     const total = await moneyInternalContext.recalBalance()
-                    setBalance(total)
+                    setBalance(await moneyInternalContext.getUserMoney())
                     setTotalSearch(total)
 
                     Toast.show({
@@ -147,7 +148,7 @@ export const MoneyProvider = ({ children }) => {
                         text2: "You don't updated your balance."
                     })
                 }
-
+                return null
             } catch (e) {
                 console.log(e.message, "error in send")
                 Toast.show({
@@ -155,6 +156,7 @@ export const MoneyProvider = ({ children }) => {
                     text1: 'Your launch has failed!',
                     text2: 'Please, try again.'
                 })
+                return null
             }
         },
         recalBalance: async () => {
@@ -163,7 +165,8 @@ export const MoneyProvider = ({ children }) => {
         },
 
         getRegisters: async data => {
-            data["user"] = { code: userCode }
+            if (data.wallet == undefined)
+                data["user"] = { code: userCode }
             const newQuery = await axios.post(`/${data.type == "+" ? "income" : "expense"}/query`,
                 data)
             return newQuery.data.registers
@@ -269,11 +272,11 @@ export const MoneyProvider = ({ children }) => {
                         }
                     })
                     await moneyInternalContext.balanceSetter(incomeArray, expensesArray)
-                    await moneyInternalContext.getPendings()
+                    moneyInternalContext.refreshUserMoney()
 
                 } else {
                     await moneyInternalContext.balanceSetter(incomes, expenses)
-                    await moneyInternalContext.getPendings()
+                    moneyInternalContext.refreshUserMoney()
 
                 }
 
@@ -284,19 +287,9 @@ export const MoneyProvider = ({ children }) => {
 
         balanceSetter: async (arr1, arr2) => {
 
-            const totalInc = await moneyInternalContext.calcTotal(arr1, 'incMoney')
-            const totalExp = await moneyInternalContext.calcTotal(arr2, 'expMoney')
-
-            setTotalInc(totalInc)
-            setTotalExp(totalExp)
-            setIncomes(arr1)
-            setExpenses(arr2)
-
             const merged = await moneyInternalContext.mergeArrays(arr1, "incMoney", arr2, 'expMoney')
             setAllLaunches(merged)
-
-            const total = totalInc - totalExp
-            setBalance(total)
+            setBalance(await moneyInternalContext.getUserMoney())
             moneyInternalContext.searchSetter(arr1, arr2, merged)
         },
 
@@ -404,6 +397,8 @@ export const MoneyProvider = ({ children }) => {
                 ))
 
                 await moneyInternalContext.generalPendings()
+                console.log(allPendings)
+                return allPendings[Object.keys(allPendings)[0]][0]
             } catch (e) {
                 console.log(e.message, " - error in getPendings")
             }
@@ -460,7 +455,12 @@ export const MoneyProvider = ({ children }) => {
         },
 
         addWallets: async (wallet) => {
-            const newWallets = await axios.post("/wallet/new", { wallet, userCode })
+            wallet['walletTotalIncomes'] = 0
+            wallet['walletTotalExpenses'] = 0
+            const newWallets = await axios.post("/wallet/new", {
+                wallet,
+                userCode
+            })
             return newWallets.data.result
         },
 
@@ -576,6 +576,23 @@ export const MoneyProvider = ({ children }) => {
             })
 
 
+        },
+        getUserMoney: async () => {
+            try {
+                const userConn = await axios.post(`/user/queryMoney`,
+                    { userCode })
+                    console.log("getUserMoneyyyyyyyyyyyyyyyyyyyyyyyyyy", {userCode});
+                return userConn.data.userMoney
+            } catch (e) {
+                console.log("error in getUserMoney", e.message)
+            }
+        },
+        refreshUserMoney: async () => {
+            const userConn = await axios.post(`/user/refreshUserMoney`,
+                { userCode })
+            setBalance(userConn.data.userMoney)
+            setTotalInc(userConn.data.userTotalIncomes)
+            setTotalExp(userConn.data.userTotalExpenses)
         }
     }
 

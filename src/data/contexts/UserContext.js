@@ -2,7 +2,7 @@ import { useState, createContext } from "react";
 import Toast from 'react-native-toast-message'
 import axios from "axios";
 import JWT from "expo-jwt";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const UserContext = createContext({})
 
@@ -12,12 +12,24 @@ export const UserProvider = ({ children }) => {
     const [phone, setPhone] = useState('')
     const [email, setEmail] = useState('')
     const [userCode, setUserCode] = useState(-1)
+    const [balance, setBalance] = useState(0)
+    const [totalInc, setTotalInc] = useState(0)
+    const [totalExp, setTotalExp] = useState(0)
 
     const userInternalContext = {
         name,
         phone,
         email,
         userCode,
+
+        balance, 
+        totalInc, 
+        totalExp, 
+        
+        setBalance, 
+        setTotalInc, 
+        setTotalExp,
+        
         start: async () => {
             const userDataJson = await AsyncStorage.getItem('token')
 
@@ -34,6 +46,7 @@ export const UserProvider = ({ children }) => {
                         setPhone(decoded.user.userPhone)
                         setUserCode(decoded.user.userCode)
                         setEmail(decoded.user.userPhone)
+                        
                     } else {
                         Toast.show({
                             type: 'error',
@@ -59,23 +72,28 @@ export const UserProvider = ({ children }) => {
                         userName: user.name,
                         userPhone: user.phone,
                         userEmail: user.email,
-                        userPasswd: user.password,
-                        userMoney: 0
+                        userPasswd: user.password
                     }
                 })
                 if (newUser.data.registered) {
                     setEmail(user.email)
                     setName(user.name)
                     setPhone(user.phone)
+                    setTotalInc(0)
+                    setTotalExp(0)
+                    setBalance(0)
+
+                    
                     setUserCode(newUser.data.userCode)
                     Toast.show({
                         type: 'success',
                         text1: 'Your account was successfully created!',
                     })
-                } else Toast.show({
+                } else {Toast.show({
                     type: 'error',
                     text1: newUser.data.result.error
                 })
+                console.log("else error",newUser.data.result.error)}
 
             } catch (err) {
                 Toast.show({
@@ -83,6 +101,7 @@ export const UserProvider = ({ children }) => {
                     text1: 'An error has occurred. Please, try again.',
                     text2: err.message
                 })
+                console.log("catch error", err.message)
             }
         },
 
@@ -101,6 +120,9 @@ export const UserProvider = ({ children }) => {
                     setName(decoded.user.userName)
                     setPhone(decoded.user.userPhone)
                     setUserCode(decoded.user.userCode)
+                    setTotalInc(decoded.user.userTotalIncomes)
+                    setTotalExp(decoded.user.userTotalExpenses)
+                    setBalance(decoded.user.userMoney)
                     await AsyncStorage.setItem('token', JSON.stringify(userConnect.data.token))
                     setEmail(email)
 
