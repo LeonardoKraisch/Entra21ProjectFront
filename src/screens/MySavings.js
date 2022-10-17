@@ -1,10 +1,13 @@
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions, FlatList } from "react-native";
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Dimensions, FlatList, TouchableOpacity } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { VictoryChart, VictoryLine, VictoryZoomContainer } from "victory-native";
 import { Card } from "react-native-paper";
+import { AntDesign } from '@expo/vector-icons';
 
 export default props => {
+
+    const [date, setDate] = useState(new Date().getFullYear())
 
     const savings = [
         { month: "jan", value: 200 },
@@ -67,6 +70,18 @@ export default props => {
             <View style={styles.label}>
                 <Text style={styles.labelText}>My Savings</Text>
             </View>
+
+            <View style={styles.dateSetter}>
+                <TouchableOpacity onPress={() => setDate(date - 1)}>
+                    <AntDesign name='caretleft' size={20} color="#FFF" />
+                </TouchableOpacity>
+                <Text style={styles.year}>
+                    {date}
+                </Text>
+                <TouchableOpacity onPress={() => setDate(date + 1)}>
+                <AntDesign name='caretright' size={20} color="#FFF"/>
+                </TouchableOpacity>
+            </View>
             <View style={styles.chartContainer}>
                 <MyChart />
             </View>
@@ -94,6 +109,18 @@ const styles = StyleSheet.create({
         color: '#FFF',
         fontWeight: 'bold',
         fontSize: 25
+    },
+    dateSetter: {
+        width: '90%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingBottom: 10
+    },
+    year: {
+        color: '#FFF',
+        fontSize: 25,
+        fontWeight: '500'
     },
     chartContainer: {
         height: '20%',
