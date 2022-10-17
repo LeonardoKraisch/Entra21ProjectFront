@@ -332,21 +332,35 @@ export const MoneyProvider = ({ children }) => {
         },
 
         searchLaunches: async (dateSearch) => {
-            console.log("search launches", dateSearch);
             try {
                 if (dateSearch != date) {
-                    const incomesSearch = await moneyInternalContext.getRegisters(dateSearch)
+                        const incomeArray = await moneyInternalContext.getRegisters({
+                            type: "+",
+                            filter: {
+                                date:
+                                {
+                                    type: "[]",
+                                    initDate: `${dateString(dateSearch)}-1`,
+                                    endDate: `${dateString(dateSearch)}-${lastDay(dateSearch)}`
+                                }
+                            }
+                        })
+                        const expensesArray = await moneyInternalContext.getRegisters({
+                            type: "-",
+                            filter: {
+                                date:
+                                {
+                                    type: "[]",
+                                    initDate: `${dateString(dateSearch)}-1`,
+                                    endDate: `${dateString(dateSearch)}-${lastDay(dateSearch)}`
+                                }
+                            }
+                        })
 
-                    console.log("incomesSearch", incomesSearch);
 
+                    const merged = await moneyInternalContext.mergeArrays(incomeArray, "incMoney", expensesArray, 'expMoney')
 
-                    const expensesSearch = await moneyInternalContext.getRegisters(dateSearch)
-                    console.log("expensesSearch", expensesSearch);
-
-
-                    const merged = await moneyInternalContext.mergeArrays(incomesSearch, "incMoney", expensesSearch, 'expMoney')
-
-                    moneyInternalContext.searchSetter(incomesSearch, expensesSearch, merged)
+                    moneyInternalContext.searchSetter(incomeArray, expensesArray, merged)
 
                 } else {
                     moneyInternalContext.searchSetter(incomes, expenses, allLaunches)
@@ -382,9 +396,8 @@ export const MoneyProvider = ({ children }) => {
         },
 
         filterPlus: async (filterIncomes, filterExpenses) => {
-            console.log("aaaaaaaaaaaaaaaaaaaaaaa", filterIncomes, filterExpenses);
-            const filteredIncomes = await moneyInternalContext.searchLaunches(filterIncomes)
-            const filteredExpenses = await moneyInternalContext.searchLaunches(filterExpenses)
+            const filteredIncomes = await moneyInternalContext.getRegisters(filterIncomes)
+            const filteredExpenses = await moneyInternalContext.getRegisters(filterExpenses)
             const filteredAllRegisters = await moneyInternalContext.mergeArrays(filteredIncomes, "incMoney", filteredExpenses, 'expMoney')
 
             await moneyInternalContext.searchSetter(filteredIncomes, filteredExpenses, filteredAllRegisters)

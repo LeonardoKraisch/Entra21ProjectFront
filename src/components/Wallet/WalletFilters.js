@@ -46,7 +46,7 @@ export default props => {
                     maxValue: parseFloat(value2.replace('R$', ''))
                 },
                 category: {
-                    type: "==",
+                    type: category,
                     value: category
                 },
                 description: { value: description }
@@ -65,7 +65,7 @@ export default props => {
                     maxValue: parseFloat(value2.replace('R$', ''))
                 },
                 category: {
-                    type: "==",
+                    type: category,
                     value: category
                 },
                 description: { value: description }
