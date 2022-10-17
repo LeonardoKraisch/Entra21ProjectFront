@@ -39,15 +39,15 @@ export default props => {
     const ShowReport = () => {
         if (show == "expenses") {
             return (
-                <CustomReport launches={launches} />
+                <CustomReport launches={launches ? launches.toWalletExp : launches} />
             )
         } else if (show == "incomes") {
             return (
-                <CustomReport launches={launches} />
+                <CustomReport launches={launches ? launches.toWalletInc : launches} />
             )
         } else {
             return (
-                <CustomReport launches={launches} />
+                <CustomReport launches={launches ? launches.merged : launches} />
             )
         }
     }

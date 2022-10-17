@@ -205,12 +205,10 @@ export const MoneyProvider = ({ children }) => {
         },
 
         getRegisters: async data => {
-            console.log(data, "get registers");
             if (data.wallet == undefined)
                 data["user"] = { code: userCode }
             const newQuery = await axios.post(`/${data.type == "+" ? "income" : "expense"}/query`,
                 data)
-            console.log(newQuery.data, "resposta registers")
             return newQuery.data.registers
         },
 
@@ -334,28 +332,28 @@ export const MoneyProvider = ({ children }) => {
         searchLaunches: async (dateSearch) => {
             try {
                 if (dateSearch != date) {
-                        const incomeArray = await moneyInternalContext.getRegisters({
-                            type: "+",
-                            filter: {
-                                date:
-                                {
-                                    type: "[]",
-                                    initDate: `${dateString(dateSearch)}-1`,
-                                    endDate: `${dateString(dateSearch)}-${lastDay(dateSearch)}`
-                                }
+                    const incomeArray = await moneyInternalContext.getRegisters({
+                        type: "+",
+                        filter: {
+                            date:
+                            {
+                                type: "[]",
+                                initDate: `${dateString(dateSearch)}-1`,
+                                endDate: `${dateString(dateSearch)}-${lastDay(dateSearch)}`
                             }
-                        })
-                        const expensesArray = await moneyInternalContext.getRegisters({
-                            type: "-",
-                            filter: {
-                                date:
-                                {
-                                    type: "[]",
-                                    initDate: `${dateString(dateSearch)}-1`,
-                                    endDate: `${dateString(dateSearch)}-${lastDay(dateSearch)}`
-                                }
+                        }
+                    })
+                    const expensesArray = await moneyInternalContext.getRegisters({
+                        type: "-",
+                        filter: {
+                            date:
+                            {
+                                type: "[]",
+                                initDate: `${dateString(dateSearch)}-1`,
+                                endDate: `${dateString(dateSearch)}-${lastDay(dateSearch)}`
                             }
-                        })
+                        }
+                    })
 
 
                     const merged = await moneyInternalContext.mergeArrays(incomeArray, "incMoney", expensesArray, 'expMoney')
@@ -422,7 +420,6 @@ export const MoneyProvider = ({ children }) => {
                 ))
 
                 await moneyInternalContext.generalPendings()
-                console.log(allPendings)
                 return allPendings[Object.keys(allPendings)[0]][0]
             } catch (e) {
                 console.log(e.message, " - error in getPendings")
@@ -519,7 +516,9 @@ export const MoneyProvider = ({ children }) => {
                         wallet: { code: walletCode }
                     }
                 })
-                return ([...toWalletInc, ...toWalletExp])
+                const merged = await moneyInternalContext.mergeArrays(toWalletInc, "incMoney", toWalletExp, 'expMoney')
+                
+                return ({ toWalletInc, toWalletExp, merged })
             } catch (e) {
                 console.log(e.message, " - error in getAllRegistersToWallet")
                 return e.message
@@ -563,14 +562,15 @@ export const MoneyProvider = ({ children }) => {
                 }
             })
             const MonthlyBalances = [...MonthlyIncomes, ...MonthlyExpenses]
-            for (const launche in MonthlyExpenses) {
+
+            for (const launch in MonthlyExpenses) {
                 try {
-                    if (parseInt(MonthlyBalances[launche].split("-")[0])
+                    if (parseInt(MonthlyBalances[launch].split("-")[0])
                         >
-                        parseInt(MonthlyBalances[launche + 1].split("-")[0])) {
-                        const year = MonthlyBalances[launche]
-                        MonthlyBalances[launche] = MonthlyBalances[launche + 1]
-                        MonthlyBalances[launche + 1] = MonthlyBalances[launche]
+                        parseInt(MonthlyBalances[launch + 1].split("-")[0])) {
+                        const year = MonthlyBalances[launch]
+                        MonthlyBalances[launch] = MonthlyBalances[launch + 1]
+                        MonthlyBalances[launch + 1] = MonthlyBalances[launch]
                     }
                 } catch {
 
@@ -606,7 +606,6 @@ export const MoneyProvider = ({ children }) => {
             try {
                 const userConn = await axios.post(`/user/queryMoney`,
                     { userCode })
-                console.log("getUserMoneyyyyyyyyyyyyyyyyyyyyyyyyyy", { userCode });
                 return userConn.data.userMoney
             } catch (e) {
                 console.log("error in getUserMoney", e.message)
