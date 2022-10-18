@@ -16,7 +16,6 @@ export default props => {
     useEffect(() => {
         async function fetch() {
             try {
-                reloadAgenda()
                 return await getPendings()
             } catch (e) {
                 console.log(e);
@@ -25,7 +24,7 @@ export default props => {
         }
         setItem(fetch())
         
-    }, [debtsState, item])
+    }, [debtsState])
 
     const renderItem = (item) => {
         const table = item.incMoney ? "inc" : "exp"
@@ -67,13 +66,11 @@ export default props => {
 
     const deleteEntry = async (code) => {
         await showToast(await delRegister(code), "Delete")
-        setRefresh(null)
         setModalVisible(false)
     }
 
     const editEntry = async (register) => {
         await showToast(await editRegister(register), "Edit")
-        setRefresh(null)
         setModalVisible(false)
     }
 
@@ -162,7 +159,7 @@ export default props => {
                 items={allPendings}
                 refreshControl={null}
                 showClosingKnob={true}
-                refreshing={true}
+                refreshing={false}
                 futureScrollRange={12}
                 pastScrollRange={6}
                 renderItem={renderItem}
