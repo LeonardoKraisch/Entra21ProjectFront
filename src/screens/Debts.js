@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Modal } from "react-native";
+import React, { useEffect, useState, useCallback } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Modal, RefreshControl } from "react-native";
 import { Agenda } from 'react-native-calendars'
 import { Card } from "react-native-paper";
 import { TextMask } from "react-native-masked-text";
@@ -9,9 +9,23 @@ import { FontAwesome } from "@expo/vector-icons";
 import useMoney from "../data/hooks/useMoney"
 
 export default props => {
-    const { allPendings, delRegister, editRegister, getPendings, showToast, debtsState, refreshDebts } = useMoney()
+    const { incPendings, expPendings, allPendings, delRegister, editRegister, getPendings, generalPendings, showToast } = useMoney()
     const [modalVisible, setModalVisible] = useState(false)
     const [item, setItem] = useState()
+    const [allItems, setAllItems] = useState(allPendings)
+
+    const wait = (timeout) => {
+        return new Promise(resolve => setTimeout(resolve, timeout));
+    }
+
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = useCallback(async () => {
+        setRefreshing(true);
+        setAllItems(await generalPendings())
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
+
 
     useEffect(() => {
         async function fetch() {
@@ -23,8 +37,13 @@ export default props => {
             }
         }
         setItem(fetch())
-        
-    }, [debtsState])
+    }, [])
+
+    // useEffect(() => {
+
+    //     onRefresh()
+    //     setAllItems(generalPendings())
+    // }, [incPendings, expPendings])
 
     const renderItem = (item) => {
         const table = item.incMoney ? "inc" : "exp"
@@ -66,11 +85,13 @@ export default props => {
 
     const deleteEntry = async (code) => {
         await showToast(await delRegister(code), "Delete")
+        onRefresh()
         setModalVisible(false)
     }
 
     const editEntry = async (register) => {
         await showToast(await editRegister(register), "Edit")
+        onRefresh()
         setModalVisible(false)
     }
 
@@ -156,10 +177,12 @@ export default props => {
     return (
         <View style={styles.container}>
             <Agenda
-                items={allPendings}
-                refreshControl={null}
+                items={allItems}
+                refreshControl={<RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                />}
                 showClosingKnob={true}
-                refreshing={false}
                 futureScrollRange={12}
                 pastScrollRange={6}
                 renderItem={renderItem}

@@ -22,7 +22,7 @@ export default props => {
         return (
             <View style={{ position: 'absolute' }}>
                 <Text style={{ color: '#FFF', fontWeight: 'bold', fontSize: 16 }}>
-                    {totalInc > 0 ? parseFloat((100 * totalExp) / totalInc).toFixed(2): parseFloat((100 * totalExp) / 1).toFixed(2)}%
+                    {totalInc > 0 ? parseFloat((100 * totalExp) / totalInc).toFixed(2) : parseFloat((100 * totalExp) / 1).toFixed(2)}%
                 </Text>
             </View>
         )
@@ -87,16 +87,16 @@ export default props => {
                     <Text style={{ fontSize: 17, color: '#FFF' }}>
                         {moment(new Date()).format("MMMM[/]YYYY")}
                     </Text>
-                <Text style={{ fontSize: 17, color: '#FFF', padding: 15 }}>Expenses</Text>
+                    <Text style={{ fontSize: 17, color: '#FFF', padding: 10 }}>Expenses</Text>
                     <TextMask type={'money'}
-                                value={totalExp}
-                                options={{
-                                    precision: 2,
-                                    separator: ',',
-                                    unit:'R$ ',
-                                    delimiter: '.',
-                                    suffixUnit: ''
-                                }} style={{ color: '#FFF', fontSize: 22, fontWeight: 'bold' }} />
+                        value={totalExp}
+                        options={{
+                            precision: 2,
+                            separator: ',',
+                            unit: 'R$ ',
+                            delimiter: '.',
+                            suffixUnit: ''
+                        }} style={{ color: '#FFF', fontSize: 22, fontWeight: 'bold' }} />
                 </View>
                 <View style={styles.chartContainer}>
                     <View style={styles.chart}>

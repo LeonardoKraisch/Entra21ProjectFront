@@ -463,6 +463,7 @@ export const MoneyProvider = ({ children }) => {
                     return merged
                 }
                 setAllPendings(await getAll())
+                return getAll()
             } catch (e) {
                 console.log(e.message, " - error in generalPendings")
                 return {}
