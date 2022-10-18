@@ -133,7 +133,7 @@ export default props => {
                         </View>
                     </Modal>
                 </Modal>
-                <AddView refresh={(myState) => refresh(!myState)} wallets={wallets} />
+                <AddView refresh={() => refresh(!myState)} wallets={wallets} />
             </View>
             <StatusBar backgroundColor={'#192b6a'} />
         </LinearGradient>
