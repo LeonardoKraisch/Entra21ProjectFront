@@ -16,7 +16,6 @@ export default props => {
     useEffect(() => {
         async function fetch() {
             try {
-                reloadAgenda()
                 return await getPendings()
             } catch (e) {
                 console.log(e);
@@ -25,7 +24,7 @@ export default props => {
         }
         setItem(fetch())
         
-    }, [debtsState, item])
+    }, [debtsState])
 
     const renderItem = (item) => {
         const table = item.incMoney ? "inc" : "exp"
