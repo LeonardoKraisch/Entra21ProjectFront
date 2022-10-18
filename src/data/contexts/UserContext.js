@@ -46,6 +46,7 @@ export const UserProvider = ({ children }) => {
                         setPhone(decoded.user.userPhone)
                         setUserCode(decoded.user.userCode)
                         setEmail(decoded.user.userPhone)
+
                         
                     } else {
                         Toast.show({

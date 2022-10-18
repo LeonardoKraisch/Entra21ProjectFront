@@ -7,7 +7,7 @@ export default props => {
 
     const { show } = useAnimation()
 
-    const rollSideAnim = show ? useRef(new Animated.Value(190)).current : useRef(new Animated.Value(390)).current
+    const rollSideAnim = useRef(new Animated.Value(187)).current 
 
     useEffect(() => {
         show ?
@@ -16,7 +16,7 @@ export default props => {
                 rollSideAnim,
                 {
                     toValue: 390,
-                    duration: 150,
+                    duration: 100,
                     useNativeDriver: false
                 }
             ).start()
@@ -27,7 +27,7 @@ export default props => {
                 rollSideAnim,
                 {
                     toValue: 187,
-                    duration: 150,
+                    duration: 100,
                     useNativeDriver: false
                 }
             ).start()
@@ -37,7 +37,7 @@ export default props => {
 
 
 
-    const rollUpAnim = show ? useRef(new Animated.Value(46)).current : useRef(new Animated.Value(630)).current
+    const rollUpAnim = useRef(new Animated.Value(46)).current 
 
     useEffect(() => {
         show ?
@@ -45,7 +45,7 @@ export default props => {
                 rollUpAnim,
                 {
                     toValue: 630,
-                    duration: 150,
+                    duration: 100,
                     useNativeDriver: false
                 }
             ).start()
@@ -56,7 +56,7 @@ export default props => {
                 rollUpAnim,
                 {
                     toValue: 46,
-                    duration: 150,
+                    duration: 100,
                     useNativeDriver: false
                 }
             ).start()
@@ -65,7 +65,7 @@ export default props => {
 
 
     return (
-        <Animated.View style={{ ...props.style, width: rollSideAnim || 187, height: rollUpAnim || 46 }}>
+        <Animated.View style={{ ...props.style, width: rollSideAnim, height: rollUpAnim }}>
             {props.children}
         </Animated.View>
     )

@@ -135,7 +135,6 @@ export const MoneyProvider = ({ children }) => {
                     const total = await moneyInternalContext.recalBalance()
                     setBalance(await moneyInternalContext.getUserMoney())
                     setTotalSearch(total)
-
                     Toast.show({
                         type: 'info',
                         text1: 'Successful launch!',
@@ -185,10 +184,12 @@ export const MoneyProvider = ({ children }) => {
                             }
                         }
                     })
+                    moneyInternalContext.getPendings()
                     await moneyInternalContext.balanceSetter(incomeArray, expensesArray)
                     moneyInternalContext.refreshUserMoney()
 
                 } else {
+                    moneyInternalContext.getPendings()
                     await moneyInternalContext.balanceSetter(incomes, expenses)
                     moneyInternalContext.refreshUserMoney()
 
@@ -218,7 +219,7 @@ export const MoneyProvider = ({ children }) => {
                 const delConn = await axios.post(`/${data.type == "+" ? "income" : "expense"}/delete`,
                     { code: data.code })
 
-                if (data.type == "+" && delConn.data.result.successful) {
+                if (data.type == "+" && delConn.data.result.successfull) {
                     if (data.pending) {
                         var newPendings = incPendings.filter((pending) => {
                             return pending.incCode != data.code
@@ -233,7 +234,7 @@ export const MoneyProvider = ({ children }) => {
                         await moneyInternalContext.balanceSetter(newLaunches, expenses)
                     }
 
-                } else if (data.type == "-" && delConn.data.result.successful) {
+                } else if (data.type == "-" && delConn.data.result.successfull) {
                     if (data.pending) {
                         var newPendings = expPendings.filter((pending) => {
                             return pending.expCode != data.code
@@ -272,30 +273,23 @@ export const MoneyProvider = ({ children }) => {
                         }
                     })
 
-                if (data.type == "+" && ediConn.data.result.successful) {
+                if (data.type == "+" && ediConn.data.result.successfull) {
                     var newPendings = incPendings.filter((pending) => {
                         return pending.incCode != data.code
                     })
                     setIncPendings(newPendings)
 
-                } else if (data.type == "-" && ediConn.data.result.successful) {
+                } else if (data.type == "-" && ediConn.data.result.successfull) {
                     var newPendings = expPendings.filter((pending) => {
                         return pending.expCode != data.code
                     })
                     setExpPendings(newPendings)
 
                 }
-                ediConn.data.result.results.successful ?
-                    Toast.show({
-                        type: 'success',
-                        text1: 'Edit successfull!',
-                    })
-                    :
-                    Toast.show({
-                        type: 'error',
-                        text1: `error: ${ediConn.data.result.error}`,
-                    })
+
                 await moneyInternalContext.generalPendings()
+                console.log(ediConn.data);
+                return ediConn.data.result
             } catch (e) {
                 Toast.show({
                     type: 'error',
@@ -469,6 +463,7 @@ export const MoneyProvider = ({ children }) => {
                     return merged
                 }
                 setAllPendings(await getAll())
+                return getAll()
             } catch (e) {
                 console.log(e.message, " - error in generalPendings")
                 return {}
@@ -517,7 +512,7 @@ export const MoneyProvider = ({ children }) => {
                     }
                 })
                 const merged = await moneyInternalContext.mergeArrays(toWalletInc, "incMoney", toWalletExp, 'expMoney')
-                
+
                 return ({ toWalletInc, toWalletExp, merged })
             } catch (e) {
                 console.log(e.message, " - error in getAllRegistersToWallet")
@@ -529,8 +524,8 @@ export const MoneyProvider = ({ children }) => {
             const newCoWallet = await axios.post("/wallet/join", { wallet })
             return newCoWallet.data.result
         },
-        showToast: async (results, action) => {
-            results.successful ?
+        showToast: async (result, action) => {
+            result.successfull ?
                 Toast.show({
                     type: 'success',
                     text1: `${action} successfull!`,
@@ -538,9 +533,9 @@ export const MoneyProvider = ({ children }) => {
                 :
                 Toast.show({
                     type: 'success',
-                    text1: `error: ${results.error}`,
+                    text1: `error: ${result.error}`,
                 })
-            console.log(results.error);
+            console.log(result.error);
         },
         getMonthlyBalance: async () => {
             const MonthlyIncomes = await moneyInternalContext.getRegisters({

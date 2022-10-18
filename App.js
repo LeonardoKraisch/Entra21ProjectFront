@@ -9,7 +9,7 @@ import { MoneyProvider } from './src/data/contexts/MoneyContext';
 
 import Navigator from './src/Navigator';
 import * as Linking from 'expo-linking';
-const URLAPI = API_URL3
+const URLAPI = API_URL
 axios.defaults.baseURL = URLAPI
 console.log(URLAPI)
 
