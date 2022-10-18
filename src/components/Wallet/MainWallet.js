@@ -8,11 +8,11 @@ import useMoney from "../../data/hooks/useMoney";
 
 export default props => {
     const { balance, totalExp, totalInc, getUserMoney, refreshUserMoney } = useMoney()
-    const [data, setData] = useState(0)
+    const [localBalance, setLocalBalance] = useState(0)
 
     useEffect(() => {
         async function fetch() {
-            setData(await getUserMoney())
+            setLocalBalance(await getUserMoney())
             await refreshUserMoney()
         }
         fetch()
@@ -28,11 +28,11 @@ export default props => {
         )
     }
 
-    const pieData = data >= 0 ? [
+    const pieData = localBalance >= 0 ? [
         {
             id: "1",
             name: 'Total Left',
-            value: data,
+            value: localBalance,
             color: '#243e9c',
         },
         {
