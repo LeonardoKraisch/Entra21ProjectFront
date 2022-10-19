@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useMemo } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Modal, RefreshControl } from "react-native";
 import { Agenda } from 'react-native-calendars'
 import { Card } from "react-native-paper";
@@ -9,7 +9,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import useMoney from "../data/hooks/useMoney"
 
 export default props => {
-    const { delRegister, editRegister, getPendings, showToast, allPendings } = useMoney()
+    const { delRegister, editRegister, generalPendings, showToast, allPendings } = useMoney()
     const [modalVisible, setModalVisible] = useState(false)
     const [item, setItem] = useState()
     const [allItems, setAllItems] = useState(allPendings)
@@ -20,26 +20,25 @@ export default props => {
 
     const [refreshing, setRefreshing] = useState(false);
 
-    const onRefresh = async () => {
-        setRefreshing(true);
-        setAllItems(fetch())
-        wait(2000).then(() => setRefreshing(false));
-    }
-
-    const fetch = async () => {
+    const onRefresh = useCallback(async () => {
+        
         try {
-            var pendings = await getPendings()
+            var pendings = await generalPendings()
+            setAllItems(await pendings)
+            console.log(pendings);
             setItem(await pendings[Object.keys(pendings)[0]][0])
-            return pendings
         } catch (e) {
-            console.log(e);
-            return []
+            console.log(e, "refresh");
+            setAllItems({})
+            setItem({})
         }
-    }
+        setRefreshing(true);
+        wait(2000).then(() => setRefreshing(false));
+    })
 
     useEffect(() => {
         onRefresh()
-    }, [])
+    }, [allPendings])
 
     const renderItem = (item) => {
         const table = item.incMoney ? "inc" : "exp"
@@ -80,15 +79,15 @@ export default props => {
 
 
     const deleteEntry = async (code) => {
+        setModalVisible(false)
         await showToast(await delRegister(code), "Delete")
         onRefresh()
-        setModalVisible(false)
     }
 
     const editEntry = async (register) => {
+        setModalVisible(false)
         await showToast(await editRegister(register), "Edit")
         onRefresh()
-        setModalVisible(false)
     }
 
     const ModalView = () => {

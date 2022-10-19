@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
+import SelectDropdown from 'react-native-select-dropdown'
 
 import moment from 'moment'
 import DateTimePicker from '@react-native-community/datetimepicker'
@@ -8,7 +10,6 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 import useMoney from "../data/hooks/useMoney";
 import WalletFilters from "../components/Wallet/WalletFilters";
 import CustomReport from "../components/Wallet/Report";
-import SelectDropdown from 'react-native-select-dropdown'
 
 export default props => {
     const { getAllRegistersToWallet } = useMoney()
@@ -16,6 +17,8 @@ export default props => {
     const [launches, setLaunches] = useState()
     const [wallet, setWallet] = useState()
     const [wallets, setWallets] = useState([props.route.params.wallet.wallet.walletName])
+    const [showPass, setShowPass] = useState(false)
+
     var customWallets = []
 
     useEffect(() => {
@@ -124,6 +127,19 @@ export default props => {
                         setWallet(selected)
                     }}
                 />
+                <View style={styles.label}>
+                    {showPass ?
+                        <Text style={styles.labelText}>
+                            PASSWORD: {props.route.params.wallet.wallet.walletPassword}
+                        </Text>
+                        :
+                        <Text style={styles.labelText}>
+                            CODE: {props.route.params.wallet.wallet.walletCode}
+                        </Text>}
+                    <TouchableOpacity onPress={() => setShowPass(!showPass)}>
+                        <Ionicons name="key-outline" size={25} color={showPass ? "red" : "#192b6a"} />
+                    </TouchableOpacity>
+                </View>
                 <View style={styles.mainFilters}>
                     <TouchableOpacity onPress={() => setShow("expenses")}>
                         <Text style={[show == "expenses" ? styles.selected : styles.unselect]}>
@@ -154,6 +170,23 @@ export default props => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    label: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        width: '90%',
+        paddingHorizontal: 15,
+        paddingVertical: 3,
+        backgroundColor: '#FFF',
+        borderRadius: 20,
+        marginHorizontal: 10,
+        marginVertical: 10
+    },
+    labelText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#192b6a'
     },
     filters: {
         borderRadius: 3,

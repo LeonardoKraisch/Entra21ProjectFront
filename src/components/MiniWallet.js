@@ -1,8 +1,11 @@
-import { Text, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Text, StyleSheet, TouchableOpacity, View, Pressable } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
 
 export default props => {
+    const [favorite, setFavorite] = useState(false)
+
     return (
         <TouchableOpacity style={styles.container}
             onPress={() => props.navigation.navigate("CustomWallet", { wallet: props.wallet.item, wallets: props.wallets })}>
@@ -13,9 +16,15 @@ export default props => {
                         {props.wallet.item.wallet.walletName}
                     </Text>
                 </View>
-                <Text style={styles.labelText}>
-                    {props.wallet.item.wallet.walletCode}
-                </Text>
+                <Pressable
+                        style={styles.buttonStyle}
+                        onPress={() => setFavorite(!favorite)}>
+                        <FontAwesome
+                            name={favorite ? "star" : "star-o"}
+                            size={20}
+                            color="yellow"
+                        />
+                    </Pressable>
             </View>
             <View style={styles.values}>
                 <View style={styles.arrows}>
@@ -108,5 +117,13 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         paddingRight: 4
     },
-    
+    buttonStyle: {
+        
+    },
+    activeButtonStyle: {
+
+    },
+    inactiveButtonStyle: {
+
+    }
 })
