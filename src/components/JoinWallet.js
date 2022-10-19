@@ -16,6 +16,7 @@ export default props => {
         }), "Join Wallet")
         props.pressProps()
         props.refresh()
+        
     }
 
     return (
