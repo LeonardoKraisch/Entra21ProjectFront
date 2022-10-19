@@ -266,15 +266,15 @@ export const MoneyProvider = ({ children }) => {
         },
 
         editRegister: async (data) => {
+            const launch = {
+                code: data.code,
+                user: userCode,
+            }
+            launch["column"] = data.type == "+" ? { incPending: false } : { expPending: false }
+            launch[data.type == "+" ? "incMoney" : "expMoney"] = data.value
             try {
                 const ediConn = await axios.post(`/${data.type == "+" ? "income" : "expense"}/edit`,
-                    {
-                        launch: {
-                            code: data.code,
-                            column: data.type == "+" ? { "incPending": false } : { "expPending": false },
-                            user: userCode
-                        }
-                    })
+                    { launch })
 
                 if (data.type == "+" && ediConn.data.result.successfull) {
                     if (data.pending) {
@@ -308,7 +308,7 @@ export const MoneyProvider = ({ children }) => {
 
                 }
 
-                
+
                 return ediConn.data.result
             } catch (e) {
                 Toast.show({
@@ -492,6 +492,7 @@ export const MoneyProvider = ({ children }) => {
         addWallets: async (wallet) => {
             wallet['walletTotalIncomes'] = 0
             wallet['walletTotalExpenses'] = 0
+            wallet["ownerUserCode"] = userCode
             const newWallets = await axios.post("/wallet/new", {
                 wallet,
                 userCode

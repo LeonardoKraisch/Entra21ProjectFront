@@ -152,10 +152,13 @@ export default props => {
                                         <TouchableOpacity onPress={() => editEntry(item.incCode ?
                                             {
                                                 type: "+",
-                                                code: item.incCode
+                                                code: item.incCode,
+                                                value:item.incMoney
+
                                             } : {
                                                 type: "-",
-                                                code: item.expCode
+                                                code: item.expCode,
+                                                value: item.expMoney
                                             }
                                         )} style={styles.buttonOk}>
                                             <MaterialIcons size={28} name="done" color="#FFF" />

@@ -11,7 +11,8 @@ export default props => {
     const join = async () => {
         await showToast(await joinWallet({
             walletCode: parseInt(walletCode),
-            password: walletPassword
+            password: walletPassword,
+            favorite:false
         }), "Join Wallet")
         props.pressProps()
         props.refresh()
