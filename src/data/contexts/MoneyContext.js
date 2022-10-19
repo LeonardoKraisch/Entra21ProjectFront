@@ -500,6 +500,10 @@ export const MoneyProvider = ({ children }) => {
                 console.log(e.message, "error in wallet")
             }
         },
+        deleteWallet: async (walletCode) => {
+            const delConn = await axios.post("/wallet/exit", { walletCode })
+            return delConn.data.result
+        },
 
         getAllRegistersToWallet: async (walletCode) => {
             try {
@@ -536,7 +540,7 @@ export const MoneyProvider = ({ children }) => {
                 })
                 :
                 Toast.show({
-                    type: 'success',
+                    type: 'error',
                     text1: `error: ${result.error}`,
                 })
             console.log(result.error, "toast");
