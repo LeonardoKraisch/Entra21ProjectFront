@@ -16,7 +16,7 @@ export default props => {
                 rollSideAnim,
                 {
                     toValue: 390,
-                    duration: 100,
+                    duration: 200,
                     useNativeDriver: false
                 }
             ).start()
@@ -27,7 +27,7 @@ export default props => {
                 rollSideAnim,
                 {
                     toValue: 187,
-                    duration: 100,
+                    duration: 200,
                     useNativeDriver: false
                 }
             ).start()
@@ -45,7 +45,7 @@ export default props => {
                 rollUpAnim,
                 {
                     toValue: 630,
-                    duration: 100,
+                    duration: 200,
                     useNativeDriver: false
                 }
             ).start()
@@ -56,7 +56,7 @@ export default props => {
                 rollUpAnim,
                 {
                     toValue: 46,
-                    duration: 100,
+                    duration: 200,
                     useNativeDriver: false
                 }
             ).start()
