@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native'
+import { Card } from "react-native-paper";
+import { MaterialIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
+import SelectDropdown from 'react-native-select-dropdown'
 
 import moment from 'moment'
 import DateTimePicker from '@react-native-community/datetimepicker'
@@ -8,7 +12,6 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 import useMoney from "../data/hooks/useMoney";
 import WalletFilters from "../components/Wallet/WalletFilters";
 import CustomReport from "../components/Wallet/Report";
-import SelectDropdown from 'react-native-select-dropdown'
 
 export default props => {
     const { getAllRegistersToWallet } = useMoney()
@@ -16,6 +19,9 @@ export default props => {
     const [launches, setLaunches] = useState()
     const [wallet, setWallet] = useState()
     const [wallets, setWallets] = useState([props.route.params.wallet.wallet.walletName])
+    const [showPass, setShowPass] = useState(false)
+    const [showModal, setShowModal] = useState(true)
+
     var customWallets = []
 
     useEffect(() => {
@@ -35,6 +41,7 @@ export default props => {
         }
         loadRegisters()
     }, [])
+
 
     const ShowReport = () => {
         if (show == "expenses") {
@@ -124,6 +131,19 @@ export default props => {
                         setWallet(selected)
                     }}
                 />
+                <View style={styles.label}>
+                    {showPass ?
+                        <Text style={styles.labelText}>
+                            PASSWORD: {props.route.params.wallet.wallet.walletPasswd}
+                        </Text>
+                        :
+                        <Text style={styles.labelText}>
+                            CODE: {props.route.params.wallet.wallet.walletCode}
+                        </Text>}
+                    <TouchableOpacity onPress={() => setShowPass(!showPass)}>
+                        <Ionicons name="key-outline" size={25} color={showPass ? "red" : "#FFF"} />
+                    </TouchableOpacity>
+                </View>
                 <View style={styles.mainFilters}>
                     <TouchableOpacity onPress={() => setShow("expenses")}>
                         <Text style={[show == "expenses" ? styles.selected : styles.unselect]}>
@@ -147,6 +167,22 @@ export default props => {
             <View style={{ flex: 1, padding: 10 }}>
                 <ShowReport />
             </View>
+            <Modal visible={showModal}
+                        animationType="fade"
+                        transparent={true}
+                        onRequestClose={() => setShowModal(false)}>
+                        <View style={styles.modalExclude}>
+                            <Card style={styles.cardExclude}>
+                                <Text style={styles.textExclude}>Are you certain you wish to exclude this wallet?</Text>
+                                <TouchableOpacity onPress={() => setShowModal(false)} style={styles.confirmExclusion}>
+                                    <MaterialIcons size={35} name="done" color="green" />
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => setShowModal(false)} style={styles.confirmExclusion}>
+                                    <MaterialIcons size={35} name="done" color="green" />
+                                </TouchableOpacity>
+                            </Card>
+                        </View>
+                    </Modal>
         </LinearGradient>
     )
 }
@@ -154,6 +190,23 @@ export default props => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    label: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        width: '90%',
+        paddingHorizontal: 15,
+        paddingVertical: 3,
+        borderBottomColor: '#CCC',
+        borderBottomWidth: 1,
+        marginHorizontal: 10,
+        marginVertical: 10
+    },
+    labelText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#FFF'
     },
     filters: {
         borderRadius: 3,
@@ -210,6 +263,30 @@ const styles = StyleSheet.create({
         color: '#FFF',
         fontSize: 15,
         fontWeight: 'bold'
+    },
+    modalExclude: {
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    cardExclude: {
+        width: '50%',
+        height: '30%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 15
+    },
+    textExclude: {
+        padding: 5,
+        fontSize: 20,
+        fontWeight: "bold"
+    },
+    confirmExclusion: {
+        marginTop: 12,
+        marginRight: 12,
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end'
     },
 })
 

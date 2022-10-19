@@ -223,10 +223,7 @@ export const MoneyProvider = ({ children }) => {
 
                 if (data.type == "+" && delConn.data.result.successfull) {
                     if (data.pending) {
-                        var newPendings = incPendings.filter((pending) => {
-                            return pending.incCode != data.code
-                        })
-                        setIncPendings(newPendings)
+                        await moneyInternalContext.getPendings()
 
                     } else {
                         var newLaunches = incomes.filter((launch) => {
@@ -238,11 +235,7 @@ export const MoneyProvider = ({ children }) => {
 
                 } else if (data.type == "-" && delConn.data.result.successfull) {
                     if (data.pending) {
-                        var newPendings = expPendings.filter((pending) => {
-                            return pending.expCode != data.code
-                        })
-                        setExpPendings(newPendings)
-
+                        await moneyInternalContext.getPendings()
                     } else {
                         var newLaunches = expenses.filter((launch) => {
                             return launch.expCode != data.code
@@ -278,11 +271,7 @@ export const MoneyProvider = ({ children }) => {
 
                 if (data.type == "+" && ediConn.data.result.successfull) {
                     if (data.pending) {
-                        var newPendings = incPendings.filter((pending) => {
-                            return pending.incCode != data.code
-                        })
-                        setIncPendings(newPendings)
-
+                        await moneyInternalContext.getPendings()
                     } else {
                         var newLaunches = expenses.filter((launch) => {
                             return launch.expCode != data.code
@@ -293,11 +282,7 @@ export const MoneyProvider = ({ children }) => {
 
                 } else if (data.type == "-" && ediConn.data.result.successfull) {
                     if (data.pending) {
-                        var newPendings = expPendings.filter((pending) => {
-                            return pending.expCode != data.code
-                        })
-                        setExpPendings(newPendings)
-
+                        await moneyInternalContext.getPendings()
                     } else {
                         var newLaunches = expenses.filter((launch) => {
                             return launch.expCode != data.code
@@ -439,7 +424,7 @@ export const MoneyProvider = ({ children }) => {
                 console.log(e.message, " - error in getPendings")
             }
         },
-        // [Object.keys(allPendings)[0]][0]
+
         generalPendings: async () => {
             try {
                 var newIncPendings = {}
@@ -558,7 +543,7 @@ export const MoneyProvider = ({ children }) => {
                     type: 'error',
                     text1: `error: ${result.error}`,
                 })
-            console.log(result.error);
+            console.log(result.error, "toast");
         },
         getMonthlyBalance: async () => {
             const MonthlyIncomes = await moneyInternalContext.getRegisters({
