@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Modal, RefreshControl } from "react-native";
 import { Agenda } from 'react-native-calendars'
 import { Card } from "react-native-paper";
@@ -9,7 +9,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import useMoney from "../data/hooks/useMoney"
 
 export default props => {
-    const { incPendings, expPendings, allPendings, delRegister, editRegister, getPendings, generalPendings, showToast } = useMoney()
+    const { delRegister, editRegister, getPendings, showToast, allPendings } = useMoney()
     const [modalVisible, setModalVisible] = useState(false)
     const [item, setItem] = useState()
     const [allItems, setAllItems] = useState(allPendings)
@@ -20,30 +20,26 @@ export default props => {
 
     const [refreshing, setRefreshing] = useState(false);
 
-    const onRefresh = useCallback(async () => {
+    const onRefresh = async () => {
         setRefreshing(true);
-        setAllItems(await generalPendings())
+        setAllItems(fetch())
         wait(2000).then(() => setRefreshing(false));
-    }, []);
+    }
 
+    const fetch = async () => {
+        try {
+            var pendings = await getPendings()
+            setItem(await pendings[Object.keys(pendings)[0]][0])
+            return pendings
+        } catch (e) {
+            console.log(e);
+            return []
+        }
+    }
 
     useEffect(() => {
-        async function fetch() {
-            try {
-                return await getPendings()
-            } catch (e) {
-                console.log(e);
-                return []
-            }
-        }
-        setItem(fetch())
+        onRefresh()
     }, [])
-
-    // useEffect(() => {
-
-    //     onRefresh()
-    //     setAllItems(generalPendings())
-    // }, [incPendings, expPendings])
 
     const renderItem = (item) => {
         const table = item.incMoney ? "inc" : "exp"
