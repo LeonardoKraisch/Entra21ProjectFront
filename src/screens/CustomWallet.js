@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native'
 import { Card } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import SelectDropdown from 'react-native-select-dropdown'
@@ -20,7 +22,7 @@ export default props => {
     const [wallet, setWallet] = useState()
     const [wallets, setWallets] = useState([props.route.params.wallet.wallet.walletName])
     const [showPass, setShowPass] = useState(false)
-    const [showModal, setShowModal] = useState(true)
+    const [showModal, setShowModal] = useState(false)
 
     var customWallets = []
 
@@ -111,6 +113,9 @@ export default props => {
 
     return (
         <LinearGradient colors={['#192b6a', '#243e9c', '#3155d6']} style={styles.container}>
+            <TouchableOpacity style={styles.buttonTrash} onPress={() => setShowModal(true)}>
+                <FontAwesome size={27} name="trash-o" color="#FFF" />
+            </TouchableOpacity>
             <View style={styles.filters}>
                 <SelectDropdown
                     buttonTextStyle={{
@@ -168,21 +173,23 @@ export default props => {
                 <ShowReport />
             </View>
             <Modal visible={showModal}
-                        animationType="fade"
-                        transparent={true}
-                        onRequestClose={() => setShowModal(false)}>
-                        <View style={styles.modalExclude}>
-                            <Card style={styles.cardExclude}>
-                                <Text style={styles.textExclude}>Are you certain you wish to exclude this wallet?</Text>
-                                <TouchableOpacity onPress={() => setShowModal(false)} style={styles.confirmExclusion}>
-                                    <MaterialIcons size={35} name="done" color="green" />
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => setShowModal(false)} style={styles.confirmExclusion}>
-                                    <MaterialIcons size={35} name="done" color="green" />
-                                </TouchableOpacity>
-                            </Card>
+                animationType="fade"
+                transparent={true}
+                onRequestClose={() => setShowModal(false)}>
+                <View style={styles.modalExclude}>
+                    <Card style={styles.cardExclude}>
+                        <Text style={styles.textExclude}>Are you certain about deleting this wallet?</Text>
+                        <View style={styles.buttons}>
+                            <TouchableOpacity onPress={() => setShowModal(false)} style={styles.confirmExclusion}>
+                                <MaterialCommunityIcons size={35} name="cancel" color="red" />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => setShowModal(false)} style={styles.confirmExclusion}>
+                                <MaterialIcons size={35} name="done" color="green" />
+                            </TouchableOpacity>
                         </View>
-                    </Modal>
+                    </Card>
+                </View>
+            </Modal>
         </LinearGradient>
     )
 }
@@ -190,6 +197,11 @@ export default props => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    buttonTrash: {
+        paddingRight: 10,
+        paddingTop: 10,
+        alignSelf: 'flex-end'
     },
     label: {
         flexDirection: 'row',
@@ -272,7 +284,7 @@ const styles = StyleSheet.create({
     },
     cardExclude: {
         width: '50%',
-        height: '30%',
+        height: '25%',
         alignItems: 'center',
         justifyContent: 'center',
         padding: 15
@@ -288,5 +300,12 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'flex-end'
     },
+    buttons: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        paddingLeft: 7,
+        paddingTop: 5,
+        justifyContent: 'space-between'
+    }
 })
 

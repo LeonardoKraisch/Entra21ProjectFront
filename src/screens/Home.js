@@ -54,6 +54,7 @@ export default props => {
 
     return (
         <LinearGradient colors={['#192b6a', '#243e9c', '#3155d6']} style={styles.container}>
+         {/* <LinearGradient colors={['#CAAF20', '#E1C84B', '#FCE986']} style={styles.container}> */}
             <Header {...props} />
             <View style={styles.body}>
                 <View style={styles.mainContainer}>

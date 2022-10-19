@@ -17,14 +17,14 @@ export default props => {
                     </Text>
                 </View>
                 <Pressable
-                        style={styles.buttonStyle}
-                        onPress={() => setFavorite(!favorite)}>
-                        <FontAwesome
-                            name={favorite ? "star" : "star-o"}
-                            size={20}
-                            color="yellow"
-                        />
-                    </Pressable>
+                    style={styles.buttonStyle}
+                    onPress={() => setFavorite(!favorite)}>
+                    <FontAwesome
+                        name={favorite ? "star" : "star-o"}
+                        size={20}
+                        color="#FFF"
+                    />
+                </Pressable>
             </View>
             <View style={styles.values}>
                 <View style={styles.arrows}>
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
         paddingRight: 4
     },
     buttonStyle: {
-        
+
     },
     activeButtonStyle: {
 

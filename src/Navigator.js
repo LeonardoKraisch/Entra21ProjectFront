@@ -93,7 +93,7 @@ export default props => {
                     return (
                         <DrawerContentScrollView {...props}>
                             <View style={styles.userInfo}>
-                                <Avatar.Image size={80} source={require('../assets/abelha.jpg')} />
+                                <Avatar.Image size={80} source={require('../assets/FIGMAbelha.png')} />
                                 <View style={styles.texts}>
                                     <Text style={{ color: '#FFF', fontSize: 18 }}>{"Welcome,"}</Text>
                                     <Text style={{ color: '#FFF', fontSize: 37 }}>{name}</Text>
