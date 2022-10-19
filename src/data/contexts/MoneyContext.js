@@ -117,6 +117,7 @@ export const MoneyProvider = ({ children }) => {
                     if (pressedPlus) {
                         if (launch["incPending"]) {
                             setIncPendings([...incPendings, launch])
+                            setAllPendings(await moneyInternalContext.generalPendings())
                         } else {
                             setIncomes([...incomes, launch])
                             setTotalInc(totalInc + await launch['incMoney'])
@@ -124,6 +125,7 @@ export const MoneyProvider = ({ children }) => {
                     } else {
                         if (launch["expPending"]) {
                             setExpPendings([...expPendings, launch])
+                            setAllPendings(await moneyInternalContext.generalPendings())
                         } else {
                             setExpenses([...expenses, launch])
                             setTotalExp(totalExp + await launch['expMoney'])
@@ -225,7 +227,7 @@ export const MoneyProvider = ({ children }) => {
                             return pending.incCode != data.code
                         })
                         setIncPendings(newPendings)
-                        await moneyInternalContext.generalPendings()
+
                     } else {
                         var newLaunches = incomes.filter((launch) => {
                             return launch.incCode != data.code
@@ -240,7 +242,7 @@ export const MoneyProvider = ({ children }) => {
                             return pending.expCode != data.code
                         })
                         setExpPendings(newPendings)
-                        await moneyInternalContext.generalPendings()
+
                     } else {
                         var newLaunches = expenses.filter((launch) => {
                             return launch.expCode != data.code
@@ -269,26 +271,44 @@ export const MoneyProvider = ({ children }) => {
                     {
                         launch: {
                             code: data.code,
-                            column: data.type == "+" ? { "incPending": false } : { "expPending": false }
+                            column: data.type == "+" ? { "incPending": false } : { "expPending": false },
+                            user: userCode
                         }
                     })
 
                 if (data.type == "+" && ediConn.data.result.successfull) {
-                    var newPendings = incPendings.filter((pending) => {
-                        return pending.incCode != data.code
-                    })
-                    setIncPendings(newPendings)
+                    if (data.pending) {
+                        var newPendings = incPendings.filter((pending) => {
+                            return pending.incCode != data.code
+                        })
+                        setIncPendings(newPendings)
+
+                    } else {
+                        var newLaunches = expenses.filter((launch) => {
+                            return launch.expCode != data.code
+                        })
+                        setIncomes(newLaunches)
+                        await moneyInternalContext.balanceSetter(incomes, newLaunches)
+                    }
 
                 } else if (data.type == "-" && ediConn.data.result.successfull) {
-                    var newPendings = expPendings.filter((pending) => {
-                        return pending.expCode != data.code
-                    })
-                    setExpPendings(newPendings)
+                    if (data.pending) {
+                        var newPendings = expPendings.filter((pending) => {
+                            return pending.expCode != data.code
+                        })
+                        setExpPendings(newPendings)
+
+                    } else {
+                        var newLaunches = expenses.filter((launch) => {
+                            return launch.expCode != data.code
+                        })
+                        setIncomes(newLaunches)
+                        await moneyInternalContext.balanceSetter(incomes, newLaunches)
+                    }
 
                 }
 
-                await moneyInternalContext.generalPendings()
-                console.log(ediConn.data);
+                
                 return ediConn.data.result
             } catch (e) {
                 Toast.show({
@@ -413,57 +433,55 @@ export const MoneyProvider = ({ children }) => {
 
                 ))
 
-                await moneyInternalContext.generalPendings()
-                return allPendings[Object.keys(allPendings)[0]][0]
+                setAllPendings(await moneyInternalContext.generalPendings())
+                return allPendings
             } catch (e) {
                 console.log(e.message, " - error in getPendings")
             }
         },
-
+        // [Object.keys(allPendings)[0]][0]
         generalPendings: async () => {
             try {
-                async function getAll() {
-                    var newIncPendings = {}
-                    for (let item of incPendings) {
-                        if (newIncPendings[item.incDate] != null && newIncPendings[item.incDate][0].incDate == item.incDate) {
-                            newIncPendings[item.incDate].push(item)
-                        } else {
-                            newIncPendings[item.incDate] = [item]
-                        }
+                var newIncPendings = {}
+                for (let item of incPendings) {
+                    if (newIncPendings[item.incDate] != null && newIncPendings[item.incDate][0].incDate == item.incDate) {
+                        newIncPendings[item.incDate].push(item)
+                    } else {
+                        newIncPendings[item.incDate] = [item]
                     }
-                    var newExpPendings = {}
-                    for (let item of expPendings) {
-                        if (newExpPendings[item.expDate] != null && newExpPendings[item.expDate][0].expDate == item.expDate) {
-                            newExpPendings[item.expDate].push(item)
-                        } else {
-                            newExpPendings[item.expDate] = [item]
-                        }
-                    }
-                    const merged = {}
-                    Object.keys(newExpPendings).forEach((key) => {
-                        merged[key] = []
-                    })
-                    Object.keys(newIncPendings).forEach((key) => {
-                        merged[key] = []
-                    })
-                    Object.keys(merged).forEach((key) => {
-                        try {
-                            newIncPendings[key].forEach((item) => {
-                                merged[key].push(item)
-                            })
-
-                        } catch { }
-                        try {
-                            newExpPendings[key].forEach((item) => {
-                                merged[key].push(item)
-                            })
-                        } catch { }
-
-                    })
-                    return merged
                 }
-                setAllPendings(await getAll())
-                return getAll()
+                var newExpPendings = {}
+                for (let item of expPendings) {
+                    if (newExpPendings[item.expDate] != null && newExpPendings[item.expDate][0].expDate == item.expDate) {
+                        newExpPendings[item.expDate].push(item)
+                    } else {
+                        newExpPendings[item.expDate] = [item]
+                    }
+                }
+                const merged = {}
+                Object.keys(newExpPendings).forEach((key) => {
+                    merged[key] = []
+                })
+                Object.keys(newIncPendings).forEach((key) => {
+                    merged[key] = []
+                })
+                Object.keys(merged).forEach((key) => {
+                    try {
+                        newIncPendings[key].forEach((item) => {
+                            merged[key].push(item)
+                        })
+
+                    } catch { }
+                    try {
+                        newExpPendings[key].forEach((item) => {
+                            merged[key].push(item)
+                        })
+                    } catch { }
+
+                })
+
+                return merged
+
             } catch (e) {
                 console.log(e.message, " - error in generalPendings")
                 return {}
