@@ -620,6 +620,11 @@ export const MoneyProvider = ({ children }) => {
             setBalance(userConn.data.userMoney)
             setTotalInc(userConn.data.userTotalIncomes)
             setTotalExp(userConn.data.userTotalExpenses)
+        },
+        setWalletFavorite: async (wuCode, favorite) => {
+            const walletConn = await axios.post(`/wallet/favorite`,
+                { wallet: { wuCode, favorite } })
+            return walletConn.data.result
         }
     }
 
