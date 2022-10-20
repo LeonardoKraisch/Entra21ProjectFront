@@ -32,10 +32,10 @@ export default props => {
         console.log(wallet)
         if (wallet > 0)
             if (pressedPlus) {
-                console.log(props.wallets[wallet-1].wallet.walletTotalIncomes = parseFloat(props.wallets[wallet -1].wallet.walletTotalIncomes) + parseFloat(money.replace(coin, "")))
+                console.log(wallet.walletTotalIncomes = parseFloat(wallet.walletTotalIncomes) + parseFloat(money.replace(coin, "")))
             } else {
                 console.log(false)
-                console.log(props.wallets[wallet-1].wallet.walletTotalExpenses = parseFloat(props.wallets[wallet -1].wallet.walletTotalExpenses) + parseFloat(money.replace(coin, "")))
+                console.log(wallet.walletTotalExpenses = parseFloat(wallet.walletTotalExpenses) + parseFloat(money.replace(coin, "")))
             } else {
             console.log("no refresh")
         }
