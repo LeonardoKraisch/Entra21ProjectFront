@@ -500,8 +500,8 @@ export const MoneyProvider = ({ children }) => {
                 console.log(e.message, "error in wallet")
             }
         },
-        deleteWallet: async (walletCode) => {
-            const delConn = await axios.post("/wallet/exit", { walletCode })
+        deleteWallet: async (wuCode) => {
+            const delConn = await axios.post("/wallet/exit", { wuCode })
             return delConn.data.result
         },
 

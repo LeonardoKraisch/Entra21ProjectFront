@@ -16,13 +16,19 @@ import WalletFilters from "../components/Wallet/WalletFilters";
 import CustomReport from "../components/Wallet/Report";
 
 export default props => {
-    const { getAllRegistersToWallet } = useMoney()
+    const { getAllRegistersToWallet, deleteWallet, showToast } = useMoney()
     const [show, setShow] = useState("expenses")
     const [launches, setLaunches] = useState()
     const [wallet, setWallet] = useState()
     const [wallets, setWallets] = useState([props.route.params.wallet.wallet.walletName])
     const [showPass, setShowPass] = useState(false)
     const [showModal, setShowModal] = useState(false)
+
+    const [showFilters, setShowFilters] = useState(false)
+    const [showDatePicker, setShowDatePicker] = useState(false)
+    const [date, setDate] = useState(new Date())
+
+    const dateStringUser = moment(date).format('MMMM[/]YYYY')
 
     var customWallets = []
 
@@ -60,12 +66,6 @@ export default props => {
             )
         }
     }
-
-    const [showFilters, setShowFilters] = useState(false)
-    const [showDatePicker, setShowDatePicker] = useState(false)
-    const [date, setDate] = useState(new Date())
-
-    const dateStringUser = moment(date).format('MMMM[/]YYYY')
 
     const DatePicker = () => {
         let datePicker = <DateTimePicker display="spinner" value={date} onChange={(_, date) => {
@@ -109,6 +109,11 @@ export default props => {
                 </View>
             )
         }
+    }
+
+    const delWallet = async () => {
+        await showToast(await deleteWallet(props.route.params.wallet.wuCode), "Wallet delete")
+        setShowModal(false)
     }
 
     return (
@@ -183,7 +188,7 @@ export default props => {
                             <TouchableOpacity onPress={() => setShowModal(false)} style={styles.confirmExclusion}>
                                 <MaterialCommunityIcons size={35} name="cancel" color="red" />
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => setShowModal(false)} style={styles.confirmExclusion}>
+                            <TouchableOpacity onPress={() => delWallet()} style={styles.confirmExclusion}>
                                 <MaterialIcons size={35} name="done" color="green" />
                             </TouchableOpacity>
                         </View>
