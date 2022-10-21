@@ -15,7 +15,7 @@ export default props => {
             {show ?
                 <View style={{ flexDirection: 'column-reverse', flex: 1 }}>
                     <TouchableOpacity onPress={() => close()} style={styles.buttonClose}>
-                        <Entypo name="circle-with-cross" size={30} color='#F5FEFD' />
+                        <Entypo name="circle-with-cross" size={30} color='#a410e6' />
                     </TouchableOpacity>
                     <Inputs {...props} />
                 </View>
@@ -56,11 +56,10 @@ const styles = StyleSheet.create({
         borderTopStartRadius: 40
     },
     buttonClose: {
-        backgroundColor: '#a410e6',
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 3,
-        borderColor: '#F5FEFD',
+        borderColor: '#a410e6',
         flexDirection: 'row',
         height: 36
     }

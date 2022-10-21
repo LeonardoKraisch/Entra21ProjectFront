@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
         alignItems: 'center',
         justifyContent: 'center',
-        borderBottomColor: '#CCC',
+        borderBottomColor: '#F5FEFD',
         borderBottomWidth: 2,
     },
     mainFilters: {
@@ -141,11 +141,11 @@ const styles = StyleSheet.create({
         width: '95%',
         padding: 5,
         marginBottom: 5,
-        borderBottomColor: '#CCC',
+        borderBottomColor: '#F5FEFD',
         borderBottomWidth: 1,
     },
     selected: {
-        color: '#FFF',
+        color: '#F5FEFD',
         fontWeight: 'bold',
         fontSize: 16
     },
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     },
     date: {
         fontSize: 15,
-        color: '#FFF',
+        color: '#F5FEFD',
         fontWeight: 'bold'
     },
     secondaryContainer: {
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
         paddingVertical: 2,
     },
     buttonText: {
-        color: '#FFF',
+        color: '#F5FEFD',
         fontSize: 15,
         fontWeight: 'bold'
     }

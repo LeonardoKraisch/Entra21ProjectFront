@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 30,
-        color: '#FFF',
+        color: '#F5FEFD',
         fontWeight: 'bold',
         margin: 2
     },
@@ -154,11 +154,11 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         width: '90%',
         height: 50,
-        backgroundColor: '#FFF',
+        backgroundColor: '#F5FEFD',
         alignSelf: 'center'
     },
     button: {
-        backgroundColor: '#3155d6',
+        backgroundColor: '#157de6',
         width: '90%',
         alignSelf: 'center',
         marginTop: 38,
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     buttonText: {
-        color: '#FFF',
+        color: '#F5FEFD',
         fontSize: 20
     },
     buttonRow: {
@@ -179,9 +179,9 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     textRec: {
-        color: '#FFF',
+        color: '#F5FEFD',
     },
     textUp: {
-        color: '#22EEFB'
+        color: '#a410e6'
     }
 })
