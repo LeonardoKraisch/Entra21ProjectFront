@@ -2,9 +2,17 @@ import { Text, StyleSheet, TouchableOpacity, View, Pressable } from "react-nativ
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
+import useMoney from "../data/hooks/useMoney"
 
 export default props => {
-    const [favorite, setFavorite] = useState(false)
+    const { setWalletFavorite, showToast } = useMoney()
+    const [favorite, setFavorite] = useState(props.wallet.item.favorite)
+
+    const favoriteWallet = async () => {
+        setFavorite(!favorite)
+        showToast( await setWalletFavorite(props.wallet.item.wuCode, favorite ), favorite ? "Unfavorited":" Favorited")
+
+    }
 
     return (
         <TouchableOpacity style={styles.container}
@@ -18,7 +26,7 @@ export default props => {
                 </View>
                 <Pressable
                     style={styles.buttonStyle}
-                    onPress={() => setFavorite(!favorite)}>
+                    onPress={() => favoriteWallet()}>
                     <FontAwesome
                         name={favorite ? "star" : "star-o"}
                         size={20}

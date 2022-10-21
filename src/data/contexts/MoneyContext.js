@@ -208,7 +208,7 @@ export const MoneyProvider = ({ children }) => {
         },
 
         getRegisters: async data => {
-            if (data.wallet == undefined)
+            if (data.wallet != false) //talves seja diferente de undefined a wallet code
                 data["user"] = { code: userCode }
             const newQuery = await axios.post(`/${data.type == "+" ? "income" : "expense"}/query`,
                 data)
@@ -511,13 +511,15 @@ export const MoneyProvider = ({ children }) => {
                     type: "+",
                     filter: {
                         wallet: { code: walletCode }
-                    }
+                    },
+                    userCode : false
                 })
                 const toWalletExp = await moneyInternalContext.getRegisters({
                     type: "-",
                     filter: {
                         wallet: { code: walletCode }
-                    }
+                    },
+                    userCode : false
                 })
                 const merged = await moneyInternalContext.mergeArrays(toWalletInc, "incMoney", toWalletExp, 'expMoney')
 
@@ -620,6 +622,11 @@ export const MoneyProvider = ({ children }) => {
             setBalance(userConn.data.userMoney)
             setTotalInc(userConn.data.userTotalIncomes)
             setTotalExp(userConn.data.userTotalExpenses)
+        },
+        setWalletFavorite: async (wuCode, favorite) => {
+            const walletConn = await axios.post(`/wallet/favorite`,
+                { wallet: { wuCode, favorite } })
+            return walletConn.data.result
         }
     }
 
