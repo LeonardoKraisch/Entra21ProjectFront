@@ -507,19 +507,15 @@ export const MoneyProvider = ({ children }) => {
 
         getAllRegistersToWallet: async (walletCode) => {
             try {
-                const toWalletInc = await moneyInternalContext.getRegisters({
-                    type: "+",
+                const toWalletInc = await  await axios.post("/income/query/wallet",{
                     filter: {
                         wallet: { code: walletCode }
-                    },
-                    userCode: false
+                    }
                 })
-                const toWalletExp = await moneyInternalContext.getRegisters({
-                    type: "-",
+                const toWalletExp = await  await axios.post("/expense/query/wallet",{
                     filter: {
                         wallet: { code: walletCode }
-                    },
-                    userCode: false
+                    }
                 })
                 const merged = await moneyInternalContext.mergeArrays(toWalletInc, "incMoney", toWalletExp, 'expMoney')
 
