@@ -40,20 +40,20 @@ export default props => {
 
 const styles = StyleSheet.create({
     inputContainer: {
-        width: '50%',
+        width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center'
     },
     textTitle: {
-        color: '#FFF',
+        color: '#F5FEFD',
         fontSize: 15
     },
     inputTimes: {
-        width: '48%',
+        width: '20%',
         marginRight: 10,
         height: 20,
-        backgroundColor: '#FFF',
+        backgroundColor: '#F5FEFD',
         textAlign: "right",
         color: '#000',
         borderRadius: 5,
@@ -62,10 +62,10 @@ const styles = StyleSheet.create({
     inputMoney: {
         textAlign: "right",
         width: '50%',
-        color: '#FFF',
+        color: '#F5FEFD',
         fontSize: 20,
         height: 25,
-        borderBottomColor: '#FFF',
+        borderBottomColor: '#F5FEFD',
         borderBottomWidth: 1,
         marginBottom: 5
     },

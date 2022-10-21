@@ -15,7 +15,7 @@ export default props => {
             {show ?
                 <View style={{ flexDirection: 'column-reverse', flex: 1 }}>
                     <TouchableOpacity onPress={() => close()} style={styles.buttonClose}>
-                        <Entypo name="circle-with-cross" size={30} color='#c63222' />
+                        <Entypo name="circle-with-cross" size={30} color='#F5FEFD' />
                     </TouchableOpacity>
                     <Inputs {...props} />
                 </View>
@@ -55,50 +55,12 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         borderTopStartRadius: 40
     },
-    buttonPlus: {
-        backgroundColor: '#34F9b2',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderTopStartRadius: 28,
-        flex: 1,
-        borderWidth: 3,
-        borderColor: '#32c622',
-        flexDirection: 'row'
-    },
-    pressedPlus: {
-        backgroundColor: '#34F9b2',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderTopStartRadius: 28,
-        flex: 1,
-        borderWidth: 3,
-        borderColor: '#34F9b2',
-        flexDirection: 'row'
-    },
-    buttonMinus: {
-        backgroundColor: '#f64232',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flex: 1,
-        borderWidth: 3,
-        borderColor: '#c63222',
-        flexDirection: 'row'
-    },
-    pressedMinus: {
-        backgroundColor: '#f64232',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flex: 1,
-        borderWidth: 3,
-        borderColor: '#f64232',
-        flexDirection: 'row'
-    },
     buttonClose: {
-        backgroundColor: '#f64232',
+        backgroundColor: '#a410e6',
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 3,
-        borderColor: '#c63222',
+        borderColor: '#F5FEFD',
         flexDirection: 'row',
         height: 36
     }

@@ -90,8 +90,9 @@ export default props => {
         }
     }
 
+
     return (
-        <LinearGradient colors={['#192b6a', '#243e9c', '#3155d6']} style={styles.container}>
+        <LinearGradient colors={['#353935', '#adb312', '#f2fa16']} style={styles.container}>
             <View style={styles.filters}>
                 <View style={styles.mainFilters}>
                     <TouchableOpacity onPress={() => setShow("expenses")}>
@@ -169,11 +170,6 @@ const styles = StyleSheet.create({
         width: '27%',
         paddingHorizontal: 15,
         paddingVertical: 2,
-        borderColor: '#CCC',
-        borderBottomWidth: 1,
-        borderRightWidth: 1,
-        borderBottomStartRadius: 5,
-        borderBottomEndRadius: 50
     },
     buttonText: {
         color: '#FFF',

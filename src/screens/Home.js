@@ -53,8 +53,7 @@ export default props => {
     };
 
     return (
-        <LinearGradient colors={['#192b6a', '#243e9c', '#3155d6']} style={styles.container}>
-         {/* <LinearGradient colors={['#CAAF20', '#E1C84B', '#FCE986']} style={styles.container}> */}
+        <LinearGradient colors={['#353935', '#adb312', '#f2fa16']} style={styles.container}>
             <Header {...props} />
             <View style={styles.body}>
                 <View style={styles.mainContainer}>
@@ -74,7 +73,7 @@ export default props => {
                 />
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity onPress={() => setShowModal(true)} style={styles.newButton}>
-                        <FontAwesome5 name="plus" size={25} color="#FFF" />
+                        <FontAwesome5 name="plus" size={25} color="#F5FEFD" />
                         <Text style={styles.newButtonText}>New Wallet</Text>
                     </TouchableOpacity>
                 </View>
@@ -96,13 +95,15 @@ export default props => {
                                         value: true,
                                         label: 'Create Wallet',
                                         icon: 'archive-plus-outline',
-                                        style: styles.segmentedButton
+                                        showSelectedCheck: true,
+                                        style: solo ? styles.segmentedButtonSelected : styles.segmentedButton
                                     },
                                     {
                                         value: false,
                                         label: 'Join Wallet',
                                         icon: 'archive-search-outline',
-                                        style: styles.segmentedButton
+                                        showSelectedCheck: true,
+                                        style: solo ? styles.segmentedButton : styles.segmentedButtonSelected
                                     },
                                 ]} />
                             <Card.Content style={styles.content}>
@@ -136,7 +137,7 @@ export default props => {
                 </Modal>
                 <AddView refresh={() => refresh(!myState)} wallets={wallets} />
             </View>
-            <StatusBar backgroundColor={'#192b6a'} />
+            <StatusBar backgroundColor={'#353935'} />
         </LinearGradient>
     )
 }
@@ -188,7 +189,7 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     newButtonText: {
-        color: '#FFF',
+        color: '#F5FEFD',
         fontSize: 18,
         fontWeight: 'bold',
         marginLeft: 15,
@@ -200,7 +201,8 @@ const styles = StyleSheet.create({
     },
     modalCard: {
         height: 490,
-        borderRadius: 10
+        borderRadius: 10,
+        backgroundColor: '#353935',
     },
     buttonHelpContainer: {
         flexDirection: 'row',
@@ -227,14 +229,19 @@ const styles = StyleSheet.create({
     buttonHelpText: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: '#FFF'
+        color: '#F5FEFD'
     },
     group: {
         width: '95%',
-        alignSelf: 'center'
+        alignSelf: 'center',
     },
     segmentedButton: {
         width: '50%',
+        backgroundColor: "#F5FEFD"
+    },
+    segmentedButtonSelected: {
+        width: '50%',
+        backgroundColor: "#157de6"
     },
     modalHelp: {
         width: '100%',
@@ -252,7 +259,8 @@ const styles = StyleSheet.create({
     textModal: {
         padding: 5,
         fontSize: 17,
-        fontWeight: "500"
+        fontWeight: "500",
+        color: "#353935"
     },
     okModalButton: {
         marginTop: 12,

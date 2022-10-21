@@ -29,14 +29,13 @@ export default props => {
                 <MenuButton {...props} />
                 <View style={styles.balance}>
                     <View style={styles.textIcon}>
-                        {/* <Text style={{ color: '#FFF', fontSize: 20, fontWeight: 'bold' }}>Balance</Text> */}
                         <TouchableOpacity style={styles.eye} onPress={() => setShowBalance(!showBalance)}>
                             <Ionicons name={showBalance ? 'eye' : 'eye-off-outline'}
-                                size={25} color='#FFF' />
+                                size={25} color='#F5FEFD' />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.value}>
-                        <Text style={{ color: '#FFF', fontSize: 27 }}>{coin}</Text>
+                        <Text style={{ color: '#F5FEFD', fontSize: 27 }}>{coin}</Text>
                         <View>{showBalance ?
                             <TextMask type={'money'}
                                 value={localBalance}
@@ -46,8 +45,8 @@ export default props => {
                                     unit: localBalance >= 0 ? '' : '-',
                                     delimiter: '.',
                                     suffixUnit: ''
-                                }} style={{ color: '#FFF', fontSize: 27 }} /> :
-                            <Text style={{ color: '#FFF', fontSize: 27 }}>{"--------------"}</Text>}
+                                }} style={{ color: '#F5FEFD', fontSize: 27 }} /> :
+                            <Text style={{ color: '#F5FEFD', fontSize: 27 }}>{"--------------"}</Text>}
                         </View>
                     </View>
                 </View>
@@ -70,7 +69,7 @@ const styles = StyleSheet.create({
         paddingBottom: 10
     },
     balance: {
-        borderBottomColor: '#FFF',
+        borderBottomColor: '#F5FEFD',
         borderBottomWidth: 1,
         paddingTop: 5,
         width: '80%',

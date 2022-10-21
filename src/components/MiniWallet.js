@@ -19,7 +19,7 @@ export default props => {
             onPress={() => props.navigation.navigate("CustomWallet", { wallet: props.wallet.item, wallets: props.wallets })}>
             <View style={styles.label}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Ionicons name="wallet-outline" size={22} color="#FFF" />
+                    <Ionicons name="wallet-outline" size={22} color="#F5FEFD" />
                     <Text style={styles.labelText}>
                         {props.wallet.item.wallet.walletName}
                     </Text>
@@ -30,18 +30,18 @@ export default props => {
                     <FontAwesome
                         name={favorite ? "star" : "star-o"}
                         size={20}
-                        color="#FFF"
+                        color="#F5FEFD"
                     />
                 </Pressable>
             </View>
             <View style={styles.values}>
                 <View style={styles.arrows}>
                     <View style={styles.incCont}>
-                        <FontAwesome name="arrow-up" color="green" size={17} />
+                        <FontAwesome name="arrow-up" color="#157de6" size={17} />
                         <Text style={styles.valuesText}>{props.wallet.item.wallet.walletTotalIncomes}</Text>
                     </View>
                     <View style={styles.expCont}>
-                        <FontAwesome name="arrow-down" color="red" size={17} />
+                        <FontAwesome name="arrow-down" color="#a410e6" size={17} />
                         <Text style={styles.valuesText}>{props.wallet.item.wallet.walletTotalExpenses}</Text>
                     </View>
                     <View style={styles.totalCont}>
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     label: {
-        borderBottomColor: '#FFF',
+        borderBottomColor: '#F5FEFD',
         borderBottomWidth: 1,
         padding: 3,
         justifyContent: 'space-between',
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 4
     },
     labelText: {
-        color: '#FFF',
+        color: '#F5FEFD',
         fontWeight: 'bold',
         fontSize: 15,
         paddingLeft: 3
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     valuesText: {
         fontSize: 14,
         paddingLeft: 5,
-        color: '#FFF'
+        color: '#F5FEFD'
     },
     arrows: {
         flex: 1,
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
         padding: 2
     },
     totalText: {
-        color: '#FFF',
+        color: '#F5FEFD',
         fontSize: 15,
         fontWeight: 'bold',
         paddingRight: 4

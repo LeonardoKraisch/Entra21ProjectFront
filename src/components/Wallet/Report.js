@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         width: '100%',
         minHeight: '60%',
         margin: 10,
-        backgroundColor: '#EEE',
+        backgroundColor: '#353935',
         borderRadius: 5,
         alignSelf: 'center',
         padding: 5,
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     headerTop: {
         width: '100%',
         flexDirection: 'row',
-        borderBottomColor: '#3C3C3C',
+        borderBottomColor: '#157de6',
         borderBottomWidth: 1,
         justifyContent: "space-between",
         paddingHorizontal: 5,
@@ -101,7 +101,8 @@ const styles = StyleSheet.create({
     },
     text: {
         fontWeight: 'bold',
-        fontSize: 16
+        fontSize: 16,
+        color: '#F5FEFD'
     },
     headerValues: {
         flexDirection: 'row',
@@ -109,12 +110,13 @@ const styles = StyleSheet.create({
     headerTitle: {
         fontSize: 18,
         fontWeight: "bold",
-        color: '#333'
+        color: '#F5FEFD'
     },
     headerText: {
         fontSize: 18,
         fontWeight: "bold",
-        paddingLeft: 10
+        paddingLeft: 10,
+        color: '#F5FEFD'
     },
     info: {
         flexDirection: "row",

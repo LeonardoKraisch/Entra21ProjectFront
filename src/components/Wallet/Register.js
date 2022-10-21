@@ -31,7 +31,7 @@ export default props => {
                     code: props.expCode,
                 }
                 )} style={styles.right}>
-                <Icon name="trash" size={30} color='#FFF' />
+                <Icon name="trash" size={30} color='#F5FEFD' />
             </TouchableOpacity>
         )
     }
@@ -40,8 +40,8 @@ export default props => {
         if (show) {
             return (
                 <View style={styles.descriptionContainer}>
-                    <MaterialIcons name="subdirectory-arrow-right" size={15} color='#000' />
-                    <Text style={{ fontWeight: 'bold', fontSize: 15, marginLeft: 3 }}>Description: </Text>
+                    <MaterialIcons name="subdirectory-arrow-right" size={15} color='#F5FEFD' />
+                    <Text style={{ fontWeight: 'bold', fontSize: 15, marginLeft: 3, color: "#F5FEFD" }}>Description: </Text>
                     <Text style={styles.description}>{props.incDescription ? props.incDescription : props.expDescription}</Text>
                 </View>
             )
@@ -80,23 +80,25 @@ export default props => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        backgroundColor: '#FFF',
+        backgroundColor: '#F5FEFD',
         height: 40,
-        borderRightColor: '#9997',
-        borderBottomColor: '#9997',
+        borderRightColor: '#adb312',
+        borderBottomColor: '#adb312',
+        borderRadius: 10,
         borderBottomWidth: 2,
         borderRightWidth: 2,
         alignItems: 'center',
         marginTop: 5
     },
     right: {
-        backgroundColor: 'red',
+        backgroundColor: '#a410e6',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-end',
         paddingHorizontal: 20,
         marginTop: 5,
-        height: 40
+        height: 40,
+        borderRadius: 10
     },
     textContainer: {
         flex: 1,
@@ -108,13 +110,14 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     descriptionContainer: {
-        backgroundColor: '#EEE',
+        backgroundColor: '#353935',
         flexDirection: 'row',
         marginHorizontal: 15,
         alignItems: 'baseline'
     },
     description: {
         flex: 1,
-        marginLeft: 10
+        marginLeft: 10,
+        color: "#F5FEFD"
     }
 })

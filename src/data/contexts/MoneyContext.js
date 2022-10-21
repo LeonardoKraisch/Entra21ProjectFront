@@ -110,7 +110,7 @@ export const MoneyProvider = ({ children }) => {
                 launch[`${table}Date`] = data.dateString,
                 launch[`${table}Description`] = data.description,
                 launch['user'] = await userCode
-            launch['wallet'] = await data.wallet
+            launch['wallet'] = await data.wallet.walletCode
             try {
                 const newLaunch = await axios.post(`/${pressedPlus ? "income" : "expense"}/new`, { launch })
                 if (await newLaunch.data.registered) {
@@ -500,8 +500,8 @@ export const MoneyProvider = ({ children }) => {
                 console.log(e.message, "error in wallet")
             }
         },
-        deleteWallet: async (walletCode) => {
-            const delConn = await axios.post("/wallet/exit", { walletCode })
+        deleteWallet: async (wuCode) => {
+            const delConn = await axios.post("/wallet/exit", { wuCode })
             return delConn.data.result
         },
 

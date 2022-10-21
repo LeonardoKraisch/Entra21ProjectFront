@@ -16,13 +16,19 @@ import WalletFilters from "../components/Wallet/WalletFilters";
 import CustomReport from "../components/Wallet/Report";
 
 export default props => {
-    const { getAllRegistersToWallet } = useMoney()
+    const { getAllRegistersToWallet, deleteWallet, showToast } = useMoney()
     const [show, setShow] = useState("expenses")
     const [launches, setLaunches] = useState()
     const [wallet, setWallet] = useState()
     const [wallets, setWallets] = useState([props.route.params.wallet.wallet.walletName])
     const [showPass, setShowPass] = useState(false)
     const [showModal, setShowModal] = useState(false)
+
+    const [showFilters, setShowFilters] = useState(false)
+    const [showDatePicker, setShowDatePicker] = useState(false)
+    const [date, setDate] = useState(new Date())
+
+    const dateStringUser = moment(date).format('MMMM[/]YYYY')
 
     var customWallets = []
 
@@ -60,12 +66,6 @@ export default props => {
             )
         }
     }
-
-    const [showFilters, setShowFilters] = useState(false)
-    const [showDatePicker, setShowDatePicker] = useState(false)
-    const [date, setDate] = useState(new Date())
-
-    const dateStringUser = moment(date).format('MMMM[/]YYYY')
 
     const DatePicker = () => {
         let datePicker = <DateTimePicker display="spinner" value={date} onChange={(_, date) => {
@@ -111,25 +111,30 @@ export default props => {
         }
     }
 
+    const delWallet = async () => {
+        await showToast(await deleteWallet(props.route.params.wallet.wuCode), "Wallet delete")
+        setShowModal(false)
+    }
+
     return (
-        <LinearGradient colors={['#192b6a', '#243e9c', '#3155d6']} style={styles.container}>
+        <LinearGradient colors={['#353935', '#adb312', '#f2fa16']} style={styles.container}>
             <TouchableOpacity style={styles.buttonTrash} onPress={() => setShowModal(true)}>
-                <FontAwesome size={27} name="trash-o" color="#FFF" />
+                <FontAwesome size={27} name="trash-o" color="#F5FEFD" />
             </TouchableOpacity>
             <View style={styles.filters}>
                 <SelectDropdown
                     buttonTextStyle={{
-                        color: '#FFF',
+                        color: '#F5FEFD',
                         fontSize: 20,
                         fontWeight: 'bold'
                     }}
                     rowTextStyle={{
-                        color: '#FFF',
+                        color: '#F5FEFD',
                         fontSize: 20,
                         fontWeight: 'bold'
                     }}
                     defaultButtonText={props.route.params.wallet.wallet.walletName}
-                    buttonStyle={{ backgroundColor: '#192b6a10', borderBottomColor: '#FFF', borderBottomWidth: 1, height: 28, paddingHorizontal: 5, marginBottom: 5 }}
+                    buttonStyle={{ backgroundColor: '#192b6a10', borderBottomColor: '#F5FEFD', borderBottomWidth: 1, height: 28, paddingHorizontal: 5, marginBottom: 5 }}
                     dropdownStyle={{ backgroundColor: '#192b6a' }}
                     data={wallets}
                     onSelect={(selected, i) => {
@@ -146,7 +151,7 @@ export default props => {
                             CODE: {props.route.params.wallet.wallet.walletCode}
                         </Text>}
                     <TouchableOpacity onPress={() => setShowPass(!showPass)}>
-                        <Ionicons name="key-outline" size={25} color={showPass ? "red" : "#FFF"} />
+                        <Ionicons name="key-outline" size={25} color={showPass ? "red" : "#F5FEFD"} />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.mainFilters}>
@@ -183,7 +188,7 @@ export default props => {
                             <TouchableOpacity onPress={() => setShowModal(false)} style={styles.confirmExclusion}>
                                 <MaterialCommunityIcons size={35} name="cancel" color="red" />
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => setShowModal(false)} style={styles.confirmExclusion}>
+                            <TouchableOpacity onPress={() => delWallet()} style={styles.confirmExclusion}>
                                 <MaterialIcons size={35} name="done" color="green" />
                             </TouchableOpacity>
                         </View>
@@ -210,7 +215,7 @@ const styles = StyleSheet.create({
         width: '90%',
         paddingHorizontal: 15,
         paddingVertical: 3,
-        borderBottomColor: '#CCC',
+        borderBottomColor: '#F5FEFD',
         borderBottomWidth: 1,
         marginHorizontal: 10,
         marginVertical: 10
@@ -218,7 +223,7 @@ const styles = StyleSheet.create({
     labelText: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: '#FFF'
+        color: '#F5FEFD'
     },
     filters: {
         borderRadius: 3,
@@ -226,7 +231,7 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
         alignItems: 'center',
         justifyContent: 'center',
-        borderBottomColor: '#CCC',
+        borderBottomColor: '#F5FEFD',
         borderBottomWidth: 2,
     },
     mainFilters: {
@@ -236,11 +241,11 @@ const styles = StyleSheet.create({
         width: '95%',
         padding: 5,
         marginBottom: 5,
-        borderBottomColor: '#CCC',
+        borderBottomColor: '#F5FEFD',
         borderBottomWidth: 1,
     },
     selected: {
-        color: '#FFF',
+        color: '#F5FEFD',
         fontWeight: 'bold',
         fontSize: 16
     },
@@ -254,7 +259,7 @@ const styles = StyleSheet.create({
     },
     date: {
         fontSize: 15,
-        color: '#FFF',
+        color: '#F5FEFD',
         fontWeight: 'bold'
     },
     secondaryContainer: {
@@ -262,17 +267,11 @@ const styles = StyleSheet.create({
         borderBottomEndRadius: 3,
     },
     buttonContainer: {
-        width: '27%',
         paddingHorizontal: 15,
         paddingVertical: 2,
-        borderColor: '#CCC',
-        borderBottomWidth: 1,
-        borderRightWidth: 1,
-        borderBottomStartRadius: 5,
-        borderBottomEndRadius: 50
     },
     buttonText: {
-        color: '#FFF',
+        color: '#F5FEFD',
         fontSize: 15,
         fontWeight: 'bold'
     },
