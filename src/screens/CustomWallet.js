@@ -186,10 +186,10 @@ export default props => {
                         <Text style={styles.textExclude}>Are you certain about deleting this wallet?</Text>
                         <View style={styles.buttons}>
                             <TouchableOpacity onPress={() => setShowModal(false)} style={styles.confirmExclusion}>
-                                <MaterialCommunityIcons size={35} name="cancel" color="red" />
+                                <MaterialCommunityIcons size={35} name="cancel" color="#a410e6" />
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => delWallet()} style={styles.confirmExclusion}>
-                                <MaterialIcons size={35} name="done" color="green" />
+                                <MaterialIcons size={35} name="done" color="#157de6" />
                             </TouchableOpacity>
                         </View>
                     </Card>
@@ -286,12 +286,14 @@ const styles = StyleSheet.create({
         height: '25%',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 15
+        padding: 15,
+        backgroundColor: '#353935'
     },
     textExclude: {
         padding: 5,
         fontSize: 20,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: '#F5FEFD'
     },
     confirmExclusion: {
         marginTop: 12,

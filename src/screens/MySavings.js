@@ -26,17 +26,23 @@ export default props => {
         return (
             <VictoryChart
                 width={Dimensions.get('window').width - 10}
-                height={Dimensions.get('window').height / 4}
+                height={Dimensions.get('window').height / 3}
                 domain={{ x: [0, 11], y: [-1000, 1000] }}
                 containerComponent={<VictoryZoomContainer
+                    style={{ backgroundColor: '#FFF' }}
                     allowZoom={false}
                     zoomDomain={{ x: [0, 5], y: [-1000, 1000] }} />
                 }
             >
                 <VictoryLine
                     style={{
-                        data: { stroke: '#32c622' },
+                        data: { stroke: '#a410e6' },
+                        parent: {
+                            
+                        }
                     }}
+
+                    interpolation="natural"
                     data={savings}
                     x="month"
                     y="value"
@@ -50,7 +56,7 @@ export default props => {
             <Card style={[styles.card, props.value > 0 ? styles.cardUp : styles.cardDown]}>
                 <Text style={styles.title}>{props.month}</Text>
                 <Card.Content style={{ alignItems: 'flex-end', width: '100%' }}>
-                    <Text style={{ fontSize: 20, fontWeight: '500' }}>Total: {props.value}</Text>
+                    <Text style={{ fontSize: 20, fontWeight: '500', color: '#F5FEFD' }}>Total: {props.value}</Text>
                 </Card.Content>
             </Card>
         )
@@ -66,20 +72,20 @@ export default props => {
     }
 
     return (
-        <LinearGradient colors={['#192b6a', '#243e9c', '#3155d6']} style={styles.container}>
+        <LinearGradient colors={['#353935', '#adb312', '#f2fa16']} style={styles.container}>
             <View style={styles.label}>
                 <Text style={styles.labelText}>My Savings</Text>
             </View>
 
             <View style={styles.dateSetter}>
                 <TouchableOpacity onPress={() => setDate(date - 1)}>
-                    <AntDesign name='caretleft' size={20} color="#FFF" />
+                    <AntDesign name='caretleft' size={20} color="#F5FEFD" />
                 </TouchableOpacity>
                 <Text style={styles.year}>
                     {date}
                 </Text>
                 <TouchableOpacity onPress={() => setDate(date + 1)}>
-                <AntDesign name='caretright' size={20} color="#FFF"/>
+                    <AntDesign name='caretright' size={20} color="#F5FEFD" />
                 </TouchableOpacity>
             </View>
             <View style={styles.chartContainer}>
@@ -106,7 +112,7 @@ const styles = StyleSheet.create({
         marginVertical: 25
     },
     labelText: {
-        color: '#FFF',
+        color: '#F5FEFD',
         fontWeight: 'bold',
         fontSize: 25
     },
@@ -118,16 +124,15 @@ const styles = StyleSheet.create({
         paddingBottom: 10
     },
     year: {
-        color: '#FFF',
+        color: '#F5FEFD',
         fontSize: 25,
         fontWeight: '500'
     },
     chartContainer: {
-        height: '20%',
+        height: '40%',
         width: '95%',
-        backgroundColor: '#FFF',
+        backgroundColor: '#353935',
         justifyContent: 'center',
-        padding: 10,
         borderRadius: 5,
         shadowColor: "#000",
         shadowOffset: {
@@ -144,6 +149,7 @@ const styles = StyleSheet.create({
         width: '95%',
     },
     card: {
+        backgroundColor: '#353935',
         padding: 5,
         marginVertical: 10,
         borderStartWidth: 5,
@@ -157,15 +163,16 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     cardUp: {
-        borderStartColor: '#32c622',
+        borderStartColor: '#157de6',
     },
     cardDown: {
-        borderStartColor: '#c63222',
+        borderStartColor: '#a410e6',
     },
     title: {
         paddingLeft: 10,
         fontSize: 18,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: '#f2fa16'
     },
 
 })

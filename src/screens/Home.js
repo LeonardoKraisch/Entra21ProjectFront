@@ -129,7 +129,7 @@ export default props => {
                                 <Text style={styles.textModal}>Or if you live with other people and have to split the bills.</Text>
                                 <Text style={styles.textModal}>You can share this wallet with whoever you want, and every member can launch and track expenses.</Text>
                                 <TouchableOpacity onPress={() => setShowHelp(false)} style={styles.okModalButton}>
-                                    <MaterialIcons size={35} name="done" color="green" />
+                                    <MaterialIcons size={35} name="done" color="#157de6" />
                                 </TouchableOpacity>
                             </Card>
                         </View>
@@ -254,13 +254,15 @@ const styles = StyleSheet.create({
         height: '50%',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 15
+        padding: 15,
+        backgroundColor: '#353935'
     },
     textModal: {
         padding: 5,
         fontSize: 17,
         fontWeight: "500",
-        color: "#353935"
+        color: '#F5FEFD'
+
     },
     okModalButton: {
         marginTop: 12,
