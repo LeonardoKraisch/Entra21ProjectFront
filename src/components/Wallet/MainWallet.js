@@ -21,7 +21,7 @@ export default props => {
     const CalcPercentage = () => {
         return (
             <View style={{ position: 'absolute' }}>
-                <Text style={{ color: '#FFF', fontWeight: 'bold', fontSize: 16 }}>
+                <Text style={{ color: '#F5FEFD', fontWeight: 'bold', fontSize: 16 }}>
                     {totalInc > 0 ? parseFloat((100 * totalExp) / totalInc).toFixed(2) : parseFloat((100 * totalExp) / 1).toFixed(2)}%
                 </Text>
             </View>
@@ -33,20 +33,20 @@ export default props => {
             id: "1",
             name: 'Total Left',
             value: localBalance,
-            color: '#243e9c',
+            color: '#157de6',
         },
         {
             id: "2",
             name: 'Expenses',
             value: totalExp,
-            color: '#c63222',
+            color: '#a410e6',
         }
     ] : [
         {
             id: "1",
             name: 'Total Left',
             value: totalExp,
-            color: '#c63222',
+            color: '#a410e6',
         }
     ]
 
@@ -84,10 +84,10 @@ export default props => {
             </View>
             <View style={styles.content}>
                 <View style={styles.dataContainer}>
-                    <Text style={{ fontSize: 17, color: '#FFF' }}>
+                    <Text style={{ fontSize: 17, color: '#F5FEFD' }}>
                         {moment(new Date()).format("MMMM[/]YYYY")}
                     </Text>
-                    <Text style={{ fontSize: 17, color: '#FFF', padding: 10 }}>Expenses</Text>
+                    <Text style={{ fontSize: 17, color: '#F5FEFD', padding: 10 }}>Expenses</Text>
                     <TextMask type={'money'}
                         value={totalExp}
                         options={{
@@ -96,7 +96,7 @@ export default props => {
                             unit: 'R$ ',
                             delimiter: '.',
                             suffixUnit: ''
-                        }} style={{ color: '#FFF', fontSize: 22, fontWeight: 'bold' }} />
+                        }} style={{ color: '#F5FEFD', fontSize: 22, fontWeight: 'bold' }} />
                 </View>
                 <View style={styles.chartContainer}>
                     <View style={styles.chart}>
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
         elevation: 10
     },
     label: {
-        borderBottomColor: '#FFF',
+        borderBottomColor: '#F5FEFD',
         borderBottomWidth: 1,
         padding: 5,
         flexDirection: 'row',
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 5
     },
     labelText: {
-        color: '#FFF',
+        color: '#F5FEFD',
         fontWeight: 'bold',
         fontSize: 16
     },

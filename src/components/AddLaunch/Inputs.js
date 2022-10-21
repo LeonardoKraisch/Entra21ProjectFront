@@ -83,7 +83,7 @@ export default props => {
     const BalancePicker = () => {
         if (pressedPlus) {
             return (
-                <Picker dropdownIconColor='#FFF' selectedValue={category} onValueChange={setCategory} style={styles.picker}>
+                <Picker dropdownIconColor='#F5FEFD' selectedValue={category} onValueChange={setCategory} style={styles.picker}>
                     <Picker.Item style={styles.pickerItem} label="Fixed 💼" value="fixed" />
                     <Picker.Item style={styles.pickerItem} label="Benefits 💳" value="benefits" />
                     <Picker.Item style={styles.pickerItem} label="Comission 👔" value="comission" />
@@ -94,7 +94,7 @@ export default props => {
             )
         } else {
             return (
-                <Picker dropdownIconColor='#FFF' selectedValue={category} onValueChange={setCategory} style={styles.picker}>
+                <Picker dropdownIconColor='#F5FEFD' selectedValue={category} onValueChange={setCategory} style={styles.picker}>
                     <Picker.Item style={styles.pickerItem} label="Food 🍽" value="food" />
                     <Picker.Item style={styles.pickerItem} label="Car 🚗" value="car" />
                     <Picker.Item style={styles.pickerItem} label="House 🏠" value="house" />
@@ -121,7 +121,7 @@ export default props => {
                 <ButtonInput />
                 <View style={styles.pickerContainer}>
                     <Text style={styles.textTitle}>Payments:</Text>
-                    <Picker dropdownIconColor='#FFF' selectedValue={payments} onValueChange={setPayments} style={styles.picker}>
+                    <Picker dropdownIconColor='#F5FEFD' selectedValue={payments} onValueChange={setPayments} style={styles.picker}>
                         <Picker.Item style={styles.pickerItem} label="Cash 1x" value="1" />
                         <Picker.Item style={styles.pickerItem} label="Installments" value="2" />
                         <Picker.Item style={styles.pickerItem} label="Monthly" value="3" />
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         width: '92%',
-        backgroundColor: '#3155d6',
+        backgroundColor: '#157de6',
         borderRadius: 3,
         marginTop: 10
     },
@@ -198,18 +198,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     selected: {
-        color: '#FFF',
+        color: '#F5FEFD',
         fontWeight: 'bold'
     },
     unselect: {
-        color: '#CCC'
+        color: '#353935'
     },
     textTitle: {
-        color: '#FFF',
+        color: '#F5FEFD',
         fontSize: 15
     },
     input: {
-        backgroundColor: '#FFF',
+        backgroundColor: '#F5FEFD',
         width: '90%',
         height: '10%',
         borderRadius: 5,
@@ -222,23 +222,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         width: '95%',
-        borderBottomColor: '#FFF',
+        borderBottomColor: '#F5FEFD',
         borderBottomWidth: 1,
         marginBottom: 5,
     },
     picker: {
-        color: '#FFF',
+        color: '#F5FEFD',
         width: '60%',
 
     },
     pickerItem: {
         backgroundColor: '#353935',
-        color: '#FFF',
+        color: '#F5FEFD',
         fontSize: 15,
     },
     datePicker: {
         borderWidth: 3,
-        borderColor: '#3155d6',
+        borderColor: '#157de6',
         borderRadius: 5,
         backgroundColor: '#353935',
         paddingVertical: 5,
@@ -247,11 +247,11 @@ const styles = StyleSheet.create({
     },
     date: {
         fontSize: 17,
-        color: '#FFF',
+        color: '#F5FEFD',
         fontWeight: 'bold'
     },
     send: {
-        backgroundColor: '#3155d6',
+        backgroundColor: '#157de6',
         width: '100%',
         alignSelf: 'center',
         marginTop: 25,
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     sendText: {
-        color: '#FFF',
+        color: '#F5FEFD',
         fontSize: 20,
         fontWeight: "bold"
     }

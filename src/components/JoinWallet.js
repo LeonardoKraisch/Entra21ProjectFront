@@ -21,7 +21,7 @@ export default props => {
 
     return (
         <Card style={styles.card}>
-            <Card.Title titleStyle={{ color: '#FFF', fontSize: 20, fontWeight: "800" }} title="Join Wallet" />
+            <Card.Title titleStyle={{ color: '#F5FEFD', fontSize: 20, fontWeight: "800" }} title="Join Wallet" />
             <Card.Content style={styles.inputs}>
                 <TextInput style={styles.input}
                     autoFocus={true}
@@ -72,11 +72,11 @@ const styles = StyleSheet.create({
         marginVertical: 10
     },
     buttonCreate: {
-        backgroundColor: '#3155d6',
+        backgroundColor: '#157de6',
         margin: 20
     },
     createText: {
-        color: '#FFF',
+        color: '#F5FEFD',
         fontSize: 20,
         fontWeight: 'bold'
     }

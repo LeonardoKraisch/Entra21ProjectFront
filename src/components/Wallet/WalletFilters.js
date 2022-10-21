@@ -122,7 +122,7 @@ export default props => {
     const BalancePicker = () => {
         if (props.show == "expenses") {
             return (
-                <Picker dropdownIconColor='#FFF' selectedValue={category} onValueChange={setCategory} style={styles.picker}>
+                <Picker dropdownIconColor='#F5FEFD' selectedValue={category} onValueChange={setCategory} style={styles.picker}>
                     <Picker.Item style={styles.pickerItem} label="Food 🍽" value="food" />
                     <Picker.Item style={styles.pickerItem} label="Car 🚗" value="car" />
                     <Picker.Item style={styles.pickerItem} label="House 🏠" value="house" />
@@ -138,7 +138,7 @@ export default props => {
             )
         } else if (props.show == "incomes") {
             return (
-                <Picker dropdownIconColor='#FFF' selectedValue={category} onValueChange={setCategory} style={styles.picker}>
+                <Picker dropdownIconColor='#F5FEFD' selectedValue={category} onValueChange={setCategory} style={styles.picker}>
                     <Picker.Item style={styles.pickerItem} label="Fixed 💼" value="fixed" />
                     <Picker.Item style={styles.pickerItem} label="Benefits 💳" value="benefits" />
                     <Picker.Item style={styles.pickerItem} label="Comission 👔" value="comission" />
@@ -150,7 +150,7 @@ export default props => {
             )
         } else {
             return (
-                <Picker dropdownIconColor='#FFF' selectedValue={category} onValueChange={setCategory} style={styles.picker}>
+                <Picker dropdownIconColor='#F5FEFD' selectedValue={category} onValueChange={setCategory} style={styles.picker}>
                     <Picker.Item style={styles.pickerItem} label="Food 🍽" value="food" />
                     <Picker.Item style={styles.pickerItem} label="Car 🚗" value="car" />
                     <Picker.Item style={styles.pickerItem} label="House 🏠" value="house" />
@@ -173,7 +173,7 @@ export default props => {
 
     const ValuePicker = () => {
         return (
-            <Picker dropdownIconColor='#FFF' itemStyle={styles.pickerItem} selectedValue={pickerValue} onValueChange={setPickerValue} style={styles.picker}>
+            <Picker dropdownIconColor='#F5FEFD' itemStyle={styles.pickerItem} selectedValue={pickerValue} onValueChange={setPickerValue} style={styles.picker}>
                 <Picker.Item style={styles.pickerItem} label="higher than:" value=">" />
                 <Picker.Item style={styles.pickerItem} label="lower than:" value="<" />
                 <Picker.Item style={styles.pickerItem} label="between:" value="[]" />
@@ -222,11 +222,11 @@ export default props => {
     return (
         <View style={styles.secondaryFilters}>
             <View style={styles.genericContainer}>
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={styles.dateTitle}>Date between:</Text>
                     <DatePicker1 />
                 </View>
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={styles.dateTitle}>to:</Text>
                     <DatePicker2 />
                 </View>
@@ -245,7 +245,7 @@ export default props => {
             </View>
 
             <View style={styles.genericContainer}>
-                <TextInput style={styles.inputMoney} placeholder="Search for description" placeholderTextColor={'#FFF9'} value={description} onChangeText={setDescription} />
+                <TextInput style={styles.inputMoney} placeholder="Search for description" placeholderTextColor={'#F5FEFD'} value={description} onChangeText={setDescription} />
             </View>
 
             <View style={styles.buttonContainer}>
@@ -259,56 +259,55 @@ export default props => {
 }
 const styles = StyleSheet.create({
     secondaryFilters: {
-        width: '100%',
+        width: '95%',
+        alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 3,
-        borderBottomColor: '#CCC',
+        borderRadius: 5,
+        backgroundColor: '#353935',
+        borderBottomColor: '#157de6',
         borderBottomWidth: 2,
     },
     genericContainer: {
-        width: '85%',
+        width: '95%',
         justifyContent: "space-between",
         alignItems: 'center',
         flexDirection: 'row',
         paddingHorizontal: 10,
-        borderBottomColor: '#FFF',
+        borderBottomColor: '#157de6',
         borderBottomWidth: 1,
         margin: 10,
     },
     mainValuesCont: {
-        width: '85%',
+        width: '95%',
         justifyContent: "space-between",
         alignItems: 'center',
         paddingHorizontal: 10,
-        borderBottomColor: '#FFF',
+        borderBottomColor: '#157de6',
         borderBottomWidth: 1,
         margin: 10,
     },
-    datePicker: {
-        paddingHorizontal: 5,
-        marginHorizontal: 5
-    },
     date: {
-        fontSize: 15,
-        color: '#FFF',
-        fontWeight: 'bold'
+        fontSize: 16,
+        color: '#F5FEFD',
+        fontWeight: 'bold',
     },
     dateTitle: {
-        fontSize: 16,
-        color: '#FFF',
+        fontSize: 18,
+        padding: 2,
+        color: '#F5FEFD',
     },
     picker: {
         flex: 1,
     },
     pickerItem: {
-        backgroundColor: '#243e9c',
-        color: '#FFF',
-        fontSize: 15,
+        backgroundColor: '#353935',
+        color: '#F5FEFD',
+        fontSize: 18,
     },
     titles: {
-        fontSize: 16,
-        color: '#FFF',
+        fontSize: 18,
+        color: '#F5FEFD',
     },
     valuesContainer: {
         minHeight: '20%',
@@ -322,15 +321,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        width: '90%',
-        paddingHorizontal: 10,
+        width: '100%',
+        paddingHorizontal: 5,
         marginBottom: 5
     },
     inputMoney: {
         paddingHorizontal: 5,
-        marginHorizontal: 10,
+        marginHorizontal: 5,
         textAlign: 'center',
-        color: '#FFF',
+        color: '#F5FEFD',
         flex: 1,
         fontSize: 18
     },
@@ -340,7 +339,7 @@ const styles = StyleSheet.create({
         marginVertical: 15,
     },
     send: {
-        backgroundColor: '#FFF',
+        backgroundColor: '#157de6',
         width: '100%',
         alignSelf: 'center',
         borderRadius: 5,
@@ -350,8 +349,8 @@ const styles = StyleSheet.create({
     },
     sendText: {
         fontWeight: 'bold',
-        color: '#666',
-        fontSize: 16
+        color: '#F5FEFD',
+        fontSize: 18
     }
 
 })

@@ -33,7 +33,7 @@ export default props => {
                 logout()
                 props.navigation.closeDrawer()
             }} style={styles.logoutButton}>
-                <MaterialIcons size={25} name="logout" color="red" />
+                <MaterialIcons size={25} name="logout" color="#950dd1" />
                 <Text style={styles.logoutButtonText}>Logout</Text>
             </TouchableOpacity>
         )
@@ -68,16 +68,16 @@ export default props => {
     const menuConfig = {
         headerShown: false,
         drawerStyle: {
-            backgroundColor: '#192b6a',
+            backgroundColor: '#353935'
         },
         drawerItemStyle: {
             height: 60,
             marginBottom: 10,
-            backgroundColor: '#243e9c',
+            backgroundColor: '#353935',
             justifyContent: 'center'
         },
         drawerLabelStyle: {
-            color: '#FFF',
+            color: '#f2fa16',
             fontSize: 20,
             fontWeight: 'bold'
         }
@@ -95,13 +95,13 @@ export default props => {
                             <View style={styles.userInfo}>
                                 <Avatar.Image size={80} source={require('../assets/FIGMAbelha.png')} />
                                 <View style={styles.texts}>
-                                    <Text style={{ color: '#FFF', fontSize: 18 }}>{"Welcome,"}</Text>
-                                    <Text style={{ color: '#FFF', fontSize: 37 }}>{name}</Text>
+                                    <Text style={{ color: '#F5FEFD', fontSize: 18 }}>{"Welcome,"}</Text>
+                                    <Text style={{ color: '#F5FEFD', fontSize: 37 }}>{name}</Text>
                                 </View>
                             </View>
                             <DrawerItemList {...props} />
                             <DrawerItem
-                                style={{ marginTop: 285 }}
+                                style={{ marginTop: 250}}
                                 icon={() => <LogoutButton {...props} />}
                                 label=''
                             />
@@ -127,11 +127,14 @@ export default props => {
 const styles = StyleSheet.create({
     userInfo: {
         flexDirection: 'row',
-        backgroundColor: '#243e9c',
+        backgroundColor: '#353935',
         marginBottom: 25,
         alignItems: 'center',
         paddingTop: 20,
-        paddingLeft: 10
+        paddingLeft: 10,
+        borderBottomColor: '#f2fa16',
+        borderBottomWidth: 2,
+        borderRadius: 20
     },
     avatar: {
         height: 60,
@@ -148,7 +151,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     logoutButtonText: {
-        color: '#FFF',
+        color: '#F5FEFD',
         fontWeight: 'bold',
         fontSize: 20,
         marginLeft: 5

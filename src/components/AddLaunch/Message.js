@@ -33,17 +33,17 @@ export default props => {
                 </Text>
                 <SelectDropdown
                     buttonTextStyle={{
-                        color: '#FFF',
+                        color: '#F5FEFD',
                         fontSize: 20,
                         fontWeight: 'bold'
                     }}
                     rowTextStyle={{
-                        color: '#FFF',
+                        color: '#F5FEFD',
                         fontSize: 20,
                         fontWeight: 'bold'
                     }}
                     defaultValue={wallet}
-                    buttonStyle={{ backgroundColor: '#353935', borderBottomColor: '#FFF', borderBottomWidth: 1, height: 28, paddingHorizontal: 5 }}
+                    buttonStyle={{ backgroundColor: '#353935', borderBottomColor: '#F5FEFD', borderBottomWidth: 1, height: 28, paddingHorizontal: 5 }}
                     dropdownStyle={{ backgroundColor: '#353935' }}
                     data={wallets}
                     onSelect={(selected, i) => {
@@ -62,17 +62,17 @@ export default props => {
                 </Text>
                 <SelectDropdown
                     buttonTextStyle={{
-                        color: '#FFF',
+                        color: '#F5FEFD',
                         fontSize: 20,
                         fontWeight: 'bold'
                     }}
                     rowTextStyle={{
-                        color: '#FFF',
+                        color: '#F5FEFD',
                         fontSize: 20,
                         fontWeight: 'bold'
                     }}
                     defaultValue={wallet}
-                    buttonStyle={{ backgroundColor: '#353935', borderBottomColor: '#FFF', borderBottomWidth: 1, height: 28, paddingHorizontal: 5 }}
+                    buttonStyle={{ backgroundColor: '#353935', borderBottomColor: '#F5FEFD', borderBottomWidth: 1, height: 28, paddingHorizontal: 5 }}
                     dropdownStyle={{ backgroundColor: '#353935' }}
                     data={wallets}
                     onSelect={(selected, i) => {
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     textTitle: {
-        color: '#FFF',
+        color: '#F5FEFD',
         fontSize: 20,
         fontWeight: 'bold'
     },
