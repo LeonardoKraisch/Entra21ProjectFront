@@ -512,14 +512,14 @@ export const MoneyProvider = ({ children }) => {
                     filter: {
                         wallet: { code: walletCode }
                     },
-                    userCode : false
+                    userCode: false
                 })
                 const toWalletExp = await moneyInternalContext.getRegisters({
                     type: "-",
                     filter: {
                         wallet: { code: walletCode }
                     },
-                    userCode : false
+                    userCode: false
                 })
                 const merged = await moneyInternalContext.mergeArrays(toWalletInc, "incMoney", toWalletExp, 'expMoney')
 
