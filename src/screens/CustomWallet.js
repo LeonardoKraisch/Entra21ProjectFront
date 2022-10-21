@@ -35,7 +35,7 @@ export default props => {
     useEffect(() => {
         async function loadRegisters() {
             try {
-                setLaunches(await getAllRegistersToWallet(props.route.params.wallet.wuCode))
+                setLaunches(await getAllRegistersToWallet(props.route.params.wallet.wallet.walletCode))
                 await props.route.params.wallets.forEach((w) => {
                     if (w.wallet.walletName != props.route.params.wallet.wallet.walletName) {
                         customWallets.push(w.wallet.walletName)
