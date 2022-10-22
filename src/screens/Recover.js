@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         fontSize: 30,
         fontWeight: 'bold',
-        color: '#F5FEFD',
+        color: '#f2fa16',
         margin: 2
     },
     inputs: {

@@ -10,7 +10,7 @@ export default props => {
 
     const favoriteWallet = async () => {
         setFavorite(!favorite)
-        showToast( await setWalletFavorite(props.wallet.item.wuCode, favorite ), favorite ? "Unfavorited":" Favorited")
+        showToast(await setWalletFavorite(props.wallet.item.wuCode, favorite), favorite ? "Unfavorited" : " Favorited")
 
     }
 
@@ -30,7 +30,7 @@ export default props => {
                     <FontAwesome
                         name={favorite ? "star" : "star-o"}
                         size={20}
-                        color="#F5FEFD"
+                        color={favorite ? "#f2fa16" : "#F5FEFD"}
                     />
                 </Pressable>
             </View>
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     label: {
-        borderBottomColor: '#F5FEFD',
+        borderBottomColor: '#157de6',
         borderBottomWidth: 1,
         padding: 3,
         justifyContent: 'space-between',

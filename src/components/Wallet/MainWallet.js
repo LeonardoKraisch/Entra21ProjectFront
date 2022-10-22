@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
         elevation: 10
     },
     label: {
-        borderBottomColor: '#F5FEFD',
+        borderBottomColor: '#157de6',
         borderBottomWidth: 1,
         padding: 5,
         flexDirection: 'row',

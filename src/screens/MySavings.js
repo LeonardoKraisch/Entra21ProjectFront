@@ -29,19 +29,15 @@ export default props => {
                 height={Dimensions.get('window').height / 3}
                 domain={{ x: [0, 11], y: [-1000, 1000] }}
                 containerComponent={<VictoryZoomContainer
-                    style={{ backgroundColor: '#FFF' }}
+                    style={{ backgroundColor: '#FFF', }}
                     allowZoom={false}
                     zoomDomain={{ x: [0, 5], y: [-1000, 1000] }} />
                 }
             >
                 <VictoryLine
                     style={{
-                        data: { stroke: '#a410e6' },
-                        parent: {
-                            
-                        }
+                        data: { stroke: '#a410e6' }
                     }}
-
                     interpolation="natural"
                     data={savings}
                     x="month"
@@ -112,7 +108,7 @@ const styles = StyleSheet.create({
         marginVertical: 25
     },
     labelText: {
-        color: '#F5FEFD',
+        color: '#f2fa16',
         fontWeight: 'bold',
         fontSize: 25
     },

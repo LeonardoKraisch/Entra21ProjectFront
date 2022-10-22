@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 30,
-        color: '#F5FEFD',
+        color: '#f2fa16',
         fontWeight: 'bold',
         margin: 2
     },
@@ -182,6 +182,6 @@ const styles = StyleSheet.create({
         color: '#F5FEFD',
     },
     textUp: {
-        color: '#a410e6'
+        color: '#f2fa16'
     }
 })

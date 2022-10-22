@@ -1,7 +1,8 @@
 import React, { useRef, useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, BackHandler, Alert } from 'react-native'
 import { TextInput } from "react-native-paper";
 import Lottie from 'lottie-react-native';
+import { useFocusEffect } from "@react-navigation/native";
 
 import useUser from "../data/hooks/useUser";
 
@@ -12,6 +13,28 @@ export default props => {
     const { signIn } = useUser()
 
     const refPassword = useRef()
+
+    useFocusEffect(() => {
+        BackHandler.addEventListener("hardwareBackPress", backAction);
+        return () =>
+            BackHandler.removeEventListener("hardwareBackPress", backAction);
+    })
+
+    const backAction = () => {
+        Alert.alert("Do you want to leave the app?", "", [
+            {
+                text: "Cancel",
+                onPress: () => null,
+                style: "cancel"
+            },
+            {
+                text: "Yes",
+                onPress: () => BackHandler.exitApp()
+            }
+        ]);
+        return true;
+    };
+
 
     return (
         <View style={styles.containter}>
@@ -88,7 +111,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 30,
         fontWeight: 'bold',
-        color: '#F5FEFD',
+        color: '#f2fa16',
         margin: 2
     },
     input: {
@@ -121,7 +144,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     textRec: {
-        color: '#F5FEFD',
+        color: '#f2fa16',
     },
     textUp: {
         color: '#a410e6'

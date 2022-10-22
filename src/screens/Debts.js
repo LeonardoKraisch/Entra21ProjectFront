@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Modal, RefreshControl } from "react-native";
 import { Agenda } from 'react-native-calendars'
 import { Card } from "react-native-paper";
@@ -13,6 +13,7 @@ export default props => {
     const [modalVisible, setModalVisible] = useState(false)
     const [item, setItem] = useState()
     const [allItems, setAllItems] = useState(allPendings)
+    var pendings = {}
 
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
@@ -21,16 +22,15 @@ export default props => {
     const [refreshing, setRefreshing] = useState(false);
 
     const onRefresh = useCallback(async () => {
-        
+
         try {
-            var pendings = await generalPendings()
-            setAllItems(await pendings)
-            console.log(pendings);
-            setItem(await pendings[Object.keys(pendings)[0]][0])
+            pendings = await generalPendings()
+            setAllItems(pendings)
+            setItem(pendings[Object.keys(pendings)[0]][0])
         } catch (e) {
             console.log(e, "refresh");
-            setAllItems({})
-            setItem({})
+            setAllItems(pendings)
+            setItem(pendings)
         }
         setRefreshing(true);
         wait(2000).then(() => setRefreshing(false));
@@ -38,7 +38,7 @@ export default props => {
 
     useEffect(() => {
         onRefresh()
-    }, [allPendings])
+    }, [])
 
     const renderItem = (item) => {
         const table = item.incMoney ? "inc" : "exp"
@@ -141,18 +141,18 @@ export default props => {
                                                 pending: true
                                             }
                                         )} style={styles.buttonTrash}>
-                                            <FontAwesome size={27} name="trash-o" color="#FFF" />
+                                            <FontAwesome size={27} name="trash-o" color="#F5FEFD" />
                                         </TouchableOpacity>
                                     </View>
                                     <View style={styles.modalButtonsConfirm}>
                                         <TouchableOpacity style={styles.buttonCancel} onPress={() => setModalVisible(false)} >
-                                            <FontAwesome name="close" size={27} color="#FFF" />
+                                            <FontAwesome name="close" size={27} color="#F5FEFD" />
                                         </TouchableOpacity>
                                         <TouchableOpacity onPress={() => editEntry(item.incCode ?
                                             {
                                                 type: "+",
                                                 code: item.incCode,
-                                                value:item.incMoney
+                                                value: item.incMoney
 
                                             } : {
                                                 type: "-",
@@ -160,7 +160,7 @@ export default props => {
                                                 value: item.expMoney
                                             }
                                         )} style={styles.buttonOk}>
-                                            <MaterialIcons size={28} name="done" color="#FFF" />
+                                            <MaterialIcons size={28} name="done" color="#F5FEFD" />
                                         </TouchableOpacity>
                                     </View>
                                 </View>
@@ -175,6 +175,14 @@ export default props => {
     return (
         <View style={styles.container}>
             <Agenda
+                theme={{
+                    dayTextColor: '#f2fa16',
+                    calendarBackground: '#353935',
+                    monthTextColor: '#157de6',
+                    selectedDayBackgroundColor: '#157de6',
+                    agendaKnobColor: '#a410e6',
+
+                }}
                 items={allItems}
                 refreshControl={<RefreshControl
                     refreshing={refreshing}
@@ -199,10 +207,12 @@ const styles = StyleSheet.create({
     negation: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: '#353935'
     },
     negationText: {
         fontSize: 17,
+        color: '#f2fa16'
     },
     item: {
         flex: 1,
@@ -221,29 +231,39 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     incItemOut: {
-        backgroundColor: '#238a17'
+        backgroundColor: '#353935',
+        borderWidth: 2,
+        borderColor: '#157de6'
     },
     expItemOut: {
-        backgroundColor: '#8c2216'
+        backgroundColor: '#353935',
+        borderWidth: 2,
+        borderColor: '#a410e6'
     },
     incItem: {
-        backgroundColor: '#4ab53e'
+        borderColor: '#157de6',
+        backgroundColor: '#353935',
+        borderWidth: 1
     },
     expItem: {
-        backgroundColor: '#e05343'
+        borderColor: '#a410e6',
+        backgroundColor: '#353935',
+        borderWidth: 1
     },
     title: {
         fontSize: 20,
         fontWeight: 'bold',
         fontStyle: 'italic',
-        color: '#222'
+        color: '#f2fa16'
     },
     labels: {
         fontSize: 16,
         fontWeight: 'bold',
+        color: '#F5FEFD'
     },
     value: {
-        fontSize: 15
+        fontSize: 15,
+        color: '#F5FEFD'
     },
     row: {
         flexDirection: 'row',
@@ -272,7 +292,7 @@ const styles = StyleSheet.create({
     },
     modalView: {
         flex: 1,
-        backgroundColor: "white",
+        backgroundColor: "#F5FEFD",
         maxWidth: "90%",
         maxHeight: '40%',
         borderRadius: 20,
@@ -289,9 +309,9 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     textQuestion: {
-        fontSize: 18,
-        padding: 2,
-        fontWeight: 'bold'
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#353935'
     },
     modalButtons: {
         flexDirection: 'row',
@@ -310,19 +330,19 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end'
     },
     buttonCancel: {
-        backgroundColor: '#23a2e2',
+        backgroundColor: '#353935',
         paddingVertical: 5,
         paddingHorizontal: 9,
         borderRadius: 20,
     },
     buttonOk: {
-        backgroundColor: '#23a2e2',
+        backgroundColor: '#157de6',
         padding: 5,
         borderRadius: 20,
         marginLeft: 10
     },
     buttonTrash: {
-        backgroundColor: '#de1f29',
+        backgroundColor: '#a410e6',
         paddingVertical: 5,
         paddingHorizontal: 9,
         borderRadius: 20,

@@ -73,7 +73,7 @@ export default props => {
                 />
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity onPress={() => setShowModal(true)} style={styles.newButton}>
-                        <FontAwesome5 name="plus" size={25} color="#F5FEFD" />
+                        <FontAwesome5 name="plus" size={25} color="#f2fa16" />
                         <Text style={styles.newButtonText}>New Wallet</Text>
                     </TouchableOpacity>
                 </View>
@@ -189,10 +189,10 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     newButtonText: {
-        color: '#F5FEFD',
-        fontSize: 18,
+        color: '#f2fa16',
+        fontSize: 22,
         fontWeight: 'bold',
-        marginLeft: 15,
+        marginLeft: 10,
         letterSpacing: 1.5
     },
     modalView: {
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     buttonHelp: {
         height: 25,
         width: 25,
-        backgroundColor: '#353935',
+        backgroundColor: '#157de6',
         margin: 10,
         marginLeft: 15,
         borderRadius: 5,
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     buttonHelpText: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: '#F5FEFD'
+        color: '#f2fa16'
     },
     group: {
         width: '95%',
@@ -248,6 +248,7 @@ const styles = StyleSheet.create({
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+
     },
     textHelpModal: {
         width: '90%',
@@ -255,7 +256,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         padding: 15,
-        backgroundColor: '#353935'
+        backgroundColor: '#353935',
+        borderColor: '#a410e6',
+        borderWidth: 3
     },
     textModal: {
         padding: 5,

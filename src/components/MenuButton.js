@@ -5,7 +5,7 @@ export default props => {
 
     return (
         <TouchableOpacity style={{ marginHorizontal: 5, height: 36, width: 36 }} onPress={() => props.navigation.openDrawer()}>
-            <Ionicons name='menu' size={35} color='#F5FEFD' />
+            <Ionicons name='menu' size={35} color='#f2fa16' />
         </TouchableOpacity>
     )
 }
