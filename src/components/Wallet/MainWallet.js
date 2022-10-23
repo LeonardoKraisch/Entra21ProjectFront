@@ -7,45 +7,44 @@ import moment from 'moment';
 import useMoney from "../../data/hooks/useMoney";
 
 export default props => {
-    const { balance, totalExp, totalInc, getUserMoney, refreshUserMoney } = useMoney()
+    const { moneyBalance, moneyExp, moneyInc, refreshUserMoney } = useMoney()
     const [localBalance, setLocalBalance] = useState(0)
 
     useEffect(() => {
         async function fetch() {
-            setLocalBalance(await getUserMoney())
             await refreshUserMoney()
         }
         fetch()
-    }, [])
+    }, [moneyExp, moneyInc])
 
     const CalcPercentage = () => {
         return (
             <View style={{ position: 'absolute' }}>
                 <Text style={{ color: '#F5FEFD', fontWeight: 'bold', fontSize: 16 }}>
-                    {totalInc > 0 ? parseFloat((100 * totalExp) / totalInc).toFixed(2) : parseFloat((100 * totalExp) / 1).toFixed(2)}%
+                    {moneyInc > 0 ? parseFloat((100 * moneyExp) / moneyInc).toFixed(2) : parseFloat((100 * moneyExp) / 1).toFixed(2)}%
                 </Text>
             </View>
         )
     }
 
-    const pieData = localBalance >= 0 ? [
+    const pieData = moneyBalance >= 0 ? [
         {
             id: "1",
             name: 'Total Left',
-            value: localBalance,
+            value: moneyBalance,
             color: '#157de6',
         },
         {
             id: "2",
             name: 'Expenses',
-            value: totalExp,
+            value: moneyExp,
             color: '#a410e6',
         }
     ] : [
         {
             id: "1",
             name: 'Total Left',
-            value: totalExp,
+            value: moneyExp,
             color: '#a410e6',
         }
     ]
@@ -89,7 +88,7 @@ export default props => {
                     </Text>
                     <Text style={{ fontSize: 17, color: '#F5FEFD', padding: 10 }}>Expenses</Text>
                     <TextMask type={'money'}
-                        value={totalExp}
+                        value={moneyExp}
                         options={{
                             precision: 2,
                             separator: ',',

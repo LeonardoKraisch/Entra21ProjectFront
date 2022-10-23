@@ -11,10 +11,13 @@ const MoneyContext = createContext({})
 
 export const MoneyProvider = ({ children }) => {
     const { pressedPlus } = useAnimation()
-    const { userCode, balance, setBalance, totalInc, setTotalInc, totalExp, setTotalExp } = useUser()
+    const { userCode, balance, totalInc, totalExp, } = useUser()
 
     const [date, setDate] = useState(new Date())
 
+    const [moneyBalance, setBalance] = useState(balance)
+    const [moneyInc, setTotalInc] = useState(totalInc)
+    const [moneyExp, setTotalExp] = useState(totalExp)
 
     const [incomes, setIncomes] = useState([null])
     const [expenses, setExpenses] = useState([])
@@ -77,11 +80,11 @@ export const MoneyProvider = ({ children }) => {
     const moneyInternalContext = {
         coin,
         date,
-        balance,
+        moneyBalance,
         incomes,
         expenses,
-        totalInc,
-        totalExp,
+        moneyInc,
+        moneyExp,
         allLaunches,
 
         searchIncomes,
@@ -120,7 +123,7 @@ export const MoneyProvider = ({ children }) => {
                             setAllPendings(await moneyInternalContext.generalPendings())
                         } else {
                             setIncomes([...incomes, launch])
-                            setTotalInc(totalInc + await launch['incMoney'])
+                            setTotalInc(moneyInc + await launch['incMoney'])
                         }
                     } else {
                         if (launch["expPending"]) {
@@ -128,14 +131,14 @@ export const MoneyProvider = ({ children }) => {
                             setAllPendings(await moneyInternalContext.generalPendings())
                         } else {
                             setExpenses([...expenses, launch])
-                            setTotalExp(totalExp + await launch['expMoney'])
+                            setTotalExp(moneyExp + await launch['expMoney'])
                         }
                     }
 
                     setAllLaunches([...allLaunches, launch])
 
                     const total = await moneyInternalContext.recalBalance()
-                    setBalance(await moneyInternalContext.getUserMoney())
+                    setBalance(total)
                     setTotalSearch(total)
                     Toast.show({
                         type: 'info',
@@ -203,7 +206,7 @@ export const MoneyProvider = ({ children }) => {
         },
 
         recalBalance: async () => {
-            const total = totalInc - totalExp
+            const total = moneyInc - moneyExp
             return total
         },
 
@@ -308,7 +311,7 @@ export const MoneyProvider = ({ children }) => {
 
             const merged = await moneyInternalContext.mergeArrays(arr1, "incMoney", arr2, 'expMoney')
             setAllLaunches(merged)
-            setBalance(await moneyInternalContext.getUserMoney())
+            setBalance(await moneyInternalContext.recalBalance())
             await moneyInternalContext.searchSetter(arr1, arr2, merged)
         },
 

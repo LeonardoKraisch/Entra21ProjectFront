@@ -26,10 +26,6 @@ export const UserProvider = ({ children }) => {
         totalInc, 
         totalExp, 
         
-        setBalance, 
-        setTotalInc, 
-        setTotalExp,
-        
         start: async () => {
             const userDataJson = await AsyncStorage.getItem('token')
 

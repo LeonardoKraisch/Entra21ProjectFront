@@ -12,16 +12,16 @@ import { TextMask } from "react-native-masked-text";
 import useMoney from '../data/hooks/useMoney'
 
 export default props => {
-    const { totalInc, totalExp, coin, getUserMoney } = useMoney()
+    const { moneyInc, moneyExp, coin, recalBalance } = useMoney()
     const [localBalance, setLocalBalance] = useState(0)
     const [showBalance, setShowBalance] = useState(true)
 
     useEffect(() => {
         async function fetch() {
-            setLocalBalance(await getUserMoney())
+            setLocalBalance(await recalBalance())
         }
         fetch()
-    }, [totalInc, totalExp])
+    }, [moneyInc, moneyExp])
 
     return (
         <View style={styles.container}>

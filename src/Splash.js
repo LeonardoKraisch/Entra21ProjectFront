@@ -27,7 +27,7 @@ export default props => {
         <View style={styles.container}>
             <Image source={require("../assets/FIGMAbelha.png")}
                 style={styles.image} />
-            <Text style={styles.text}>Your Beezness</Text>
+            <Text style={styles.text}>Your <Text style={styles.textFocus}>Beez</Text>ness</Text>
         </View>
     )
 
@@ -36,7 +36,7 @@ export default props => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFF',
+        backgroundColor: '#000',
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -46,8 +46,12 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 50,
-        color: "#333",
-        fontWeight: 'bold'
+        color: "#157de6",
+        fontWeight: 'bold',
+        
+    },
+    textFocus: {
+        color: "#f2fa16",
     }
 })
 
