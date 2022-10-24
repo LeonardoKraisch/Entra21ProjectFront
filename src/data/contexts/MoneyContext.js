@@ -520,9 +520,9 @@ export const MoneyProvider = ({ children }) => {
                         wallet: { code: walletCode }
                     }
                 })
-                const merged = await moneyInternalContext.mergeArrays(toWalletInc, "incMoney", toWalletExp, 'expMoney')
+                const merged = await moneyInternalContext.mergeArrays(toWalletInc.data.registers, "incMoney", toWalletExp.data.registers, 'expMoney')
 
-                return ({ toWalletInc, toWalletExp, merged })
+                return ({ toWalletInc : toWalletInc.data.registers, toWalletExp : toWalletExp.data.registers, merged })
             } catch (e) {
                 console.log(e.message, " - error in getAllRegistersToWallet")
                 return e.message
